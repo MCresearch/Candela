@@ -74,7 +74,7 @@ In each line the first item specifies the name of the parameter, and you may fil
 
 For `geo_in_type`, currently supported formats include pw.x (`QE2`), cp.x (`QE`), VASP (`VASP`), ABACUS (`ABACUS`), PWmat (`PWMAT`) and so on.
 
-The physical quantities used in the program are all in $\AA$/ps/eV.
+The physical quantities used in the program are all in Angstrom/ps/eV.
 
 Other parameters are needed for specific `calculation`, which you may refer to [List of supported analyses](#List-of-supported-analyses) where a detailed summary of suppoted `calculation` of analyses is given.
 
