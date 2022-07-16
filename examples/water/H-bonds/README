@@ -1,0 +1,103 @@
+
+------------------------------------ EXPLAIN hbcase.dat FILE -----------------------------------------------
+In the hbcase.dat file, each line represents the H-bond network information for 
+a hydronium (H3O+) or hydroxide (OH-) ion. For example:
+
+1    476555        40.3456   16  3  0    8   26   40    0    0    0    0    0    0    0    0    0
+
+Here 476555 is the snapshot index, 40.3456 is the time in ps.
+
+The next '16' is the index of oxygen that belongs to the ion.
+
+The next '3' is the number of accepted HB for the ion.
+
+The next '0' is the number of donating HB for the ion.
+
+The next 8 numbers are the index of oxygen atoms that donating H bonds to the ion.
+These numbers start from 1 and 0 means no oxygen atoms. In other words, 
+here 8, 26 and 40 indicate that the ion 
+accepts H-bonds from water molecules with oxygen indexes being 5, 26, and 40. 
+
+The next 4 numbers are the index of oxygen atoms that accept H bonds to the ion. 
+These numbers start from 1 and 0 means no oxygen atoms. 
+
+------------------------------------ EXPLAIN bond.dat FILE -------------------------------------------------
+In the bond.dat file, the H-bond network information is printed 
+out for each oxygen atom in a water molecule. For example:
+
+476555 40.3456
+ atom    1 A 2 D 2   57   63    0    0    0    0    0    0    8   64    0    0    476555   40.3456
+
+Here 476555 is the snapshot index, 40.3456 is the time in ps.
+
+The number after "atom" in the index for oxygen atoms starting from 1.
+
+The number after "A" is the number of accepted H-bonds for this oxygen atom.
+
+The number after "D" is the number of donating H-bonds for this oxygen atom.
+
+The next 8 numbers are the index of oxygen atoms that donating H bonds to the 1st (the number after "atom") oxygen atom.
+These numbers start from 1 and 0 means no oxygen atoms. In other words, 
+here 57 and 63 indicate that the 1st oxygen atoms (number after "atom") 
+accept H-bonds from water molecules with oxygen indexes being 57 and 63. 
+
+The next 4 numbers are the index of oxygen atoms that accept H bonds to the 1st (the number after "atom") oxygen atom.
+These numbers start from 1 and 0 means no oxygen atoms. In other words,
+here 8 and 64 indicate that the 1st oxygen atoms (number after "atom")
+donate H-bonds from water molecules with oxygen indexes being 8 and 64.
+
+The last two numbers are again the snapshot index and the time.
+
+------------------------------------ EXPLAIN trans.dat file -----------------------------------------------
+This file records the PROTON TRANSFER information:
+
+    328610        27.8219   25  0  3    328580        27.8193   39  1  3  103
+
+Here at snapshot 328610, the water ion is located at oxygen 25 (starting from 1), 
+which accepts 0 H-bonds but donates 3 H-bonds, this is the new snapshot recorded
+after proton transfer from an oxygen to another oxygen finished. 
+In fact, the proton transfer process occurs between since 328580 snapshot
+At snapshot 328580, the proton starts to leave from oxygen with index 39 
+and accepts 1 H-bond and donates 3 H-bonds. The index of proton (hydrogen) 
+that involves in this process has an index of 103.
+
+------------------------------------ EXPLAIN solvation_angle.dat file --------------------------------------
+In the solvation_angle.dat file, we record the angles formed by H-O1-O2, where O1 is the oxygen that 
+H belongs to. 
+
+Degrees Ion Water
+0 0.0139665 0.00410267
+
+Here it means at angle 0 degree, the distribution for the H-bond angles around ion and water.
+
+------------------------------------ EXPLAIN solvation_distance.dat file -----------------------------------
+In the solvation_distance.dat file, we record the distance of solvation atoms for accepted and donating
+HBs for ions.
+
+index accept_dis donate_dis
+2.39 0 1.58046
+
+Here it means the distribution of solvation atoms (accepted O or donating O) at distance 2.39 Angstroms.
+
+------------------------------------ EXPLAIN waterwire.dat file --------------------------------------------
+In the waterwire.dat file, we report the waterwires formed around ions, so this file only prints out data
+when system is "hydronium" or "hydroxide". 
+
+328390 27.8032
+6
+O123 39 11 32 h12 75 96
+O123 39 11 54 h12 75 11
+O123 39 25 5 h12 103 25
+O123 39 25 8 h12 103 89
+O123 39 40 23 h12 39 104
+O123 39 40 52 h12 39 40
+
+here 328390 is the snapshot index, 27.8032 is the trajectory time in ps
+6 means 6 waterwires found.
+
+O123 means 39, 11, and 32 are the indexes of three oxygen atoms (starting from 1) that form
+a water wire. The first index 39 is the index for ion.
+In hydronium system, 39 donates a HB to 11, and 11 donates a HB to 32.
+However, in hydroxide system, 30 accepts a HB from 11, and 11 accepts a HB from 32.
+
+

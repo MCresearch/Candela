@@ -1,0 +1,7 @@
+This example is to calculat the Instantanous Liquid Interface 
+based on the literature J. Phys. Chem. B 2010, 114, 1954
+
+The output file is ILI.dat which contains the ILI and the gradient
+of each ILI.
+
+This function can also be parallel.

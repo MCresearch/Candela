@@ -1,0 +1,23 @@
+calculation 	isf2 # Pair Distribution Function.   
+geo_in_type  	PROFESS  
+geo_directory  	../out/   
+isf_outfile	2.00864isf.txt #outfile for isf
+
+geo_1        	10000  #(make sure: interval*(nt+nT)<=geo_2-geo_1)
+geo_2        	100000 
+geo_interval 	1
+ 
+natom        	864      # total number of atoms.   
+natom1		864
+ntype		1
+isf_nt1	 	10000  #The range of time for ISF.
+isf_nt2		80000  #The number of time for averaging ISF.
+dt_snapshots	0.00025 #The time between two continuous snapshots.
+
+isf_target_q	2.00 # The target q of ISF. (in A^-1) 
+isf_ngx		20		# The number of dg in x-direction for searching target_q
+isf_ngy		20
+isf_ngz		20
+isf_dgx		0.25863754383  #(in A^-1) The minimal step of q.
+isf_dgy		0.25863754383
+isf_dgz 	0.25863754383

@@ -1,0 +1,19 @@
+Various examples:
+
+a1_ext: extend the cell along three directions.
+a2_vacuum: add vacuum to the system.
+a3_pseudo: analysis of pseudopotentials.
+a4_average_ion: ...
+
+b1_pdf: calculate the pair distribution functions.
+b2_ssf: calculate the static structure factors.
+b3_vel: calcualte the distribution of velocities. 
+b4_profile_ions: plot the density profiles for ions.
+b4_idp_QE: plot the ionic density profile using QE output geometry files.
+b5_profile_elec: plot the density profiles for electrons.
+b6: calculate the angle distribution functions.
+
+c1_vaf: caluclate the velocity autocorrelation functions.
+c2_isf: calculate the intermediate scattering functions.
+c3_dsf: calcualte the dynamics structure factors.
+c4_powers: calculate the power spectrums.

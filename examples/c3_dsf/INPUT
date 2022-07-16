@@ -1,0 +1,15 @@
+calculation   dsf           # Dynamics Structure Factor (DSF). 
+geo_in_type   PROFESS       # Input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA.
+geo_directory /home/mohanc/4_tigress/5_Bulk_Lithium_MD/2_MD/Eqi_128atoms_BCC/3_MD/LDA_Steven/PDF/ion20/ 
+geo_1         5000          # IN PROFESS, start from file: ion.*.dat, where * is 'geo_1' .
+geo_2         30000         # IN PROFESS, end at file : ion.*.dat, where * is 'geo_2'.
+geo_neqi      100           # Number of equilibrium states we use.
+
+dsf_out	      Li_dsf.txt    # Output DSF file.
+dsf_dt        0.1           # dt in DSF, unit is feto-second.
+
+ntype         1             # Number of different types of atoms.
+natom         128           # Total number of atoms.
+struf_dg      0.4630885318  # Delta G in G space 
+struf_ng      5             # Number of G points
+

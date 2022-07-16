@@ -1,0 +1,11 @@
+calculation void  ! Extend the Cell
+geo_in_type PROFESS ! read in geometry file format
+geo_out_type PROFESS ! output geometry file format
+geo_directory ./
+geo_in  10000
+geo_out new.ion
+ntype 1
+natom 16000
+cartesian 1
+snatom 1 11744
+rcut 20.0

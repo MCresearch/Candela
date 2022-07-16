@@ -1,0 +1,27 @@
+  calculation  pdf       # pair Distribution Function (radial distribution function).
+  system hydronium
+  geo_in_type  QE   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ../H_PBE.pos	
+  geo_1        1
+  geo_2        10 
+  geo_interval 1 
+
+  geo_out      pdf.dat # output pdf name.
+
+  ntype        2         # number of different types of atoms.
+  natom        190       # total number of atoms.
+  natom1       63
+  natom2       127
+  dr           0.01      # delta r in real space 
+  rcut         6.22     # real space distance to evaluate the structure factor
+
+  id1 O
+  id2 H
+  ele1 O
+  ele2 O
+
+  celldm1 12.444655509 
+  celldm2 12.444655509 
+  celldm3 12.444655509 
+
+  

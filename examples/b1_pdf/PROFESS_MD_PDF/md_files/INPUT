@@ -1,0 +1,8 @@
+  calculation  pdf       Extend the cell.
+  geo_in_type  PROFESS   Input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_in       ion.12982.dat 
+  geo_out      ./result/ion.12982.dat.txt 
+  ntype        1         Number of different types of atoms.
+  natom        128       Total number of atoms.
+  pdf_dr       0.01
+  pdf_rcut     10

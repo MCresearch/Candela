@@ -1,0 +1,56 @@
+  calculation  msd_multiple  # mean square displacements
+  system hydroxide
+  geo_in_type  QE   #PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory  ../SCAN_volume/water.pos
+  cell_file ../SCAN_volume/water.cel
+  geo_1        1     
+  geo_2        122517 
+  geo_interval 1  
+
+  ntype        2         # number of different types of atoms.
+  natom        192       # total number of atoms.
+
+  natom1 64 # O
+  natom2 128 # H
+  id1 O
+  id2 H
+
+  rcut_oo 3.5
+  rcut_oh 1.24
+  acut_hoo 30
+
+  msd_n  5  # number of msd needed
+  msd_t0 5 # starting point of msd
+  msd_t 12.20 # length of each msd (in ps)
+  msd_dt0 3 # difference between different t0 of different MSD
+  msd_dt .00084661 # delta t between 2 snapshots
+  msd_natom 192
+  msd_stokes 0
+  system water
+
+
+calculation msd_multiple # mean square displacements
+system water
+geo_in_type LAMMPS 
+geo_directory  ../lmp.nve.64/dump.lammpstrj
+geo_1        1
+geo_2        200001
+geo_interval 1
+geo_ignore   1000 ! first 5 ps
+
+ntype 2 # number of different types of atoms.
+natom 192 # total number of atoms.
+natom1 64 # O
+natom2 128 # H
+id1 O
+id2 H
+rcut_oo 3.5
+rcut_oh 1.24
+acut_hoo 30
+msd_n 10 # number of msd needed
+msd_t0 0 # starting point of msd
+msd_t 100 # length of msd (in ps)
+msd_dt0 100 # difference between different different MSD
+msd_dt 0.005 # delta t between 2 snapshots (ps)
+msd_natom 192
+msd_stokes 0

@@ -1,0 +1,23 @@
+  calculation  pdf       # pair Distribution Function.
+  geo_in_type  PROFESS   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA/XYZ(在checkGeometry中没有加XYZ)
+  geo_directory ./out/
+  geo_1        1000
+  geo_2        1493
+  geo_interval 1          #只读取其整数倍的ion文件
+
+  geo_out      PDF.txt # output pdf name.
+
+  ntype        2         # number of different types of atoms.
+  natom        96       # total number of atoms.
+  natom1       32
+  natom2       64
+  dr       0.01      # delta r in real space 
+  rcut     6.00     # real space distance to evaluate the structure factor
+  ele1     O         # element type starting from 1
+  ele2     H         # element type starting from 1
+  
+  #其他参数
+  #ha_pdf    	true/false  true的话就会进行紧邻原子的读取以及进行Honeycutt-Anderson decomposion of pdf
+  #system 		water/hydronium/hydroxide会进行相应氢键的考虑
+  
+

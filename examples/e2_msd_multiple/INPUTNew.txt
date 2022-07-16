@@ -1,0 +1,24 @@
+ calculation  msd_multiple
+ system  Al
+ geo_in_type PROFESS
+ geo_directory  ../out/
+ geo_1 1
+ geo_2 4000
+ geo_interval 4
+ geo_ignore 0
+
+ ntype 1
+ natom 108
+ natom1 108
+ id1 Al
+
+ msd_n 5
+ msd_t0 0
+ msd_t 20
+ msd_dt0 20
+ msd_dt 0.01
+ msd_natom 108
+ msd_stokes 0
+
+ dt_snapshots 0.00025
+如果出现assert mass>0错误，可能ion文件缺失

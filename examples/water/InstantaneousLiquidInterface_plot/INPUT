@@ -1,0 +1,25 @@
+  calculation  ili3d  # instantaneous liquid interfaces (ILI)
+  geo_in_type  QE   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ../hexane_oh.pos
+  geo_1        1    # first read in configuration number, format: ion.1.dat
+  geo_2        10   # last read in configuration number, format: ion.500.dat
+  geo_interval 1    # pick up geometry with this interval number between geo_1 and geo_2
+  geo_target   5    # the target ILI you want to plot.
+
+  ntype        3       # number of different types of atoms.
+  natom        407     # total number of atoms.
+
+  natom1 96 # O
+  natom2 36 # C
+  natom3 275 # H
+  id1 O
+  id2 C
+  id3 H
+
+  celldm1 12.444655509
+  celldm2 12.444655509
+  celldm3 26.9617536455 # celldm3 in Angstrom
+
+  nx 40 # the dimension of ILI along the x direction
+  ny 40 # the dimension of ILI along the y direction
+  nz 80 # the dimesnion of z 

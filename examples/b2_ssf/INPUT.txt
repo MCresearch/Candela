@@ -1,0 +1,18 @@
+##by QR Liu
+######################################
+calcualtion	ssf
+geo_directory 	../out/
+geo_1        	1000
+geo_2     	   	1493
+geo_interval 	1
+ssf_out		输出文件名
+ntype
+natom
+natom1
+
+struf_dgx				#x方向上k的分辨率
+struf_dgy
+struf_dgz
+struf_ng				#会把ng同时付给xyz的正方向上，所以一个维度有2n+1个点
+
+

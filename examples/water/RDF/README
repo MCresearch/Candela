@@ -1,0 +1,9 @@
+Compute the radial distribution function of systems.
+
+In the input file
+
+If "system" is "water", then all water molecules are taken 
+intot account.
+
+If "system" is "hydronium" or "hydroxide" then only
+the H or O of ion is taken into account.

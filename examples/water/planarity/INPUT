@@ -1,0 +1,29 @@
+  calculation  hyper  # instantaneous liquid interfaces
+  system hydroxide
+  geo_in_type  QE   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory /home/tug81303/backup/hydronium_hydroxide/H3O_OH/hydroxide/vdW/OH-_PBE_vdW.pos
+  geo_out      hyper.dat
+  geo_1        1     # first read in configuration number, format: ion.1.dat
+  geo_2        65152 # last read in configuration number, format: ion.500.dat
+  geo_interval 1   # pick up geometry with this interval number between geo_1 and geo_2
+
+  ntype        2         # number of different types of atoms.
+  natom        191       # total number of atoms.
+
+  natom1 64 # O 
+  natom2 127 # H
+  id1 O
+  id2 H
+
+  celldm1 12.444655509 
+  celldm2 12.444655509 
+  celldm3 12.444655509 
+
+  rcut_oo 3.5
+  rcut_oh 1.24
+  acut_hoo 30
+
+  rcut  6.0
+  dr 0.1
+
+  nacc 4 # two modes: "nacc=4" or "nacc=3 ndon=1"

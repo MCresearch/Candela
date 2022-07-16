@@ -1,0 +1,6 @@
+  calculation  vel       Extend the cell.
+  vel_in       vel.9995.dat 
+  vel_out      vel-out.txt 
+  ndv          15
+  natom        128       Total number of atoms.
+

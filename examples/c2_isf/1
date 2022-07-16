@@ -1,0 +1,229 @@
+ ------------------------------------------------------------------------------------
+              WELCOME TO D310 Sun Mar  3 23:41:39 2013
+
+ AUTHOR: Mohan, LAST UPDATE: 12/06/12
+ READING from INPUT file
+ ------------------------------------------------------
+ ------------------------------------------------------
+ Calculate the intermediate scattering function 
+ dg=0.463089
+ Target_q 1.46441
+ Find 24 q vectors in G space.
+
+ Ensemble 1/1
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.1.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.1.dat
+ is=1 ic=1 file1=1 file2=1
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.1.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.1.dat
+ is=1 ic=2 file1=1 file2=2
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.2.dat
+ is=1 ic=3 file1=1 file2=3
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.3.dat
+ is=1 ic=4 file1=1 file2=4
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.4.dat
+ is=1 ic=5 file1=1 file2=5
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.5.dat
+ is=1 ic=6 file1=1 file2=6
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.6.dat
+ is=1 ic=7 file1=1 file2=7
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.7.dat
+ is=1 ic=8 file1=1 file2=8
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.8.dat
+ is=1 ic=9 file1=1 file2=9
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.9.dat
+ is=1 ic=10 file1=1 file2=10
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.10.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.10.dat
+ is=1 ic=11 file1=1 file2=11
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.11.dat
+ is=1 ic=12 file1=1 file2=12
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.12.dat
+ is=1 ic=13 file1=1 file2=13
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.13.dat
+ is=1 ic=14 file1=1 file2=14
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.14.dat
+ is=1 ic=15 file1=1 file2=15
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.15.dat
+ is=1 ic=16 file1=1 file2=16
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.16.dat
+ is=1 ic=17 file1=1 file2=17
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.17.dat
+ is=1 ic=18 file1=1 file2=18
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.18.dat
+ is=1 ic=19 file1=1 file2=19
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.19.dat
+ is=1 ic=20 file1=1 file2=20
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.20.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.20.dat
+ is=1 ic=21 file1=1 file2=21
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.21.dat
+ is=1 ic=22 file1=1 file2=22
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.22.dat
+ is=1 ic=23 file1=1 file2=23
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.23.dat
+ is=1 ic=24 file1=1 file2=24
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.24.dat
+ is=1 ic=25 file1=1 file2=25
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.25.dat
+ is=1 ic=26 file1=1 file2=26
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.26.dat
+ is=1 ic=27 file1=1 file2=27
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.27.dat
+ is=1 ic=28 file1=1 file2=28
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.28.dat
+ is=1 ic=29 file1=1 file2=29
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.29.dat
+ is=1 ic=30 file1=1 file2=30
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.30.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.30.dat
+ is=1 ic=31 file1=1 file2=31
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.31.dat
+ is=1 ic=32 file1=1 file2=32
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.32.dat
+ is=1 ic=33 file1=1 file2=33
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.33.dat
+ is=1 ic=34 file1=1 file2=34
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.34.dat
+ is=1 ic=35 file1=1 file2=35
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.35.dat
+ is=1 ic=36 file1=1 file2=36
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.36.dat
+ is=1 ic=37 file1=1 file2=37
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.37.dat
+ is=1 ic=38 file1=1 file2=38
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.38.dat
+ is=1 ic=39 file1=1 file2=39
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.39.dat
+ is=1 ic=40 file1=1 file2=40
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.40.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.40.dat
+ is=1 ic=41 file1=1 file2=41
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.41.dat
+ is=1 ic=42 file1=1 file2=42
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.42.dat
+ is=1 ic=43 file1=1 file2=43
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.43.dat
+ is=1 ic=44 file1=1 file2=44
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.44.dat
+ is=1 ic=45 file1=1 file2=45
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.45.dat
+ is=1 ic=46 file1=1 file2=46
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.46.dat
+ is=1 ic=47 file1=1 file2=47
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.47.dat
+ is=1 ic=48 file1=1 file2=48
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.48.dat
+ is=1 ic=49 file1=1 file2=49
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.49.dat
+ is=1 ic=50 file1=1 file2=50
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.50.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.50.dat
+ is=1 ic=51 file1=1 file2=51
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.51.dat
+ is=1 ic=52 file1=1 file2=52
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.52.dat
+ is=1 ic=53 file1=1 file2=53
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.53.dat
+ is=1 ic=54 file1=1 file2=54
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.54.dat
+ is=1 ic=55 file1=1 file2=55
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.55.dat
+ is=1 ic=56 file1=1 file2=56
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.56.dat
+ is=1 ic=57 file1=1 file2=57
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.57.dat
+ is=1 ic=58 file1=1 file2=58
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.58.dat
+ is=1 ic=59 file1=1 file2=59
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.59.dat
+ is=1 ic=60 file1=1 file2=60
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.60.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.60.dat
+ is=1 ic=61 file1=1 file2=61
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.61.dat
+ is=1 ic=62 file1=1 file2=62
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.62.dat
+ is=1 ic=63 file1=1 file2=63
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.63.dat
+ is=1 ic=64 file1=1 file2=64
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.64.dat
+ is=1 ic=65 file1=1 file2=65
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.65.dat
+ is=1 ic=66 file1=1 file2=66
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.66.dat
+ is=1 ic=67 file1=1 file2=67
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.67.dat
+ is=1 ic=68 file1=1 file2=68
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.68.dat
+ is=1 ic=69 file1=1 file2=69
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.69.dat
+ is=1 ic=70 file1=1 file2=70
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.70.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.70.dat
+ is=1 ic=71 file1=1 file2=71
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.71.dat
+ is=1 ic=72 file1=1 file2=72
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.72.dat
+ is=1 ic=73 file1=1 file2=73
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.73.dat
+ is=1 ic=74 file1=1 file2=74
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.74.dat
+ is=1 ic=75 file1=1 file2=75
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.75.dat
+ is=1 ic=76 file1=1 file2=76
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.76.dat
+ is=1 ic=77 file1=1 file2=77
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.77.dat
+ is=1 ic=78 file1=1 file2=78
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.78.dat
+ is=1 ic=79 file1=1 file2=79
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.79.dat
+ is=1 ic=80 file1=1 file2=80
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.80.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.80.dat
+ is=1 ic=81 file1=1 file2=81
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.81.dat
+ is=1 ic=82 file1=1 file2=82
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.82.dat
+ is=1 ic=83 file1=1 file2=83
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.83.dat
+ is=1 ic=84 file1=1 file2=84
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.84.dat
+ is=1 ic=85 file1=1 file2=85
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.85.dat
+ is=1 ic=86 file1=1 file2=86
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.86.dat
+ is=1 ic=87 file1=1 file2=87
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.87.dat
+ is=1 ic=88 file1=1 file2=88
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.88.dat
+ is=1 ic=89 file1=1 file2=89
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.89.dat
+ is=1 ic=90 file1=1 file2=90
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.90.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.90.dat
+ is=1 ic=91 file1=1 file2=91
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.91.dat
+ is=1 ic=92 file1=1 file2=92
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.92.dat
+ is=1 ic=93 file1=1 file2=93
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.93.dat
+ is=1 ic=94 file1=1 file2=94
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.94.dat
+ is=1 ic=95 file1=1 file2=95
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.95.dat
+ is=1 ic=96 file1=1 file2=96
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.96.dat
+ is=1 ic=97 file1=1 file2=97
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.97.dat
+ is=1 ic=98 file1=1 file2=98
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.98.dat
+ is=1 ic=99 file1=1 file2=99
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.99.dat
+ is=1 ic=100 file1=1 file2=100
+ ReadGeometry : /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.100.dat
+ File name is /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1/ion.100.dat
+ --------------- 
+      Finish     
+ --------------- 

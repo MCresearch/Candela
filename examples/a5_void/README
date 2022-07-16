@@ -1,0 +1,7 @@
+Note: snatom in any case should not be put in the last row!!!!
+otherwise snatom will be read twice and the second reading is wrong.
+
+snatom: how many centered atoms you want.
+then follows the index of all centered atoms (starting with 0).
+
+Mohan Chen 2016-11-13

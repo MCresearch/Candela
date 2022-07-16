@@ -1,0 +1,12 @@
+calculation ext  ! Extend the Cell
+ext_1       2    ! Extend cell along x
+ext_2       2    ! Extend cell along y
+ext_3       4    ! Extend cell along z
+geo_in_type PROFESS ! read in geometry file format
+geo_out_type PROFESS ! output geometry file format
+geo_directory .
+geo_in  110
+geo_out Mo110.ion
+ntype 1
+natom 4
+cartesian 1

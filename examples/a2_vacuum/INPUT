@@ -1,0 +1,14 @@
+  calculation  vacuum    Extend the cell.
+  vacuum_x1    0.0
+  vacuum_x2    0.0
+  vacuum_y1    0.0
+  vacuum_y2    0.0
+  vacuum_z1    8.0       add 8.0 Angstrom from the bottom of z
+  vacuum_z2    8.0       add 8.0 Angstrom from the top of z
+  geo_in_type  PROFESS   Input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_out_type PROFESS   Output type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_in       Li_exp_256.ion 
+  geo_out      Li_exp_256_vacuum.ion
+  ntype        1         Number of different types of atoms.
+  natom        256      Total number of atoms.
+ 

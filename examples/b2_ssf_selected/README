@@ -1,0 +1,17 @@
+There are a few steps in order to use ssf_selected.
+1) prepare INPUT, run D310, if you don't have the "SSF.input" file in the directory,
+you get a file named SSF.input0.
+
+2) Follow the printed instructions, sort the 4th column of SSF.input0 and put
+the new results to SSF.input1.
+
+3) select you wanted q in SSF.input1, and add the total
+number of q in the first line of SSF.input1, run the code again and you will
+get the final "SSF.input"
+
+4) add the number of lines in the first line of SSF.input,
+delete SSF.input0 and SSF.input1 and the code will read "SSF.input" to calcualte the selected
+static structure factor
+
+
+Mohan 2016-11-13

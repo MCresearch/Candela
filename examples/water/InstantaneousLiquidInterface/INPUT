@@ -1,0 +1,35 @@
+  calculation  ili  # instantaneous liquid interfaces (ILI)
+  geo_in_type  QE   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ../hexane_oh.pos
+  geo_1        1    # first read in configuration number, format: ion.1.dat
+  geo_2        10    # last read in configuration number, format: ion.500.dat
+  geo_interval 1    # pick up geometry with this interval number between geo_1 and geo_2
+
+  ntype        3       # number of different types of atoms.
+  natom        407     # total number of atoms.
+
+  natom1 96 # O
+  natom2 36 # C
+  natom3 275 # H
+  id1 O
+  id2 C
+  id3 H
+
+  celldm1 12.444655509
+  celldm2 12.444655509
+  celldm3 26.9617536455 # celldm3 in Angstrom
+
+  zeta 2.4 # the parameter of gaussian functions
+  d 3   # dimension, default is 3 dimensional
+  nx 40 # the dimension of ILI along the x direction
+  ny 40 # the dimension of ILI along the y direction
+
+  # we need to do interpolation on each (x,y) point in order to get the correct 'z'
+  # where the ILI locates.
+  z0 24     # starting from position where z0=24, which should be in vacuum
+  dz -0.2  # each point the z0 value is decreased by -0.25
+
+  ele1 O # generate Gaussian functions on the location of oxygen atoms
+  ref_rho 0.016 # reference density, which is the c value in eqn.(4) in ILI paper.
+  within  0.001 # accuracy to within 0.1%
+  maxiter 100 # maximum number for itrations to get ILI for each (ix,iy) point

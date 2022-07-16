@@ -1,0 +1,16 @@
+calculation            isf           # Intermediate scattering functions. 
+geo_in_type            PROFESS       # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+ntype                  1             # Number of different types of atoms.
+natom                  128           # Total number of atoms.
+geo_directory          /scratch/gpfs/mohanc/PROFESS_Li_480K/480K-7/md_output_path_1 # Directory
+isf_target_q           1.46441       # 1.44 on reference PRB 65, 184201
+isf_nensemble          1             # number of ensemble
+isf_ensemble_start     1             # start geometry
+isf_ncorrelation       1000          # number of correlation, 1000*0.1fs=1ps
+isf_outfile            isf.out.txt   # name of output file
+isf_natom1             128           # selected atom number, useless now
+isf_natom2             128           # selected atom number, useless now
+isf_dg                 0.4630885318  # 2pi/a 
+isf_ng                 8             # number of G used
+step_interval_dynamics 250           # 250 * 0.1fs = 25 fs, 25 fs * 100 = 2.5 ps#
+

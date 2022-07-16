@@ -1,0 +1,27 @@
+  calculation  wannier  # use Wannier centers (to calculate dipole moments) 
+  system water          # system is water
+  geo_in_type  QE       # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ../water.pos 
+  cell_file ../water.cel 
+  wannier_file ../water.wfc 
+  geo_1        1     # starting geometry index
+  geo_2        10   # ending geometry index
+  geo_interval 1     # interval between starting and ending geometries
+  geo_ignore   0     # ignore the first xxx geometries
+
+  ntype        2        # number of different types of atoms.
+  natom        192      # total number of atoms.
+  natom1       64
+  natom2       128
+  id1 O
+  id2 H
+
+  ele1 O  # please do not change this value
+
+  nbands 256 # number of bands for the system
+
+  dr 0.001 # for MLWF distribution
+  rcut 1.00 # for MLWF distribution
+
+  dz 0.02  # for dipole moment distribution (in Debye)
+  rcut1 10.0 # for dipole moment range (in Deybe)

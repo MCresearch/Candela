@@ -1,0 +1,12 @@
+  calculation  ext       Extend the cell.
+  ext_1        3         Extend cell along 1st direction for n1 times.
+  ext_2        3         Extend cell along 1st direction for n1 times.
+  ext_3        1         Extend cell along 1st direction for n1 times.
+  geo_in_type  VASP   Input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_out_type VASP   Output type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory .
+  geo_in       POSCAR 
+  geo_out      POSCAR_NEW 
+  ntype        1         Number of different types of atoms.
+  natom        7         Total number of atoms.
+

@@ -1,0 +1,13 @@
+  calculation  iprofile  # pair Distribution Function.
+  geo_in_type  PROFESS   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_1        5000 
+  geo_2        20000
+  geo_interval 10
+  geo_out	   ion.profile.txt # output static structure factor name.
+  geo_directory /scratch/gpfs/mohanc/2015-12-19-PFCs_VASP/Mo110-Li-MD/2x2_600K_64Li/run7/2014-05-07-VASP_Split/md_files 
+  ntype        2         # number of different types of atoms.
+  natom        104       # total number of atoms.
+  natom1       40
+  natom2       64
+  iprof_nr     500
+  iprof_b      0.4

@@ -1,0 +1,5 @@
+  calculation  pp        Pair Distribution Function.
+  pseudo_type  recpot
+  pseudo_in    H.L0.recpot 
+  pseudo_out   H.L0.recpot.txt
+  pseudo_z     1

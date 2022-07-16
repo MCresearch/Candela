@@ -1,0 +1,31 @@
+  calculation  msd      # pair Distribution Function.
+  system water
+  geo_in_type  QE   #PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory  ../SCAN_volume/water.pos
+  cell_file ../SCAN_volume/water.cel
+  geo_1        1
+  geo_2       122517
+  geo_interval 1
+  geo_ignore   0
+
+  geo_out      msd.txt # output pdf name.
+
+  ntype        2         # number of different types of atoms.
+  natom        192      # total number of atoms.
+  natom1       64
+  natom2       128
+  dr           0.01      # delta r in real space
+  rcut         6.22     # real space cutoff
+
+  id1 O
+  id2 H
+  ele1 O
+  ele2 O
+
+  struf_dgx   0.05
+  struf_ng    480
+
+  func 2
+
+  cartesian 1
+  msd_dt 0.005 

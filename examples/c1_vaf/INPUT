@@ -1,0 +1,14 @@
+calculation      velcor        # Dynamics Structure Factor (DSF).
+velcor_in_type   PROFESS       # Input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA.
+velcor_directory ../480K-7/md_output_path_1/ 
+velcor_1         251             # correlation length we need, start from file: ion.*.dat, where * is 'geo_1' .
+velcor_2         3000          # correlation length we need, end at file : ion.*.dat, where * is 'geo_2'.
+step_interval_dynamics 250     # 250 * 0.1fs = 25 fs, 25 fs * 100 = 2.5 ps
+velcor_neqi      100		   # total time we need = 100 * 25fs = 
+
+velcor_out       Li_velcor.txt # Output DSF file.
+velcor_atom      1            # dt in DSF, unit is feto-second.
+
+ntype            1             # Number of different types of atoms.
+natom            128           # Total number of atoms.
+

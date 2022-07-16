@@ -1,0 +1,18 @@
+  calculation  pdf2d       # pair Distribution Function.
+  geo_in_type  PROFESS   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ../md_files_7
+  geo_1        0
+  geo_2        20000
+  geo_interval 10
+  rho_ref      0.0425152 
+
+  geo_out      PDF2D_10to125_7.txt # output pdf name.
+
+  ntype        1         # number of different types of atoms.
+  natom        104       # total number of atoms.
+  pdf_dr       0.01      # delta r in real space 
+  pdf_rcut     7.000     # real space distance to evaluate the structure factor
+  pdf_ele1     1         # element type starting from 1
+  pdf_ele2     1         # element type starting from 1
+  pdf_z0  10 #-2.51
+  pdf_z1  12.5 #1.49

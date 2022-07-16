@@ -1,0 +1,12 @@
+#------------------------------------------------------
+#
+# First call 1_circle_many_geometry_files.sh
+# to use GOO.exe to calculate the PDF file for 
+# each md_geometry file,
+#
+# Second enter the directory which contians 
+# the PDF file, and call 2_sum.exe, input
+# the start geometry index and the stop geometry
+# index and how many points are in the PDF files.
+#
+#------------------------------------------------------

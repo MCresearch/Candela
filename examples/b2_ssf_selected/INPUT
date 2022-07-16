@@ -1,0 +1,14 @@
+calculation   ssf_selected  # pair Distribution Function.
+geo_in_type   PROFESS       # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+geo_directory ../out10000/
+geo_1         0             # IN PROFESS, start from file: ion.*.dat, where * is 'geo_1' 
+geo_2         10 10000    # IN PROFESS, end at file : ion.*.dat, where * is 'geo_2'
+geo_interval  10 
+
+ssf_out	      Li_ssf.txt    # output static structure factor name.
+ntype         1             # number of different types of atoms.
+natom         16000         # total number of atoms.
+struf_ng      60            # number of G points
+struf_dgx  0.0879899353 
+struf_dgy  0.0879899353
+struf_dgz  0.0879899353

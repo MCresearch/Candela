@@ -1,0 +1,11 @@
+  calculation  insert       Extend the cell.
+  geo_in_type  VASP   Input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_out_type VASP   Output type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory .
+  geo_in       POSCAR 
+  geo_out      POSCAR_INSERT
+  ntype        1           Number of different types of atoms.
+  natom        250         Total number of atoms.
+  natom_new     100 
+  element_new   H
+  min_dis       1        unit is Angstrom, minimal allowed distance

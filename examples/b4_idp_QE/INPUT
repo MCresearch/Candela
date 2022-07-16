@@ -1,0 +1,20 @@
+calculation  iprofile  # pair Distribution Function.
+geo_in_type  QE   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+geo_1        1 # starting geometry
+geo_2        2 # ending geometry
+geo_interval 1 # geometry interval
+geo_out	   ion.profile.txt # output static structure factor name.
+geo_directory interface.pos 
+iprof_nr     500
+iprof_b      0.5
+celldm1 12.444655509 # celldm1 in Bohr
+celldm2 12.444655509 # celldm2 in Bohr
+celldm3 26.9617536455 # celldm3 in Bohr
+ntype 3 # number of types
+natom 407 # total number of atoms
+natom1 96  # number of atoms for the first type O 
+natom2 36 # number of atoms for the second type C 
+natom3 275  # number of atoms for the third type H
+id1 O
+id2 C
+id3 H

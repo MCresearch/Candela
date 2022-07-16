@@ -1,0 +1,66 @@
+ ------------------------------------------------------------------------------------
+              WELCOME TO GOO (GeOmetry Operation) on Mon Nov 12 11:44:23 2012
+
+ AUTHOR: Mohan, LAST UPDATE: 10/03/12
+
+ READING GENERAL INFORMATION
+ Calculation = pdf
+ ==> PDF::Routine
+ ==> CellFile::ReadGeometry
+ ==> CellFile::ReadGeometry_PROFESS
+ In SCAN_BEGIN, can't find: SPECIES_POT block.
+ In SCAN_BEGIN, can't find: POSITIONS_FRAC block.
+ ==> PDF::cal
+ dr = 0.01 Angstrom
+ rcut = 10 Angstrom
+ nmesh = 1001
+ norms of lattice vectors = 13.544 13.544 13.544
+ ncell is 1 1 1
+ Volume of the input cell = 2484.51 A^3
+ Average ion density = 0.0515192
+ --------------- 
+ #Finish.
+ ------------------------------------------------------------------------------------
+              WELCOME TO GOO (GeOmetry Operation) on Mon Nov 12 11:44:23 2012
+
+ AUTHOR: Mohan, LAST UPDATE: 10/03/12
+
+ READING GENERAL INFORMATION
+ Calculation = pdf
+ ==> PDF::Routine
+ ==> CellFile::ReadGeometry
+ ==> CellFile::ReadGeometry_PROFESS
+ In SCAN_BEGIN, can't find: SPECIES_POT block.
+ In SCAN_BEGIN, can't find: POSITIONS_FRAC block.
+ ==> PDF::cal
+ dr = 0.01 Angstrom
+ rcut = 10 Angstrom
+ nmesh = 1001
+ norms of lattice vectors = 13.544 13.544 13.544
+ ncell is 1 1 1
+ Volume of the input cell = 2484.51 A^3
+ Average ion density = 0.0515192
+ --------------- 
+ #Finish.
+ ------------------------------------------------------------------------------------
+              WELCOME TO GOO (GeOmetry Operation) on Mon Nov 12 11:44:23 2012
+
+ AUTHOR: Mohan, LAST UPDATE: 10/03/12
+
+ READING GENERAL INFORMATION
+ Calculation = pdf
+ ==> PDF::Routine
+ ==> CellFile::ReadGeometry
+ ==> CellFile::ReadGeometry_PROFESS
+ In SCAN_BEGIN, can't find: SPECIES_POT block.
+ In SCAN_BEGIN, can't find: POSITIONS_FRAC block.
+ ==> PDF::cal
+ dr = 0.01 Angstrom
+ rcut = 10 Angstrom
+ nmesh = 1001
+ norms of lattice vectors = 13.544 13.544 13.544
+ ncell is 1 1 1
+ Volume of the input cell = 2484.51 A^3
+ Average ion density = 0.0515192
+ --------------- 
+ #Finish.

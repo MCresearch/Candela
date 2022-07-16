@@ -1,0 +1,15 @@
+  calculation  bdf       # bdf: bond angle distribution function. 
+  geo_in_type  PROFESS   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ./ 
+  geo_1        1     # first read in configuration number, format: ion.1.dat
+  geo_2        500   # last read in configuration number, format: ion.500.dat
+  geo_interval 50    # pick up geometry with this interval number between geo_1 and geo_2
+
+  bdf_out      file.dat # output file name for bond angle distribution functions
+  bdf_nadj     2        # number of nearest atom number that are taken into consideration
+  bdf_dtheta   0.1      # d(theta) for degree between (0,180]
+
+  ntype        1         # number of different types of atoms.
+  natom        160       # total number of atoms.
+
+  bdf_movie    1         # whether to make movie for each type

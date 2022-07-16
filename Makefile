@@ -8,7 +8,7 @@ D_OBJ=./obj
 SRC_CPP = $(wildcard $(D_SRC)/*.cpp)
 OBJ_CPP = $(addprefix $(D_OBJ)/, $(patsubst %.cpp, %.o, $(notdir $(SRC_CPP))))
 
-TARGET=candela
+TARGET=./bin/candela
 
 #CC=icc -g
 #CC=mpiicc 
@@ -23,6 +23,8 @@ ${TARGET}:$(OBJ_CPP)
 	$(CC) -o $@ $^
 
 $(D_OBJ)/%.o: $(D_SRC)/%.cpp
+	@if [ ! -d $(D_OBJ) ]; then mkdir $(D_OBJ); fi
+	@if [ ! -d ./bin ]; then mkdir ./bin; fi
 	$(CC) -c $< -o $@
 
 .PHONY: clean

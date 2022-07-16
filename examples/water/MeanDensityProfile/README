@@ -1,0 +1,5 @@
+ION.dat contains the ion information in terms of ILI
+WATER.dat contains the water molecules information in terms of ILI
+pos_ILI.dat contains the distance of each atom to the ILI in each snapshot
+joint_conditional_dist.dat contains the joint conditional distribution information
+for the distances (from atom to ILI) between a0 and a1.

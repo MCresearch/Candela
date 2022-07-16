@@ -1,0 +1,23 @@
+  calculation  reorganize  # use Wannier centers (to calculate dipole moments) 
+  system water          # system is water
+  geo_in_type  QE       # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory  water.pos 
+  wannier_file water.wfc 
+  cell_file water.cel 
+
+  geo_1        1
+  geo_2        10
+  geo_interval 1
+  geo_ignore   0 ! first 5 ps
+
+  nbin 2
+
+  ntype        2        # number of different types of atoms.
+  natom        192      # total number of atoms.
+  natom1       64
+  natom2       128
+  id1 O
+  id2 H
+
+  nbands 256 # number of bands for the system
+

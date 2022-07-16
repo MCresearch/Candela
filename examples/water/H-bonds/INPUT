@@ -1,0 +1,23 @@
+  calculation  hbs  # performing analysis on Hydrogen Bonds
+  system hydronium  # the name of the system
+  geo_in_type  QE   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ../H_PBE.pos # the address of the geometry file 
+  geo_1        1    # first read in configuration number, format: ion.1.dat
+  geo_2        255  # last read in configuration number, format: ion.500.dat
+  geo_interval 1    # pick up geometry with this interval number between geo_1 and geo_2
+
+  ntype        2    # number of different types of atoms.
+  natom        190  # total number of atoms.
+
+  natom1 63  # O 
+  natom2 127 # H
+  id1 O      # id for natom1
+  id2 H      # id for natom2
+
+  celldm1 12.444655509 # cell length along x in Angstroms
+  celldm2 12.444655509 # cell length along y in Angstroms
+  celldm3 12.444655509 # cell length along z in Angstroms
+
+  rcut_oo 3.5 # cutoff for O-O in the defintion of H-bonds
+  rcut_oh 1.24 # cutoff for O-H in the definition of O-H covalent bond
+  acut_hoo 30 # cutoff for H-O-O bond angle in the definition of H-bonds

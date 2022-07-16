@@ -1,0 +1,12 @@
+calculation ext  ! Extend the Cell
+ext_1       7    ! Extend cell along x
+ext_2       8    ! Extend cell along y
+ext_3       10   ! Extend cell along z
+geo_in_type LAMMPS ! read in geometry file format
+geo_out_type LAMMPS ! output geometry file format
+geo_directory .
+geo_in  Li111.ion
+geo_out New_Li111.ion
+ntype 1
+natom 12
+cartesian 1

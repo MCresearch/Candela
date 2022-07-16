@@ -1,0 +1,11 @@
+This INPUT generate the distribution of MLWFs and dipole moements.
+
+distribution_MLWF.dat: the distribution of MLWF.
+distribution_dipole.dat: the distribution of dipole moements.
+
+This calculation can also generate dipole moments along each
+direction for each water molecule in order to compute the 
+velocity of dipole mements.
+
+The velocity of dipole moments can be used to calculate the
+autocorrelation function and then the infrred spectra can be obtained.

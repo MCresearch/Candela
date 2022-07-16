@@ -1,0 +1,34 @@
+  calculation  mdp  # instantaneous liquid interfaces (ILI)
+  geo_in_type  QE   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ../hexane_oh.pos
+  ili_file     ILI.dat
+  geo_1        1    # first read in configuration number, format: ion.1.dat
+  geo_2        10    # last read in configuration number, format: ion.500.dat
+  geo_interval 1    # pick up geometry with this interval number between geo_1 and geo_2
+
+  ntype        3       # number of different types of atoms.
+  natom        407     # total number of atoms.
+
+  natom1 96 # O
+  natom2 36 # C
+  natom3 275 # H
+  id1 O
+  id2 C
+  id3 H
+
+  celldm1 12.444655509
+  celldm2 12.444655509
+  celldm3 26.9617536455 # celldm3 in Angstrom
+
+  nx 40 # the dimension of ILI along the x direction
+  ny 40 # the dimension of ILI along the y direction
+  rcut 20 
+  dr 0.1
+  u1 40  # the dimension of joint conditional distribution
+  u2 40  # the dimension of joint conditional distribution
+  a0 1.1 # used to compute the joint conditional distribution 
+  a1 1.3 # between a0 and a1
+  mdp0 -2 # print atoms that have distances to ILI larger than mdp0
+
+  #only_hydroxide  1  # only compute properties related to hydroxide
+  #nacc            -1 # the number of accepted HBs
