@@ -113,4 +113,21 @@ Pair distribution function, also radial distribution function. The following par
 The analysis calculates the OOO angle distribution of the central water and its two neighboring water molecules. (`bdf_rcut1` has the same function.) It also calculates the free energy map of OOO angle and O-O distance. (Figure. 3D-3E in Chen, et al., 114, 10846, Proc. Nat. Acad. Sci. (2017))
 
 - **dist**<a id=dist></a>
-The analysis calculates the 3D spatial distribution of water molecules around hydroxide ion. The output file could be put into Vesta to generate the 3D distribution plot. (Figure. 4a-c of Chen et al. 10, 413, Nat. Chem. (2018))
+The analysis calculates the 2D/3D spatial distribution of water molecules around hydroxide ion. The output file could be put into Vesta to generate the 3D distribution plot. (Figure. 4a-c of Chen et al. 10, 413, Nat. Chem. (2018)) The following parameters are also needed for the analysis:
+    - `nx`/`ny` number of grids on the x/y direction of the 2D distribution.
+    - `u1`/`u2`/`u3` number of grids on the x/y/z direction of the 3D distribution.
+    - `rcut` radius cutoff of the distribution. See the code of `src/dist.cpp` for a more detailed understanding.
+    - `rcut1` radius cutoff of the distribution. See the code of `src/dist.cpp` for a more detailed understanding.
+
+
+- **dist2**<a id=dist2></a>
+The analysis calculates the 3D spatial distribution of first-shell (`func=2`) and second-shell (`func=3`) water molecules or the spatial distribution of Wannier function centers (`func=1`). The Wannier function centers distribution only support `qe` format (cp.x) for now. The `wannier_file` and `nbands` (number of Wannier centers) have to be specified when involving calculation of Wannier centers. The output file could be put into Vesta to generate the 3D distribution plot as well. The radial cutoff and number of grids on 3 dimensions are all specified with `rcut` and `u1`.
+
+- **hb_stat**<a id=hb_stat></a>
+The analysis calculates distribution of HB number, length and lifetime etc.
+
+- **hb_stat2**<a id=hb_stat2></a>
+The analysis calculates the O-O-O angular distribution of water molecules with different number of acceptence/donation number.
+
+- **hyper**<a id=hyper>
+The analysis calculates the planarity distribution of hydroxide accepted water molecules. See the definition in Chen et al. 10, 413, Nat. Chem. (2018)
