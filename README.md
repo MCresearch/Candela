@@ -9,6 +9,10 @@
         - [hbs](#hbs)
         - [bdf_rcut](#bdf_rcut)
         - [dist](#dist)
+        - [dist2](#dist2)
+        - [hb_stat](#hb_stat)
+        - [hb_stat2](#hb_stat2)
+        - [hyper](#hyper)
         
 - [Analysis program template](#Analysis-template)
 ## Overview
@@ -129,5 +133,5 @@ The analysis calculates distribution of HB number, length and lifetime etc.
 - **hb_stat2**<a id=hb_stat2></a>
 The analysis calculates the O-O-O angular distribution of water molecules with different number of acceptence/donation number.
 
-- **hyper**<a id=hyper>
+- **hyper**<a id=hyper></a>
 The analysis calculates the planarity distribution of hydroxide accepted water molecules. See the definition in Chen et al. 10, 413, Nat. Chem. (2018)
