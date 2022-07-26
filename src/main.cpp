@@ -79,7 +79,6 @@
 #include "nonHB_correlation.h"
 #include "nonHB_correlation2.h"
 #include "nonHB_correlation3.h"
-#include "angular_correlation.h"
 #include "HB_break.h"
 #include "oho_angle.h"
 #include "orientation_tcf.h"
@@ -216,7 +215,6 @@ int main(int argc, char **argv)
 	else if (INPUT.calculation == "nonhb_correlation") {nonHB_correlation hb; hb.Routine();}
 	else if (INPUT.calculation == "nonhb_correlation2") {nonHB_correlation2 hb; hb.Routine();}
 	else if (INPUT.calculation == "nonhb_correlation3") {nonHB_correlation3 hb; hb.Routine();}
-	else if (INPUT.calculation == "angular_correlation") {angular_correlation hb; hb.Routine();}
 	else if (INPUT.calculation == "hb_break") {HB_break hb; hb.Routine();}
 	else if (INPUT.calculation == "oho_angle") {oho_angle oho_angle; oho_angle.Routine();}
 	else if(INPUT.calculation == "incremental_pdf3"){incrementalPDF3 hb; hb.Routine();}

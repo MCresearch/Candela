@@ -13,6 +13,15 @@
         - [hb_stat](#hb_stat)
         - [hb_stat2](#hb_stat2)
         - [hyper](#hyper)
+        - [incremental_pdf](#incremental_pdf)
+        - [mj](#mj)
+        - [movie/movie2/OH_movie](#movie/movie2/OH_movie)
+        - [reorganize](#reorganize)
+        - [ssf](#ssf)
+        - [tetra_order](#tetra_order)
+        - [wannier](#wannier)
+        - [orientation_tcf](#orientation_tcf)
+        - [msd](#msd)
         
 - [Analysis program template](#Analysis-template)
 ## Overview
@@ -99,7 +108,7 @@ Pair distribution function, also radial distribution function. The following par
     - `id1` Name of the first type of atom of the pdf. For example, for $g_{OH}(r)$, `id1` is O.
 
     - `id2` Name of the second type of atom of the pdf. For example, for $g_{OH}(r)$, `id2` is H.
-- **hbs** <a id="hbs"></a> Hydrogen bond (HB) analysis. Multiple properties are calculated, among which the most used ones are HB number statistics (at the end of `running0.log`) and proton transfer (PT) time record (only for `system` is `hydroxide` or `hydronium`). Another important function in this module is 
+- **hbs** <a id="hbs"></a> Hydrogen bond (HB) analysis. Multiple properties are calculated, among which the most used ones are HB number statistics (at the end of `running0.log`) and proton transfer (PT) time record (`trans.dat`, only for `system` is `hydroxide` or `hydronium`). Another important function in this module is 
 
     ```cpp
     void HBs::setup_water(const Cell &cel, Water *water)
@@ -135,3 +144,35 @@ The analysis calculates the O-O-O angular distribution of water molecules with d
 
 - **hyper**<a id=hyper></a>
 The analysis calculates the planarity distribution of hydroxide accepted water molecules. See the definition in Chen et al. 10, 413, Nat. Chem. (2018)
+
+- **incremental_pdf**<a id=incremental_pdf></a>
+The analysis calculates the pdf of water molecules in order of distance or topological neighbors (order of hydrogen bond). INPUT parameter `nshell` is needed to specify the number of shells considered.
+
+- **mj** <a id=mj></a>
+The analysis takes in `trans.dat` file from `hbs` analysis containing PT time and ion indexes and classify the PTs into different classes including `single`, `double`, `triple`, `quadraple` and `rattle`. For detailed classification standard and discussions refer to Chen et al. 10, 413, Nat. Chem. (2018) and Liu et al. J. Chem. Phys. 157, 024503 (2022).
+
+- **movie/movie2/OH_movie** <a id=movie/movie2/OH_movie></a>
+These three analyses are all designed to search certain configurations in the snapshots and output them in `xyz` format for VESTA plot. Please refer to the codes for exactly what configurations are extracted.
+
+- **reorganize** <a id=reorganize></a>
+The analysis read in atomic position file in one format and output the positions in `qe` and `xyz` format.
+
+- **ssf** <a id=ssf></a>
+The analysis calculates static structure factor (SSF) of single element. For water it only calculates SSF between oxygen atoms $S_{OO}(k)$. The following parameters are also needed for the calculation:
+    - `struf_dgx/struf_dgy/struf_dgz` The parameters specify $\Delta k$ on three directions. Typically it has to be an integer multiple of $2\pi/\mathrm{celldm}$, where $\mathrm{celldm}$ is the cell length on corresponding direction. 
+    - `struf_ng` Number of `dg` on each direction.
+    - `ssf_out` SSF output file name.
+
+- **tetra_order** <a id=tetra_order></a>
+The analysis calculates the tetrahedral order of water and its closest neighbors. See, for example, Errington, J. et al. 409, 318. Nat. (2001) for a precise definition.
+
+- **wannier** <a id=wannier></a>
+The analysis calculates the distribution of distance from Wannier centers to oxygen atom (stored in `distribution_MLWF.dat`) and distribution of dipole moment of water molecules (stored in `distribution_dipole.dat`).
+Again, input parameters `wannier_file` and `nband` are needed in the `INPUT` file. 
+
+- **orientation_tcf** <a id=orientation_tcf></a>
+The analysis calculates the 2nd order angular time correlation function (TCF) of water molecule or ion. For a detailed definition and example see Liu et al. J. Chem. Phys. 157, 024503 (2022).
+
+- **msd** <a id=msd></a>
+The analysis calculates the mean square displacement (MSD) by averaging square displacement over all water molecules. By Einstein's relation, MSD of molecule in liquid is linearly dependent on time by which we could deduce the diffusivity. The following parameters are needed for calculation of MSD:
+    - `msd_dt` Time step between two printed snapshots.
