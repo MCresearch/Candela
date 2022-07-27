@@ -22,8 +22,15 @@
         - [wannier](#wannier)
         - [orientation_tcf](#orientation_tcf)
         - [msd](#msd)
+        - [msd_multiple](#msd_multiple)
+        - [special_msd](#special_msd)
+        - [angular_jump](#angular_jump)
+        - [hb_correlation/hb_correlation2](#hb_correlation/hb_correlation2)
+        - [nonhb_correlation/nonhb_correlation2/nonhb_correlation3](#nonhb_correlation/nonhb_correlation2/nonhb_correlation3)
         
-- [Analysis program template](#Analysis-template)
+- [Analysis program template](#Analysis-program-template)
+    - [Basic classes in Candela](#Basic-classes-in-Candela)
+    - [The structure of a typical analysis C++ file](#The-structure-of-a-typical-analysis-C++-file)
 ## Overview
 Candela is short for Collection of ANalysis DEsigned for Large-scale Atomic simulations. It is developed by [MCresearch](https://github.com/MCresearch) to conduct analyses on MD trajectory in different formats. The analyses herein are mostly targeted at liquid water and warm condensed matter system. 
 
@@ -31,7 +38,7 @@ Section [Basic usage and variables](#Basic-usage-and-variables) introduces the u
 
 Section [List of supported analyses](#List-of-supported-analyses) introduces the implemented analyses in Candela for now;
 
-Section [Analysis program template](#Analysis-template) introduces the structure of a typical analysis subprogram, in case you may need to add new analysis program to Candela.
+Section [Analysis program template](#Analysis-program-template) introduces the structure of a typical analysis subprogram, in case you may need to add new analysis program to Candela.
 
 ## Basic usage and variables 
 ### Compilation
@@ -94,7 +101,7 @@ For `geo_in_type`, currently supported formats include pw.x (`QE2`), cp.x (`QE`)
 
 The physical quantities used in the program are all in Angstrom/ps/eV.
 
-Other parameters are needed for specific `calculation`, which you may refer to [List of supported analyses](#List-of-supported-analyses) where a detailed summary of suppoted `calculation` of analyses is given.
+Other parameters are needed for specific `calculation`, which you may refer to [List of supported analyses](#List-of-supported-analyses) where a detailed summary of suppoted `calculation` of analyses is given. You may refer to the example `INPUT` files in `/examples` as well for different kinds of analyses.
 
 ## List of supported analyses
 ### Water-related analyses
@@ -176,3 +183,184 @@ The analysis calculates the 2nd order angular time correlation function (TCF) of
 - **msd** <a id=msd></a>
 The analysis calculates the mean square displacement (MSD) by averaging square displacement over all water molecules. By Einstein's relation, MSD of molecule in liquid is linearly dependent on time by which we could deduce the diffusivity. The following parameters are needed for calculation of MSD:
     - `msd_dt` Time step between two printed snapshots.
+
+- **msd_multiple** <a id=msd_multiple></a>
+The analysis calculates the MSD by averaging over both water molecules and different time intervals. The trajectory is split into multiple segments with a length of `msd_t` ps for each segment and the initial snapshots were displaced by an interval of `msd_dt0` ps. MSDs are calculated for each time segment and averaged to render the final MSD. The method is mainly used for water ions, since in AIMD there are usually only one water ion and time average is necessary to generate MSD linearly dependent on time. See more details in Liu et al. J. Chem. Phys. 157, 024503 (2022). Except for `msd_dt` and `msd_dt0`, `msd_dt` is also needed in the `INPUT` file.
+
+- **special_msd**<a id=special_msd></a>
+The analysis calculates and outputs square displacement of each single water molecule.
+
+- **hb_stat3/hb_stat4/hbs_near_angularjump/hbs_near_doubledonor**<a id=angular_jump></a>
+These four programs focus on the analyses of angular jump of hydrogen bonds (see Laage, D. 311, 832. Sci. (2006)). However, the programs are not well organized yet and might contain bugs.
+
+- **hb_correlation/hb_correlation2**<a id=hb_correlation/hb_correlation2></a>
+The two analyses calculate the hydrogen bond time correlation function in two different ways. For a definition of HB TCF, see Luzar et al., 379, 55, Nature (1996). The following parameters are needed for the calculation:
+    - `msd_dt` time interval between two printed snapshots;
+    - `msd_t` maximum time length of the TCF;
+    - `nPT` maximum number of recorded HB combinations.
+
+- **nonhb_correlation/nonhb_correlation2/nonhb_correlation3**<a id=nonhb_correlation/nonhb_correlation2/nonhb_correlation3></a>
+`nonhb_correlation` analysis calculate the TCF of two water molecules staying together within a certain distance. `nonhb_correlation2` and `nonhb_correlation3` calculate the TCF of water molecule converting between H-bonded water molecule and non-H-bonded water molecule.
+
+## Analysis program template
+Before adding new analysis subprogram to Candela, we recommand you to go through the existing analysis program list in case the required analysis is already fulfilled. This part introduces the basic structure of an analysis subroutine, by learning which you could write new analysis subroutines on your own.
+### Basic classes in Candela
+The following table summarizes the basic classes and their properties and methods that are most used in Candela. There are mainly four kinds of classes: `Vector3<T>`, `Cell`, `Atom` and `Water`. `Cellfile` is a class inherited from `Cell` and mainly contains methods reading data from MD trajectory in different formats. All of the classes are straightforwardly defined and directly correspond to physical entities.
+
+ Class Name (source file)  | Properties  | Property description      |Methods | Method description                                                      | 
+| :---------------- | :--------------------- | :------------------------------- | :------------- |:---------------------------- |
+| **`Vector3<T>`** (`vec3.h`) | `T x, y, z` | component of the vector on three directions | `Vector<T> +-*/ T` | $(x_1+-\times/ T, y_1+-\times/T, z_1+-\times/T)$
+| | | | `Vector cos/sin (Vector)` | $(\cos(x), \cos(y), \cos(z))$ or $(\sin(x), \sin(y), \sin(z))$
+| | | | `T norm (Vector)` | $\sqrt{x^2+y^2+z^2}$
+| | | | `T norm2 (Vector)` | $x^2+y^2+z^2$
+| | | | `void normalize (Vector)` | $(x, y, z)/\sqrt{x^2+y^2+z^2}$
+| | | | `Vector +-*^/ Vector` | `^` stands for outer product
+| | | | `T dot(Vector, Vector)` | $x_1\cdot x_2+y_1\cdot y_2+z_1\cdot z_2$
+| | | | `Vector cross(Vector, Vector)` | $(y_1\cdot z_2-y_2\cdot z_1, z_1\cdot x_2-x_1\cdot z_2, x_1\cdot y_2-y_1\cdot x_2)$
+| `Atom` (atoms.h/atoms.cpp) | `string id` | name of the element | `void read_pos/read_pos2/read_pos3/read_pos4` | read in positions of atom. The input arguements are not listed in detailed here.
+| | `int na` | number of atoms of the element | `void read_vel` |  read in velocities of atom, only for cp.x (`QE`) format.
+| | `Vector3<double> * pos` | Cartesian positions of atom | |  
+| | `Vector3<double> * posd` | direct positions of atom | |  
+| | `Vector3<double> * vel` | velocities of atom| |  
+| | `double mass` | relative atomic mass | |  
+| | `double charge` | charge | | 
+| `Cell` (cell.h/cell.cpp) | `int nat` | total number of atoms in the cell | `void direct2cartesian` | convert positions in direct coordination into Cartesian coordination
+| | `int ntypes` |  number of elements| `void cartesian2direct` | convert positions in Cartesian coordination into direct coordination
+| | `Atom* atom` | atoms in the cell | `void read_wannier_centers` | read in Wannier center positions. Now only cp.x (`QE`) format is supported.
+| | `Vector3<double>* wan_centers` | Wannier centers in the cell | `void read_eig ()` | read in eigen value of the solved KS equation
+| | `double snapshot_time` | simulation time of the current snapshot | | 
+| | `int snapshot_index` | simulation index of the current snapshot | |
+| | `double* eig` | eigen value of the solved KS equation | |
+| `Cell CellFile` (`cellFile.h/cpp, cellFile_PROFESS/VASP/QE/QE2.cpp, etc.`)| `static ifstream ifs_pos_kept` | ifstream opening the file containing atomic positions | `static bool ReadGeometry()` | read in atomic positions|
+| | `static ifstream ifs_wan_kept` | ifstream opening the file containing Wannier center positions | `static bool ReadGeometry_PROFESS/VASP/QE/QE2 ...` | read in atomic positions in different formats
+| | `static ifstream ifs_cel_kept` | ifstream opening the file containing cell arrays. Only useful for cp.x (`QE`) format. | `static bool WriteGeometry()` | write atomic positions in certain format. Now cp.x (`QE`) and xyz `XYZ` are supported.
+| | `static ifstream ifs_eig_kept` | ifstream opening the file containing eigenvalues | `static bool ReadVelocity()` | read in atomic velocities. Only useful for cp.x (`QE`) format.
+| | `static ifstream ifs_vel_kept` | ifstream opening the file containing atomic velocities | |
+| `Water` (`water.h/cpp, HBs.h/cpp`) | `static int nions` | number of ions in the cell | `void HBs::setup_water()` | set up the water array in the cell |
+||`int indexO`| the index is usually the same as the index of the water||
+||`int naccept`|number of accepted water molecules ||
+||`int ndonate`|number of donated water molecules ||
+||`int* indexH`|H index of the water molecule ||
+||`double* disH`|distance of H atoms from O atom in Angstroms||
+||`int* acceptO`|index of accepted O atoms||
+||`int* acceptH`|index of accepted H atoms||
+||`double* accept_angle`|HOO angle of the accepted HB||
+||`double* accept_disO`|distance of the accepted O atom from the central O atom||
+||`int* donateO`|index of donated O atoms||
+||`int* donateH`|index of donated H atoms||
+||`double* donate_angle`|HOO angle of the donated HB||
+||`double* donate_disO`|distance of the donated O atom from the central O atom||
+||`double dipole[3]`|dipole moment of the water molecule||
+
+Generally, the relationship between the classes is: `Cell` contains different kinds of `Atom`, and `Atom` could make up to form `Water`. The properties of these classes in vector form are stored in `Vector3<T>` instances.
+
+### The structure of a typical analysis C++ file
+Here we give a brief description of `example.cpp` contained in `/examples/example` to show how a typical analysis could be done under the frame of Candela.
+
+First, the class `Example` and its properties and methods are defined in `example.h` as follows:
+
+```cpp
+#ifndef EXAMPLE_H
+#define EXAMPLE_H
+#include "Cellfile.h"
+class Example
+{
+    public:
+    Example();
+    ~Example();
+
+    void Routine();
+    void calc(CellFile &cel);
+    void output();
+
+    double* example_arr;
+    int example_len;
+};
+
+#endif
+```
+
+The function `Routine()` is to be called in the `main.cpp` to implement the analysis. Function `calc()` takes in all information of a cell of a single snapshot and do the calculations. Function `output()` writes out the results in files.
+
+In `example.cpp`, function `Routine()` is implemented as the follows:
+
+```cpp
+void Example::Routine()
+{
+    // Initialize necessary arrays.
+    this->example_arr = new double[this->example_len]; 
+
+    int count_geometry_number = 0;
+    for(int igeo=INPUT.geo_1; igeo<=INPUT.geo_2; ++igeo)
+	{
+		// cel : input geometry file
+		CellFile cel;
+
+        if(igeo<INPUT.geo_ignore || igeo%INPUT.geo_interval!=0) 
+		{
+			cel.read_and_used=false;
+		}
+		else cel.read_and_used=true;
+
+		stringstream ss; ss << igeo;
+		cel.file_name = ss.str();
+
+		// cel : input geometry file
+		if( !CellFile::ReadGeometry( cel ) ) continue;
+
+		if(cel.read_and_used==false) 
+		{
+			cel.clean(); // renxi added 20200614
+			continue;
+		}
+		++count_geometry_number;
+		cout << "snapshot " << igeo << endl;
+        this->calc(cel);
+        cel.clean();
+	}//igeo
+
+    this->output();
+    delete[] this->example_arr;
+    return;
+}
+```
+
+In the function, it first initialize the memory of array used in this analysis. Then, it iteratively do the following things to each snapshots in the MD trajectory:
+1. judge whether the snapshot has to be analyzed (`if(igeo<INPUT.geo_ignore || igeo%INPUT.geo_interval!=0) `). If so, label the snapshot as non-ignorable (`cel.read_and_used=true;`);
+2. read in the atomic positions and velocities, Wannier centers etc. if necessary (`if( !CellFile::ReadGeometry( cel ) ) continue;`);
+3. judge whether the snapshot is ignorable, if so, clean the cell and move on to the next iteration (`cel.clean(); continue;`); else, go to step 4;
+4. do analysis to the cell of the snapshot (`this->calc(cel);`) and clean the cell.
+
+Function `calc(Cellfile &cel)` is implemented as the follows:
+
+```cpp
+
+void Example::calc(CellFile &cel)
+{
+    int ito=-1;
+	int ith=-1;
+	int itc=-1;
+	for(int it=0;it <INPUT.ntype; ++it)
+	{
+		if(cel.atom[it].id=="O") ito=it;
+		else if(cel.atom[it].id=="H" or cel.atom[it].id=="D") ith=it;
+		else if(cel.atom[it].id=="C") itc=it;
+	}
+	if(INPUT.ntype==2){ assert(ito>=0); assert(ith>=0);}
+    
+    Water *water = new Water[cel.atom[ito].na];
+    Water::nions = 0;
+    HBs::setup_water(cel, water);
+    for (int iwater1=0; iwater1<cel.atom[ito].na; iwater1++)
+    {
+        // The analysis begins here...
+    }
+    return;
+}
+```
+
+In the function, each element is first assigned with an index (`ito`, `ith`, etc.). Then memories are allocated for an array of `water` class instances, corresponding to the water molecules in the current snapshot cell (`Water *water = new Water[cel.atom[ito].na];`). The water array is fulfilled later (`HBs::setup_water(cel, water);`), and you could do your calculation to each of the water molecules.
+
+And of course, you have to add your analysis in `main.cpp` as well to let it run.
+
+That's all we would like to say in this documentation. Please feel free to contact us for any help. Happy using Candela and coding!

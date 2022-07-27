@@ -1,6 +1,6 @@
 #ifndef EXAMPLE_H
 #define EXAMPLE_H
-
+#include "Cellfile.h"
 class Example
 {
     public:
