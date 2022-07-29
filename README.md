@@ -27,6 +27,7 @@
         - [angular_jump](#angular_jump)
         - [hb_correlation/hb_correlation2](#hb_correlation/hb_correlation2)
         - [nonhb_correlation/nonhb_correlation2/nonhb_correlation3](#nonhb_correlation/nonhb_correlation2/nonhb_correlation3)
+	- [ext](#ext)
         
 - [Analysis program template](#Analysis-program-template)
     - [Basic classes in Candela](#Basic-classes-in-Candela)
@@ -201,6 +202,11 @@ The two analyses calculate the hydrogen bond time correlation function in two di
 
 - **nonhb_correlation/nonhb_correlation2/nonhb_correlation3**<a id=nonhb_correlation/nonhb_correlation2/nonhb_correlation3></a>
 `nonhb_correlation` analysis calculate the TCF of two water molecules staying together within a certain distance. `nonhb_correlation2` and `nonhb_correlation3` calculate the TCF of water molecule converting between H-bonded water molecule and non-H-bonded water molecule.
+
+
+- **ext**<a id=ext></a>
+The analysis takes in input atomic coordination and extend the cell and atomic coordinations to certain number of times. The following parameters are necessary in the analysis: `ext_1/ext_2/ext_3`, standing for the number of times extended on three directions.
+For example, if `ext_1=2`, `ext_2=2`, `ext_3=2`, the cell will be extended to `(2, 2, 2)` time of the original size.
 
 ## Analysis program template
 Before adding new analysis subprogram to Candela, we recommand you to go through the existing analysis subprogram list in case the needed analysis is already fulfilled. This part introduces the basic structure of an analysis subroutine, by learning which you could write new analysis subroutines on your own.
