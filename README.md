@@ -42,7 +42,7 @@ Section [Analysis program template](#Analysis-program-template) introduces the s
 
 ## Basic usage and variables 
 ### Compilation
-Type `make` in the `Candela` directory to compile the executable `Candela.exe` in `\bin` directory. The default compiler is g++, which could be switched to other compiliers. 
+Type `make` in the `Candela` directory to compile the executable `Candela.exe` in `\bin` directory. The default compiler is g++, which could be switched to other compiliers by changing `CC` in `Makefile`. 
 
 ### Using Candela
 First, you have to prepare an `INPUT` file containing the input parameters of Candela. The following shows an example of the `INPUT` file:
@@ -75,7 +75,7 @@ First, you have to prepare an `INPUT` file containing the input parameters of Ca
   celldm3 12.444655509 
 ```
 
-In each line the first item specifies the name of the parameter, and you may fill in the value of the parameter after it. The following chart displyas the general parameters and their purposes.
+In each line the first item specifies the name of the parameter, and you may fill in the value of the parameter after it. The following chart displays the general parameters and their purposes.
 
  Name  | Type  | Example                                                      | Discription                                                      |
 | :---------------- | :--------------------- | :-------------------------------------- | :-------------------------------------------------------------|
@@ -86,7 +86,7 @@ In each line the first item specifies the name of the parameter, and you may fil
 | **geo_1** | Int | 1 | Starting index of snapshot in the MD trajectory file. In most cases it has to be 1.
 | **geo_2** | Int | 10 | Final index of snapshot in the MD trajectory file
 | **geo_interval** | Int | 1 | The program analyse 1 snapshot for every `geo_interval` snapshots
-| **ntype** | Int | 2 | Number of atom species. The maximum number of spicies is mostly 3 or 4.
+| **ntype** | Int | 2 | Number of atom species. It depends on the MD format. The maximum number of spicies is mostly 3 or 4.
 | **natom** | Int | 190 | Number of atoms
 | **natom1** | Int | 63 | Number of atoms of the 1st species
 | **natom2** | Int | 127 | Number of atoms of the 2nd species
@@ -99,7 +99,7 @@ In each line the first item specifies the name of the parameter, and you may fil
 
 For `geo_in_type`, currently supported formats include pw.x (`QE2`), cp.x (`QE`), VASP (`VASP`), ABACUS (`ABACUS`), PWmat (`PWMAT`) and so on.
 
-The physical quantities used in the program are all in Angstrom/ps/eV.
+The physical quantities used in the program are all in Angstrom/ps/eV unit.
 
 Other parameters are needed for specific `calculation`, which you may refer to [List of supported analyses](#List-of-supported-analyses) where a detailed summary of suppoted `calculation` of analyses is given. You may refer to the example `INPUT` files in `/examples` as well for different kinds of analyses.
 
@@ -115,13 +115,13 @@ Pair distribution function, also radial distribution function. The following par
     - `id1` Name of the first type of atom of the pdf. For example, for $g_{OH}(r)$, `id1` is O.
 
     - `id2` Name of the second type of atom of the pdf. For example, for $g_{OH}(r)$, `id2` is H.
-- **hbs** <a id="hbs"></a> Hydrogen bond (HB) analysis. Multiple properties are calculated, among which the most used ones are HB number statistics (at the end of `running0.log`) and proton transfer (PT) time record (`trans.dat`, only for `system` is `hydroxide` or `hydronium`). Another important function in this module is 
+- **hbs** <a id="hbs"></a> Hydrogen bond (HB) analysis. Multiple properties are calculated, among which the most used ones are HB number statistics (at the end of `running0.log`) and proton transfer (PT) time record (`trans.dat`, only for `system` as `hydroxide` or `hydronium`). Another important function in this module is 
 
     ```cpp
     void HBs::setup_water(const Cell &cel, Water *water)
     ```
 
-    The function is called in EVERY analysis involving water to set up the `water` instance, recording multiple information of each water molecule, including O, H indexes, O-H distance, accepted/donated water index, accepted/donated angle and so on. The following parameters are additionlly needed for setting up `water` instance.
+    The function is called in EVERY analysis involving water to set up the `water` instance, recording multiple information of each water molecule, including O, H indexes, O-H distance, accepted/donated water index, accepted/donated angle and so on (For stored information in detail, refer to [Basic classes in Candela](#Basic-classes-in-Candela)). The following parameters are additionlly needed for setting up `water` instance.
 
     - `rcut_oo` The radial cutoff for hydrogen-bonded water molecules. The default value is 3.5 (Angstroms), following Luzar et al., 379, 55, Nature (1996).
 
@@ -130,10 +130,10 @@ Pair distribution function, also radial distribution function. The following par
     - `rcut_oh` The radial cutoff to calculate neighboring hydrogen atoms of oxygen atom. Default value is 1.24 (Angstroms).
 
 - **bdf_rcut**<a id=bdf_rcut></a>
-The analysis calculates the OOO angle distribution of the central water and its two neighboring water molecules. (`bdf_rcut1` has the same function.) It also calculates the free energy map of OOO angle and O-O distance. (Figure. 3D-3E in Chen, et al., 114, 10846, Proc. Nat. Acad. Sci. (2017))
+The analysis calculates the OOO angle distribution of the central water and its two neighboring water molecules. (`bdf_rcut1` has the same functionality.) It also calculates the free energy map of OOO angle and O-O distance. (Figure. 3D-3E in Chen, et al., 114, 10846, Proc. Nat. Acad. Sci. (2017))
 
 - **dist**<a id=dist></a>
-The analysis calculates the 2D/3D spatial distribution of water molecules around hydroxide ion. The output file could be put into Vesta to generate the 3D distribution plot. (Figure. 4a-c of Chen et al. 10, 413, Nat. Chem. (2018)) The following parameters are also needed for the analysis:
+The analysis calculates the 2D/3D spatial distribution of water molecules around hydroxide ion. The output file could be put into Vesta to generate the 3D distribution plot. (Figures. 4a-c of Chen et al. 10, 413, Nat. Chem. (2018)) The following parameters are also needed for the analysis:
     - `nx`/`ny` number of grids on the x/y direction of the 2D distribution.
     - `u1`/`u2`/`u3` number of grids on the x/y/z direction of the 3D distribution.
     - `rcut` radius cutoff of the distribution. See the code of `src/dist.cpp` for a more detailed understanding.
@@ -141,7 +141,7 @@ The analysis calculates the 2D/3D spatial distribution of water molecules around
 
 
 - **dist2**<a id=dist2></a>
-The analysis calculates the 3D spatial distribution of first-shell (`func=2`) and second-shell (`func=3`) water molecules or the spatial distribution of Wannier function centers (`func=1`). The Wannier function centers distribution only support `qe` format (cp.x) for now. The `wannier_file` and `nbands` (number of Wannier centers) have to be specified when involving calculation of Wannier centers. The output file could be put into Vesta to generate the 3D distribution plot as well. The radial cutoff and number of grids on 3 dimensions are all specified with `rcut` and `u1`.
+The analysis calculates the 3D spatial distribution of first-shell (`func=2`) and second-shell (`func=3`) water molecules or the spatial distribution of Wannier function centers (`func=1`). The Wannier function center distribution only support `qe` format (cp.x) for now. The `wannier_file` and `nbands` (number of Wannier centers) have to be specified when involving calculation of Wannier centers. The output file could be put into Vesta to generate the 3D distribution plot as well. The radial cutoff and number of grids on 3 dimensions are all specified with `rcut` and `u1`.
 
 - **hb_stat**<a id=hb_stat></a>
 The analysis calculates distribution of HB number, length and lifetime etc.
@@ -153,7 +153,7 @@ The analysis calculates the O-O-O angular distribution of water molecules with d
 The analysis calculates the planarity distribution of hydroxide accepted water molecules. See the definition in Chen et al. 10, 413, Nat. Chem. (2018)
 
 - **incremental_pdf**<a id=incremental_pdf></a>
-The analysis calculates the pdf of water molecules in order of distance or topological neighbors (order of hydrogen bond). INPUT parameter `nshell` is needed to specify the number of shells considered.
+The analysis calculates the pdf of water molecules in order of distance or topological neighbors (order of hydrogen bond). INPUT parameter `nshell` is needed to specify the number of shells considered. For example, see Figure. 4 in Imoto, et al. Phys. Chem. Chem. Phys. 17, 24224 (2015) and Figure. 5 in Skinner, et al. J. Chem. Phys. 144, 134504 (2016).
 
 - **mj** <a id=mj></a>
 The analysis takes in `trans.dat` file from `hbs` analysis containing PT time and ion indexes and classify the PTs into different classes including `single`, `double`, `triple`, `quadraple` and `rattle`. For detailed classification standard and discussions refer to Chen et al. 10, 413, Nat. Chem. (2018) and Liu et al. J. Chem. Phys. 157, 024503 (2022).
@@ -203,8 +203,9 @@ The two analyses calculate the hydrogen bond time correlation function in two di
 `nonhb_correlation` analysis calculate the TCF of two water molecules staying together within a certain distance. `nonhb_correlation2` and `nonhb_correlation3` calculate the TCF of water molecule converting between H-bonded water molecule and non-H-bonded water molecule.
 
 ## Analysis program template
-Before adding new analysis subprogram to Candela, we recommand you to go through the existing analysis program list in case the required analysis is already fulfilled. This part introduces the basic structure of an analysis subroutine, by learning which you could write new analysis subroutines on your own.
+Before adding new analysis subprogram to Candela, we recommand you to go through the existing analysis subprogram list in case the needed analysis is already fulfilled. This part introduces the basic structure of an analysis subroutine, by learning which you could write new analysis subroutines on your own.
 ### Basic classes in Candela
+To write new subprograms in Candela, it is necessary to understand and take use of the basic classes implemented. They will greatly help you in developing your own codes.
 The following table summarizes the basic classes and their properties and methods that are most used in Candela. There are mainly four kinds of classes: `Vector3<T>`, `Cell`, `Atom` and `Water`. `Cellfile` is a class inherited from `Cell` and mainly contains methods reading data from MD trajectory in different formats. All of the classes are straightforwardly defined and directly correspond to physical entities.
 
  Class Name (source file)  | Properties  | Property description      |Methods | Method description                                                      | 
@@ -255,7 +256,7 @@ The following table summarizes the basic classes and their properties and method
 Generally, the relationship between the classes is: `Cell` contains different kinds of `Atom`, and `Atom` could make up to form `Water`. The properties of these classes in vector form are stored in `Vector3<T>` instances.
 
 ### The structure of a typical analysis C++ file
-Here we give a brief description of `example.cpp` contained in `/examples/example` to show how a typical analysis could be done under the frame of Candela.
+Here we give a brief description of `example.cpp` contained in `/examples/example` to show how a typical analysis of water system could be done under the frame of Candela.
 
 First, the class `Example` and its properties and methods are defined in `example.h` as follows:
 
@@ -282,7 +283,7 @@ class Example
 
 The function `Routine()` is to be called in the `main.cpp` to implement the analysis. Function `calc()` takes in all information of a cell of a single snapshot and do the calculations. Function `output()` writes out the results in files.
 
-In `example.cpp`, function `Routine()` is implemented as the follows:
+In `example.cpp`, function `Routine()` is realized as the follows:
 
 ```cpp
 void Example::Routine()
@@ -325,11 +326,11 @@ void Example::Routine()
 }
 ```
 
-In the function, it first initialize the memory of array used in this analysis. Then, it iteratively do the following things to each snapshots in the MD trajectory:
+The function first initialize the memory of array used in this analysis. Then, it iteratively do the following things to each snapshots in the MD trajectory:
 1. judge whether the snapshot has to be analyzed (`if(igeo<INPUT.geo_ignore || igeo%INPUT.geo_interval!=0) `). If so, label the snapshot as non-ignorable (`cel.read_and_used=true;`);
 2. read in the atomic positions and velocities, Wannier centers etc. if necessary (`if( !CellFile::ReadGeometry( cel ) ) continue;`);
 3. judge whether the snapshot is ignorable, if so, clean the cell and move on to the next iteration (`cel.clean(); continue;`); else, go to step 4;
-4. do analysis to the cell of the snapshot (`this->calc(cel);`) and clean the cell.
+4. do some calculations to the cell of the snapshot (`this->calc(cel);`) and clean the cell.
 
 Function `calc(Cellfile &cel)` is implemented as the follows:
 
@@ -359,8 +360,10 @@ void Example::calc(CellFile &cel)
 }
 ```
 
-In the function, each element is first assigned with an index (`ito`, `ith`, etc.). Then memories are allocated for an array of `water` class instances, corresponding to the water molecules in the current snapshot cell (`Water *water = new Water[cel.atom[ito].na];`). The water array is fulfilled later (`HBs::setup_water(cel, water);`), and you could do your calculation to each of the water molecules.
+In the function, each element is first assigned with an index (`ito`, `ith`, etc.) to facilitate the invocation of elements in the following analysis. Then memories are allocated for an array of `water` class instances, corresponding to the water molecules in the current snapshot cell (`Water *water = new Water[cel.atom[ito].na];`). The water array is fulfilled later with `HBs::setup_water(cel, water)`. After this, you could do your own calculation to each of the water molecules as you wish.
 
-And of course, you have to add your analysis in `main.cpp` as well to let it run.
+And of course, you have to add your analysis to `main.cpp` as well to let it run.
 
-That's all we would like to say in this documentation. Please feel free to contact us for any help. Happy using Candela and coding!
+That's all we would like to say in this documentation. Please feel free to contact us for any help. 
+
+Happy using Candela and coding!
