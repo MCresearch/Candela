@@ -36,7 +36,23 @@ Input::Input()
     //z0 = 0.0;
 	dx = 0.05;
 	dy = 0.05;
-	//dz = 0.05;
+	//dz = 0.05; 
+	dis_oc = -1;   // distace between cation and OH   // Jianchuan Liu add 2022-09-07
+	model_oh = -1; // 0: Calculate the OH around Cation, 1: Calculate the OH not around Cation  // Jianchuan Liu add 2022-09-07
+	// calculate the free energy  // Jianchuan Liu add 2022-09-07
+	cfe_model = 1; // 1: X: distance of OH1-Cation, Y: distance of OH2-Cation
+	               // 2: X: distance of OH1-Cation or OH2-Cation, Y: distance of OH-OH
+				   // 3: X: avg distance of OH1-Cation and OH2-Cation, Y:  distance of OH-OH
+
+	// for reorientation TCF Jianchuan Liu add 2022-09-07
+	tcf_t = 6;  // ps 
+	tcf_n = 1; // number of tcf needed
+	tcf_t0 = 0.0; // starting point of tcf
+	tcf_dt0 = 3.0; // difference between starting points
+	tcf_dt = -0.0005; // unit is ps, time difference between two snapshots
+    tcf_natom = -1;
+    skip_frame = 1;
+
 
 	triclinic = 0; // default is 0 for LAMMPS geometry file, mohan add 2015-05-15	
 	hindex = 0;
@@ -504,6 +520,19 @@ void Input::Read(const string &fn)
         else if (strcmp("temperature", word) == 0) read_value(ifs, temperature); // mohan add 2019-02-07
 		else if (strcmp("force_file", word) == 0) read_value(ifs, force_file);
 		else if (strcmp("pdf_nstd", word) == 0) read_value(ifs, pdf_nstd);
+		// cation free energy
+		else if (strcmp("dis_oc", word) == 0) read_value(ifs, dis_oc); //Jianchuan Liu add 2021-11-05 
+		else if (strcmp("cfe_model", word) == 0) read_value(ifs, cfe_model); //Jianchuan Liu add 2022-03-14 
+		// TCF 
+		else if (strcmp("tcf_t", word) == 0) read_value(ifs, tcf_t); //Jianchuan Liu add 2022-01-10 
+		else if (strcmp("tcf_t0", word) == 0) read_value(ifs, tcf_t0); //Jianchuan Liu add 2022-01-10 
+		else if (strcmp("tcf_dt0", word) == 0) read_value(ifs, tcf_dt0); //Jianchuan Liu add 2022-01-10 
+		else if (strcmp("tcf_n", word) == 0) read_value(ifs, tcf_n); //Jianchuan Liu add 2022-01-10 
+		else if (strcmp("tcf_dt", word) == 0) read_value(ifs, tcf_dt); //Jianchuan Liu add 2022-01-10
+		else if (strcmp("tcf_natom", word) == 0) read_value(ifs, tcf_natom); //Jianchuan Liu add 2022-01-10
+		else if (strcmp("skip_frame", word) == 0) read_value(ifs, skip_frame); //Jianchuan Liu add 2022-01-10
+		else if (strcmp("model_oh", word) == 0) read_value(ifs, model_oh); //Jianchuan Liu add 2021-11-09
+		else if (strcmp("ion_analysis", word) == 0) read_value(ifs, ion_analysis); //mohan add 2016-10-04
 		// for movie
 		else if (strcmp("snatom", word) == 0){ 
 				ifs >> snatom;

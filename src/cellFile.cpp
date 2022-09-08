@@ -249,6 +249,7 @@ bool CellFile::ReadGeometry( Cell &cel )
 			ifs_pos_kept.open(ss.str().c_str());
 			cout << " File name is " << ss.str() << endl;
 			cout << " CellFile::file_open = " << file_open << endl;
+
 			if(!ifs_pos_kept)
 			{
 				cout << "Could not open the file." << endl;
@@ -256,6 +257,7 @@ bool CellFile::ReadGeometry( Cell &cel )
 			} 
 			file_open = true;
 		}
+					
 		return ReadGeometry_LAMMPS(cel, ifs_pos_kept);
 	}
 	// (6) read in geometry file from ABACUS

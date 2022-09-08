@@ -13,6 +13,12 @@ b4_idp_QE: plot the ionic density profile using QE output geometry files.
 b5_profile_elec: plot the density profiles for electrons.
 b6: calculate the angle distribution functions.
 
+
+b9_O_cation_O_angle: calculate the angle distribution functions of O-cation-O 
+b10_FreeEnergy: calculate the Free Energy of Cation and OH
+b11_HBs_aroundCation:calculate the HBs of OH with not_around/around cation
+b12_pos2pdb: convert traj to pdb format
+
 c1_vaf: caluclate the velocity autocorrelation functions.
 c2_isf: calculate the intermediate scattering functions.
 c3_dsf: calcualte the dynamics structure factors.

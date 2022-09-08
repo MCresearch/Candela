@@ -305,14 +305,26 @@ void HBs::search_hydrogen_bonds(const Cell &cel, const int &igeo)
 	int ito=-1;
 	int ith=-1;
 	int itc=-1;
+	int itcl=-1;  // Jianchuan Liu add 2022-09-07
+	int itna=-1;  // Jianchuan Liu add 2022-09-07
+	int itca=-1;  // Jianchuan Liu add  2022-09-07
+    int itmg=-1;  // Jianchuan Liu add  2022-09-07
+	int it_tmp=-1; // Jianchuan Liu add  2022-09-07
 	for(int it=0;it <INPUT.ntype; ++it)
 	{
 		if(cel.atom[it].id=="O") ito=it;
 		else if(cel.atom[it].id=="H" or cel.atom[it].id=="D") ith=it;
 		else if(cel.atom[it].id=="C") itc=it;
+		else if(cel.atom[it].id=="Cl") itcl=it; // Jianchuan Liu add  2022-09-07
+		else if(cel.atom[it].id=="Na") itna=it; // Jianchuan Liu add  2022-09-07
+		else if(cel.atom[it].id=="Ca") itca=it; // Jianchuan Liu add  2022-09-07
+		else if(cel.atom[it].id=="Mg") itmg=it; // Jianchuan Liu add  2022-09-07
 	}
+	if(itmg != -1 and itca == -1) it_tmp = itmg; // Jianchuan Liu add  2022-09-07
+	if(itca != -1 and itmg == -1) it_tmp = itca; // Jianchuan Liu add  2022-09-07
+
 	if(INPUT.ntype==2){ assert(ito>=0); assert(ith>=0);}
-	if(INPUT.ntype==3){ assert(itc>=0); }
+	//if(INPUT.ntype==3){ assert(itc>=0); }  // Jianchuan Liu delete  2022-09-07
 
 	Water *water = new Water[cel.atom[ito].na];
     Water::nions = 0;
@@ -357,6 +369,56 @@ void HBs::search_hydrogen_bonds(const Cell &cel, const int &igeo)
 				}
 			}
 		}
+		// // Jianchuan Liu add 2022-09-07  for two hydroxide ions
+		if(INPUT.system=="2hydroxide" and water[o1].nH==1 and Water::nions==2)
+		{
+			if (it_tmp != -1)
+			{
+				double dis_Cation_O = distance(cel.atom[ito].pos[o1], cel.atom[it_tmp].pos[0], INPUT.celldm1, INPUT.celldm2, INPUT.celldm3);
+				if(INPUT.model_oh == 0 and INPUT.dis_oc != -1 and dis_Cation_O > INPUT.dis_oc) continue; //Calculate the OH around Cation
+				if(INPUT.model_oh == 1 and INPUT.dis_oc != -1 and dis_Cation_O <= INPUT.dis_oc) continue; //Calculate the OH not around Cation
+				if(INPUT.dis_oc != -1 and INPUT.model_oh != -1)
+				{
+					cout << "!! waterwires !!" << endl;
+					cout << "Input cut off(O-Cation) is: " << INPUT.dis_oc << endl;
+					cout << "OH-Cation distance is : " << dis_Cation_O << endl;
+				}
+			}
+			
+			ofs_wire << cel.snapshot_index << " " << cel.snapshot_time << endl;
+			ofs_running << "ion_position " << cel.snapshot_time << " " << cel.atom[ito].pos[o1].z << endl;
+			int count=0;
+			for(int iacc2=0; iacc2<water[o1].naccept; ++iacc2)
+			{
+				int o2 = water[o1].acceptO[iacc2];
+				int h1 = water[o1].acceptH[iacc2];
+				if(water[o2].nH!=2) continue;
+				for(int iacc3=0; iacc3<water[o2].naccept; ++iacc3)
+				{
+					int o3 = water[o2].acceptO[iacc3];
+					int h2 = water[o2].acceptH[iacc3];
+					if(water[o3].nH!=2) continue;
+					if(o3==o1) continue;
+					++count;
+				}
+			}
+			ofs_wire << count << endl;
+			for(int iacc2=0; iacc2<water[o1].naccept; ++iacc2)
+			{
+				int o2 = water[o1].acceptO[iacc2];
+				int h1 = water[o1].acceptH[iacc2];
+				if(water[o2].nH!=2) continue;
+				for(int iacc3=0; iacc3<water[o2].naccept; ++iacc3)
+				{
+					int o3 = water[o2].acceptO[iacc3];
+					int h2 = water[o2].acceptH[iacc3];
+					if(water[o3].nH!=2) continue;
+					if(o3==o1) continue;
+					ofs_wire << "O123 " << o1+1 << " " << o2+1 << " " << o3+1 << " h12 " << h1+1 << " " << h2+1 << endl;
+				}
+			}
+		}
+
 		else if(INPUT.system=="hydronium" and water[o1].nH==3 and Water::nions==1) 
 		{	
 			ofs_wire << cel.snapshot_index << " " << cel.snapshot_time << endl;
@@ -533,6 +595,37 @@ void HBs::search_hydrogen_bonds(const Cell &cel, const int &igeo)
 			for(int iii=0; iii<4; ++iii) ofs_hbcase << setw(5) << water[ia].donateO[iii]+1;
 			ofs_hbcase << endl;
 		} // for water
+		// Jianchuan Liu add 2021-09-07  for two hydroxide ions
+		if (INPUT.system=="2hydroxide" and water[ia].nH==1 and Water::nions==2)
+		{
+			if (it_tmp != -1)
+			{
+				double dis_Cation_O = distance(cel.atom[ito].pos[ia], cel.atom[it_tmp].pos[0], INPUT.celldm1, INPUT.celldm2, INPUT.celldm3);
+				if(INPUT.model_oh == 0 and INPUT.dis_oc != -1 and dis_Cation_O > INPUT.dis_oc) continue; //Calculate the OH around Cation
+				if(INPUT.model_oh == 1 and INPUT.dis_oc != -1 and dis_Cation_O <= INPUT.dis_oc) continue; //Calculate the OH not around Cation
+				if(INPUT.dis_oc != -1 and INPUT.model_oh != -1)
+				{
+					cout << "!! hbcase !!" << endl;
+					cout << "Input cut off(O-Cation) is: " << INPUT.dis_oc << endl;
+					cout << "OH-Cation distance is : " << dis_Cation_O << endl;
+				}
+			}
+			//
+			nacc = water[ia].naccept; // ia is now ion
+			ndon = water[ia].ndonate; // 
+
+			assert(nacc<10);
+			assert(ndon<10);
+			++accept_count[nacc]; 
+			++donate_count[ndon];
+
+			ofs_hbcase << setw(10) << count_geometry_number << setw(10) << cel.snapshot_index << setw(15) << cel.snapshot_time
+				<< setw(5) << ia+1 << setw(3) << nacc  << setw(3) << ndon;
+
+			for(int iii=0; iii<8; ++iii) ofs_hbcase << setw(5) << water[ia].acceptO[iii]+1;
+			for(int iii=0; iii<4; ++iii) ofs_hbcase << setw(5) << water[ia].donateO[iii]+1;
+			ofs_hbcase << endl;
+		} 		
 		else
 		{
 			const int total_HB = water[ia].naccept+water[ia].ndonate;
@@ -543,7 +636,7 @@ void HBs::search_hydrogen_bonds(const Cell &cel, const int &igeo)
 
 
 	// output information
-	if(INPUT.system == "hydroxide" or INPUT.system == "hydronium")
+	if(INPUT.system == "hydroxide" or INPUT.system == "hydronium" or INPUT.system == "2hydroxide")
 	{
 		for(int ia=0; ia<cel.atom[ito].na; ++ia)
 		{
@@ -583,6 +676,53 @@ void HBs::search_hydrogen_bonds(const Cell &cel, const int &igeo)
 					avg_count_ion++;
 				} // end nacc
 			} // end nH
+
+			// Jianchuan Liu add 2021-09-07  for two hydroxide ions
+			if (water[ia].nH==1 and INPUT.system=="2hydroxide" and Water::nions==2)
+			{
+				if (it_tmp != -1)
+				{
+					double dis_Cation_O = distance(cel.atom[ito].pos[ia], cel.atom[it_tmp].pos[0], INPUT.celldm1, INPUT.celldm2, INPUT.celldm3);
+					if(INPUT.model_oh == 0 and INPUT.dis_oc != -1 and dis_Cation_O > INPUT.dis_oc) continue; //Calculate the OH around Cation
+					if(INPUT.model_oh == 1 and INPUT.dis_oc != -1 and dis_Cation_O <= INPUT.dis_oc) continue; //Calculate the OH not around Cation
+					if(INPUT.dis_oc != -1 and INPUT.model_oh != -1)
+					{
+						cout << "!! output !!" << endl;
+						cout << "Input cut off(O-Cation) is: " << INPUT.dis_oc << endl;
+						cout << "OH-Cation distance is : " << dis_Cation_O << endl;
+					}
+				}
+				//
+				// the default value of INPUT.nacc is -1.
+				// if the INPUT.nacc !=1, only print out information for ions who have
+				// 'INPUT.nacc' accetped H bonds.
+				if(INPUT.nacc==-1 or (INPUT.nacc!=-1 and INPUT.nacc==water[ia].naccept) )
+				{
+					for(int iacc=0; iacc < water[ia].naccept; ++iacc)
+					{
+						double angle0=water[ia].accept_angle[iacc];
+						int iangle = (int)(angle0/INPUT.d_angle);
+						angle_ion[iangle]++;
+						double dis0 = water[ia].accept_disO[iacc];
+						int iaccept = (int)(dis0/INPUT.dr);
+						if(dis0<INPUT.rcut_oo) accept_dis[iaccept]++;
+					}
+					for(int idon=0; idon < water[ia].ndonate; ++idon)
+					{
+						double angle0=water[ia].donate_angle[idon];
+						int iangle = (int)(angle0/INPUT.d_angle);
+						angle_ion[iangle]++;
+						double dis0 = water[ia].donate_disO[idon];
+						int idonate = (int)(dis0/INPUT.dr);
+						if(dis0<INPUT.rcut_oo) donate_dis[idonate]++;
+					}
+
+					avg_aion+=water[ia].naccept;
+					avg_dion+=water[ia].ndonate;
+					avg_count_ion++;
+				} // end nacc
+			} // end nH
+			//
 		} // end ia
 	} // end hydronium and hydroxide
 
@@ -763,7 +903,8 @@ void HBs::setup_water(const Cell &cel, Water *water)
 		//cout << "water: " << ia << " number of H: " << water[ia].nH << endl;
 
 		if( (INPUT.system=="hydroxide" and water[ia].nH==1) or
-            (INPUT.system=="hydronium" and water[ia].nH==3) ) 
+            (INPUT.system=="hydronium" and water[ia].nH==3) or
+			(INPUT.system=="2hydroxide" and water[ia].nH==1)) // Jianchuan Liu add 2021-09-07
 		{
 			Water::nions++;
 

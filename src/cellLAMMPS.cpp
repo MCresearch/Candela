@@ -19,6 +19,7 @@ bool CellFile::CheckGeometry_LAMMPS( Cell &cel )
 
 bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 {
+	
 	TITLE("CellFile","ReadGeometry_LAMMPS");
 	const int ntype = INPUT.ntype;
 
@@ -148,6 +149,11 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 		else if(cel.atom[it].id=="Be")
 		{
 			cel.atom[it].mass=9.012182;
+		}
+		else if(cel.atom[it].id=="Ca") // Jianchuan Liu add 2022-09-07
+		{
+			
+			cel.atom[it].mass=40.078;
 		}
 	}
 
@@ -352,6 +358,7 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 	//	delete[] cel.atom[it].pos; // added ny renxi 20200612
 	//	delete[] cel.atom[it].posd; // added by renxi 20200612	
 	//}
+
 	return true;
 }
 

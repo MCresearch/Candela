@@ -40,6 +40,17 @@ public:
 };
 
 template <class T>
+double vector_cos(Vector3<T> &u1, Vector3<T> &v1)
+{
+	double dot_mult = u1.x*v1.x + u1.y*v1.y + u1.z*v1.z;
+	//cout << "dot_mult = " << dot_mult << endl;
+	double vec_mag_u = sqrt(u1.x*u1.x + u1.y*u1.y + u1.z*u1.z);
+	double vec_mag_v = sqrt(v1.x*v1.x + v1.y*v1.y + v1.z*v1.z);
+	double acos_uv = acos(dot_mult / vec_mag_u / vec_mag_v) * 180 / 3.1415926535897932384626;
+	return acos_uv;
+}
+
+template <class T>
 Vector3<T> operator+(const Vector3<T> &u,const Vector3<T> &v);
 template <class T>
 Vector3<T> operator-(const Vector3<T> &u,const Vector3<T> &v);

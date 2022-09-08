@@ -28,7 +28,11 @@
         - [hb_correlation/hb_correlation2](#hb_correlation/hb_correlation2)
         - [nonhb_correlation/nonhb_correlation2/nonhb_correlation3](#nonhb_correlation/nonhb_correlation2/nonhb_correlation3)
         - [ext](#ext)
-        
+        - [O_cation_O_angle](#O_cation_O_angle)
+        - [FreeEnergy](#FreeEnergy)
+        - [HBs_aroundCation](#HBs_aroundCation)
+        - [pos2pdb](#pos2pdb)
+
 - [Analysis program template](#Analysis-program-template)
     - [Basic classes in Candela](#Basic-classes-in-Candela)
     - [The structure of a typical analysis C++ file](#The-structure-of-a-typical-analysis-C++-file)
@@ -207,6 +211,32 @@ The two analyses calculate the hydrogen bond time correlation function in two di
 - **ext**<a id=ext></a>
 The analysis takes in input atomic coordination and extend the cell and atomic coordinations to certain number of times. The following parameters are necessary in the analysis: `ext_1/ext_2/ext_3`, standing for the number of times extended on three directions.
 For example, if `ext_1=2`, `ext_2=2`, `ext_3=2`, the cell will be extended to `(2, 2, 2)` time of the original size.
+
+
+- **O_cation_O_angle**<a id=O_cation_O_angle></a>
+Calculate the angle distribution functions of O-cation-O.
+in the analysis: `dis_oc 3.2`, standing for the distance between cation and O atom (only including the water in the first shell of cation)
+
+
+- **FreeEnergy**<a id=FreeEnergy></a>
+Calculate the Free Energy of Cation-OH
+in the analysis: `cfe_model  1`, i.e. X: distance of OH1-Cation, Y: distance of OH2-Cation;
+                 `cfe_model  2`, i.e. X: distance of OH1-Cation or OH2-Cation, Y: distance of OH-OH;
+                  `cfe_model  3`, i.e. X: avg distance of OH1-Cation and OH2-Cation, Y:  distance of OH-OH
+
+
+- **HBs_aroundCation**<a id=HBs_aroundCation></a>
+Calculate the HBs of OH with not_around/around cation.
+in the analysis: `model_oh 0`, standing for calculating the OH around Cation; 
+                 `model_oh 1`, standing for calculating the OH not around Cation;
+                 `dis_oc 3.2`, standing for the distance between cation and O atom
+
+
+- **pos2pdb**<a id=pos2pdb></a>
+Convert traj to pdb format. 
+in the analysis: `dis_oc` is `-1 or none`, standing for all atom coord will convert to pdb; 
+                 `dis_oc` is not `-1 or none`, e.g. `3.2`, standing for the atom in the first shell of cation will convert to pdb (`3.2` is distance of O-Ca)
+
 
 ## Analysis program template
 Before adding new analysis subprogram to Candela, we recommand you to go through the existing analysis subprogram list in case the needed analysis is already fulfilled. This part introduces the basic structure of an analysis subroutine, by learning which you could write new analysis subroutines on your own.

@@ -1,0 +1,30 @@
+  calculation  o_c_o # hydrogen bond analysis 
+  system 2hydroxide
+  geo_in_type  LAMMPS   # input type of geometry file: PROFESS/VASP/QE/ABINIT/MESIA
+  geo_directory ../traj.lammpstrj
+  geo_out      angle.dat
+  geo_1        10    # first read in configuration number, format: ion.1.dat
+  geo_2        10000  # last read in configuration number, format: ion.500.dat
+  geo_ignore   0 
+  geo_interval 1   # pick up geometry with this interval number between geo_1 and geo_2
+  ia_select 2 
+  ntype        3         # number of different types of atoms.
+  natom        191       # total number of atoms.
+
+  natom1 64 # O 
+  natom2 126 # H
+  natom3 1
+  id1 O
+  id2 H
+  id3 Ca
+
+  dis_oc 3.2
+
+  celldm1 12.444655509 
+  celldm2 12.444655509 
+  celldm3 12.444655509 
+ 
+  rcut_oo 3.5
+  rcut_oh 1.24
+  acut_hoo 30
+  dt_snapshots 0.0001

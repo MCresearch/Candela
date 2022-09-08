@@ -100,6 +100,29 @@ public:
 	float dsf_dt;
 	int dsf_neqi;
 
+	// >>> For Function: cation free energy
+	int cfe_model;  // Jianchuan Liu add 2022-09-07
+
+	// for one cation and two OH 
+	double dis_oc; // Jianchuan Liu add 2022-09-07
+	double model_oh; // Jianchuan Liu add 2022-09-07 // 0: Calculate the OH around Cation, 1: Calculate the OH not around Cation
+
+	int skip_frame; // Jianchuan Liu add 2022-09-07
+	double nframe; // Jianchuan Liu add 2022-09-07
+	double aroundframe; // Jianchuan Liu add 2022-09-07
+	double ptframe; // Jianchuan Liu add 2022-09-07
+	double exploreframe; // Jianchuan Liu add 2022-09-07
+	double explorear; // Jianchuan Liu add 2022-09-07
+	double explorept; // Jianchuan Liu add 2022-09-07
+	// reorientation TCF
+	double tcf_t; // Jianchuan Liu add 2022-09-07
+	double tcf_t0; // Jianchuan Liu add 2022-09-07
+	double tcf_dt0; // Jianchuan Liu add 2022-09-07
+	double tcf_n; // Jianchuan Liu add 2022-09-07
+	double tcf_dt; //  Jianchuan Liu add 2022-09-07
+	int tcf_natom; //  Jianchuan Liu add 2022-09-07
+
+
 	// >>> For Function : velocity correlation functions.
 	string velcor_in_type;
 	string velcor_directory;

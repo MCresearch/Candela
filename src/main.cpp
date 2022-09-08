@@ -84,6 +84,9 @@
 #include "orientation_tcf.h"
 #include "bdf_rcut1.h"
 #include "first_shell_angle.h"
+#include "Cation_free_energy.h"  // Jianchuan Liu add 2022-09-07
+#include "OcationOAngle.h"  // Jianchuan Liu add 2022-09-07
+#include "pos2pdb.h"  // Jianchuan Liu add 2022-09-07
 int main(int argc, char **argv)
 {
 	//cout << "run D310" << endl;
@@ -221,6 +224,13 @@ int main(int argc, char **argv)
 	else if(INPUT.calculation == "orientation_tcf"){Orientation_TCF hb; hb.Routine();}
 	else if(INPUT.calculation == "bdf_rcut1"){BDF_rcut1 hb; hb.Routine();}
 	else if(INPUT.calculation == "first_shell_angle"){First_shell_angle hb; hb.Routine();}
+    // free energy  CationFreeEnergy
+	else if(INPUT.calculation == "CFE") {CationFreeEnergy cfe; cfe.Routine();}   // Jianchuan Liu add 2022-09-07
+	// convert geometry to PDB format file. 
+    else if(INPUT.calculation == "pos2pdb"){Pos2pdb pos2pdb; pos2pdb.Routine();} // Jianchuan Liu add 2022-09-07
+	// O-Cation-O angle
+	else if(INPUT.calculation == "o_c_o"){OcationOAngle oco; oco.Routine();}
+
 	else
 	{
 		ofs_running << " calculation=" << INPUT.calculation << endl;
