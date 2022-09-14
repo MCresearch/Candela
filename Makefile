@@ -2,32 +2,40 @@
 # Candela MAKEFILE
 ##############################################################################
 
+#--------------------------------------
+#----------- Please set ---------------
+#-------------------------------------- 
+#mpi version: mpiicc/mpiicpc/mpicxx/mpicc 
+CC=mpiicpc 
+#serial version: icc/icpc/g++
+# CC=g++
+#--------------------------------------
+
+
+
+OPTION=-O3 
 D_SRC=./src
 D_OBJ=./obj
+D_BIN=./bin
 
 SRC_CPP = $(wildcard $(D_SRC)/*.cpp)
 OBJ_CPP = $(addprefix $(D_OBJ)/, $(patsubst %.cpp, %.o, $(notdir $(SRC_CPP))))
+TARGET=$(D_BIN)/candela
 
-TARGET=./bin/candela
+ifeq ($(findstring mpi, $(CC)), mpi)
+	HONG=-D__MPI
+endif
 
-#CC=icc -g
-#CC=mpiicc 
-#CC=mpicxx
-#CC=CC
-#HONG=-D__MPI
-#CC=mpiicc
-CC=g++
-OPTION=-O3 
 
 ${TARGET}:$(OBJ_CPP)
-	$(CC) -o $@ $^
+	@if [ ! -d $(D_BIN) ]; then mkdir $(D_BIN); fi
+	$(CC) $(OPTION) -o $@ $^
 
 $(D_OBJ)/%.o: $(D_SRC)/%.cpp
-	@if [ ! -d $(D_OBJ) ]; then mkdir $(D_OBJ); fi
-	@if [ ! -d ./bin ]; then mkdir ./bin; fi
-	$(CC) -c $< -o $@
+	@-if [ ! -d $(D_OBJ) ]; then mkdir $(D_OBJ); fi
+	$(CC) $(OPTION) $(HONG) -c $< -o $@
 
 .PHONY: clean
 
 clean:
-	rm -f $(D_OBJ)/* $(TARGET) 
+	@rm -rf $(D_OBJ) $(D_BIN)
