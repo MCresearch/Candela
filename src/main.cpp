@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 
 	// read in the parameters.
 	// INPUT has been generated in input.cpp
-	INPUT.Init("INPUT", argc);
+	INPUT.Init(argc,argv);
 			
 	//--------------------------------------------------
 	// The program has several subroutines.

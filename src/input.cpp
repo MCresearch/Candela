@@ -231,7 +231,7 @@ Input::~Input()
 	delete[] satom;
 }
 
-void Input::Init(const string &fn, const int &argc)
+void Input::Init(const int argc, char **argv) 
 {
 	time_t time_start = std::time(NULL);
 	ofs_running << " ------------------------------------------------------------------------------------" << endl;
@@ -247,6 +247,20 @@ void Input::Init(const string &fn, const int &argc)
 
 
     this->Default();
+
+	std::string fn; 
+	if(argc == 1)
+	{
+		fn = "INPUT";
+	}
+	else if(argc == 2) //./candela input.txt
+	{
+		fn = argv[1];
+	}
+	else if(argc >= 3) //./candela -i input.txt
+	{
+		fn = argv[2];
+	}
 
     this->Read(fn);
 

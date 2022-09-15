@@ -11,7 +11,7 @@ public:
     ~Input();
     
 	// read in the parameters, be called in main.cpp
-	void Init(const string &fn, const int &argc);
+	void Init(const int argc, char **argv);
 
 	private:
 

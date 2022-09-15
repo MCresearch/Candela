@@ -146,8 +146,8 @@ void HB_stat::Routine()
 		
 		cout << "snapshot " << igeo << endl;
 
-		calc(cel, count_geometry_number,\
-        nHBs, HB_lifespan_hist, relative_vel_hist, r_oo_hist, r_oh_hist, angle_hist, \ 
+		calc(cel, count_geometry_number,
+        nHBs, HB_lifespan_hist, relative_vel_hist, r_oo_hist, r_oh_hist, angle_hist,
         HB_lifespan, incoming_time, last_bonded_time, accepted, r_oo, r_oh, angle, angle_r_oo_hist, angle_r_oh_hist);
         ++count_geometry_number;
         cout << "count_geometry_number " << count_geometry_number << endl;
