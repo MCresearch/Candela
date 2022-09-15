@@ -298,7 +298,7 @@ void WfQE:: readGKK(Wavefunc & wf, int & ik)
 	rwsgkk>>strw>>inttmp>>ngtot>>endrw;
 	//cout<<"ngtot: "<<ngtot<<endl;
 	wf.ngtot=ngtot;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	locate(rwsgkk,useless,"K-POINT_COORDS",1);
 
 	//get kpoint vector
@@ -324,13 +324,13 @@ void WfQE:: readGKK(Wavefunc & wf, int & ik)
 	rwread(rwsgkk,idk,ngtot);
 	delete[] idk;//Temporarily unused
 	rwsgkk>>endrw;
-	ifnecheckv(strw,endrw)	
+	ifnecheckv(strw,endrw);
 	locate(rwsgkk,useless,"GRID",1);
 
 	//get plane wave
 	rwsgkk>>strw>>inttmp;
 	inttmp=((ngtot)*3+1)*4;
-	ifnecheckv(strw,inttmp)
+	ifnecheckv(strw,inttmp);
 	for(int i=0;i<ngtot;i++)
 	{
 		rwsgkk>>ik_x[i]>>ik_y[i]>>ik_z[i];
@@ -339,7 +339,7 @@ void WfQE:: readGKK(Wavefunc & wf, int & ik)
 		wf.gkk_z[i]=ik_z[i]*2*M_PI/INPUT.celldm3;
 	}
 	rwsgkk>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	delete []ik_x;
 	delete []ik_y;
 	delete []ik_z;
@@ -366,13 +366,13 @@ void WfQE::readWF(Wavefunc &wf, int &ik)
 	string ikstr=findstr(useless,"ik");
 	string nkstr=findstr(useless,"nk");
 	int ngtot_2=str2int(igwxstr);
-	ifnecheckv(ngtot,ngtot_2)
+	ifnecheckv(ngtot,ngtot_2);
 	int nband_2=str2int(nbndstr);
-	ifnecheckv(nband,nband_2)
+	ifnecheckv(nband,nband_2);
 	int ik_2=str2int(ikstr)-1;
-	ifnecheckv(ik,ik_2)
+	ifnecheckv(ik,ik_2);
 	int nkpoint_2=str2int(nkstr);
-	ifnecheckv(nkpoint,nkpoint_2)
+	ifnecheckv(nkpoint,nkpoint_2);
 	wf.Wavegg=new complex<double>[nband*ngtot];
 	//double *sum;
 	//sum=new double [nband];
@@ -390,7 +390,7 @@ void WfQE::readWF(Wavefunc &wf, int &ik)
 			//sum[i]+=pow(wf.Wavegg[index].real(),2)+pow(wf.Wavegg[index].imag(),2);
 		}
 		rwswf>>endrw;
-		ifnecheckv(strw,endrw)
+		ifnecheckv(strw,endrw);
 		locate(rwswf,useless,"evc",1);
 	}
 	for(int i=0;i<nband;i++)
@@ -422,12 +422,12 @@ void WfQE::readWF2(Wavefunc &wf, int &ik)
 	for(int i=0;i<11;i++)
 		rwswf>>inttmp;
 	rwswf>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	int ngtot_2,nband_2;
 	rwswf>>strw>>inttmp>>ngtot_2>>inttmp>>nband_2>>endrw;
-	ifnecheckv(strw,endrw)
-	ifnecheckv(ngtot,ngtot_2)
-	ifnecheckv(nband,nband_2)
+	ifnecheckv(strw,endrw);
+	ifnecheckv(ngtot,ngtot_2);
+	ifnecheckv(nband,nband_2);
 	double bx,by,bz;
 	rwswf>>strw;
 	for(int i=0;i<3;i++)
@@ -452,7 +452,7 @@ void WfQE::readWF2(Wavefunc &wf, int &ik)
 		//cout<<wf.gkk_x[i]<<' '<<wf.gkk_y[i]<<' '<<wf.gkk_z[i]<<endl;
 	}
 	rwswf>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	for(int i=0;i<nband;i++)
 	{
 		rwswf>>strw;
@@ -461,7 +461,7 @@ void WfQE::readWF2(Wavefunc &wf, int &ik)
 			rwswf>>wf.Wavegg[i*ngtot+j];
 		}
 		rwswf>>endrw;
-		ifnecheckv(strw,endrw)
+		ifnecheckv(strw,endrw);
 	}
 	delete[]ik_x;
 	delete[]ik_y;

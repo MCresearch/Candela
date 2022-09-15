@@ -51,7 +51,7 @@ binfstream& operator>>(binfstream& rstream,T& data)
 	int n=sizeof(data)/sizeof(T);
 	size_t ch;
     ch=fread(&data,size,n,rstream.fileptr);
-#ifdef __JUG
+#ifdef __DEBUG
 	if(ch<n)
 	{
 		cout<<"Error in binfstream: Some data didn't be read."<<endl;
@@ -82,7 +82,7 @@ void rwread(binfstream& rstream,T* &data,int n)
 	int size=sizeof(T);
 	size_t ch;
     ch=fread(data,size,n,rstream.fileptr);
-#ifdef __JUG
+#ifdef __DEBUG
     if(ch<n) 
     {
         cout<<"Error in binfstream: Some dynamic memory didn't be read."<<endl;

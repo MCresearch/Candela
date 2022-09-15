@@ -523,5 +523,5 @@ void MSD_Multiple::each_msd(const Cell &cel, const int &ito, MSD_Single &ms, con
 int MSD_Multiple::round(double r)
 {
     if(r-floor(r)>=0.5){return ceil(r);}
-    else if(r-floor(r)<0.5){return floor(r);}
+    else 			   {return floor(r);}
 }

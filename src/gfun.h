@@ -117,7 +117,7 @@ double distance
 template<class T>//qianrui add 2020-1-6
 bool ifne(T& x,T& y)
 {
-#ifdef __JUG
+#ifdef __DEBUG
 	if(x!=y)
 	{
 		cout<<x<<"!="<<y<<endl;
@@ -132,7 +132,7 @@ bool ifne(T& x,T& y)
 template<class T>//qianrui add 2020-1-6
 bool ifelt(T& x,T& y)
 {
-#ifdef __JUG
+#ifdef __DEBUG
 	double error=abs(double(x)-double(y));
 	if(x>0&&y>0)
 	{
@@ -174,7 +174,7 @@ bool ifelt(T& x,T& y)
 template<class T>//qianrui add 2020-1-6
 bool ifne(T*x,T*y,int n)
 {
-#ifdef __JUG
+#ifdef __DEBUG
 	for(int i=0;i<n;i++)
 	{
 		if(x[i]!=y[i])

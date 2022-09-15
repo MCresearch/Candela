@@ -42,9 +42,9 @@ void WfPWmat::Init(Wavefunc & wf)
 	rwsgkk>>strw>>n1>>n2>>n3>>mg_nx>>nnodes>>nkpoint>>is_SO>>islda>>endrw;
 	INPUT.nkpoint=nkpoint;
 	//cout<<"There are "<<nkpoint<<" kpoints"<<endl;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	rwsgkk>>strw>>Ecut>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	rwsgkk>>strw;
 	for(int i=0;i<3;i++)
 	{
@@ -52,17 +52,17 @@ void WfPWmat::Init(Wavefunc & wf)
 		axes[i]/=P_BOHR;//axes in bohr
 	}
 	rwsgkk>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	int nprod=nkpoint*nnodes;
 	int *ngtotnod_9_t;
 	ngtotnod_9=new int[nprod];
 	ngtotnod_9_t=new int[nprod];
 	int nnodes_t;
 	rwsgkk>>strw>>nnodes_t;
-	ifnecheckv(nnodes,nnodes_t)
+	ifnecheckv(nnodes,nnodes_t);
 	rwread(rwsgkk,ngtotnod_9,nprod);
 	rwsgkk>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 
 //OUT.WG
 	string wgfile=INPUT.wfdirectory+"/OUT.WG";
@@ -78,25 +78,25 @@ void WfPWmat::Init(Wavefunc & wf)
 	double Ecut_t;
 	rwswf>>strw>>n1_t>>n2_t>>n3_t>>nband>>mg_nx_t>>nnodes_t>>nkpoint_t>>is_SO_2>>islda_2>>endrw;
 	wf.nband=nband;
-	ifnecheckv(strw,endrw)
-	ifnecheckv(mg_nx_t,mg_nx)
-	ifnecheckv(is_SO_2,is_SO)
-	ifnecheckv(islda_2,islda)
-	ifnecheckv(n1,n1_t)
-	ifnecheckv(n2,n2_t)
-	ifnecheckv(n3,n3_t)
-	ifnecheckv(nkpoint_t,nkpoint)
+	ifnecheckv(strw,endrw);
+	ifnecheckv(mg_nx_t,mg_nx);
+	ifnecheckv(is_SO_2,is_SO);
+	ifnecheckv(islda_2,islda);
+	ifnecheckv(n1,n1_t);
+	ifnecheckv(n2,n2_t);
+	ifnecheckv(n3,n3_t);
+	ifnecheckv(nkpoint_t,nkpoint);
 	rwswf>>strw>>Ecut_t>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	double axes_t[9];
 	rwswf>>strw>>axes_t>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	rwswf>>strw>>nnodes_t;
 	rwread(rwswf,ngtotnod_9_t,nprod);
 	rwswf>>endrw;
-	ifnecheckv(nnodes_t,nnodes)
-	ifnecheckv(strw,endrw)
-	ifnecheckp(ngtotnod_9,ngtotnod_9_t,nprod)
+	ifnecheckv(nnodes_t,nnodes);
+	ifnecheckv(strw,endrw);
+	ifnecheckp(ngtotnod_9,ngtotnod_9_t,nprod);
 	delete[]ngtotnod_9_t;
 //OUT.FERMI
 	string useless;
@@ -205,19 +205,19 @@ void WfPWmat:: readGKK(Wavefunc & wf,int &ik)
 		rwsgkk>>strw;
 		rwread(rwsgkk,gkk_n_tmp,mg_nx);
 		rwsgkk>>endrw;
-		ifnecheckv(strw,endrw)
+		ifnecheckv(strw,endrw);
 		rwsgkk>>strw;
 		rwread(rwsgkk,gkk_n_xtmp,mg_nx);
 		rwsgkk>>endrw;
-		ifnecheckv(strw,endrw)
+		ifnecheckv(strw,endrw);
 		rwsgkk>>strw;
 		rwread(rwsgkk,gkk_n_ytmp,mg_nx);
 		rwsgkk>>endrw;
-		ifnecheckv(strw,endrw)
+		ifnecheckv(strw,endrw);
 		rwsgkk>>strw;
 		rwread(rwsgkk,gkk_n_ztmp,mg_nx);
 		rwsgkk>>endrw;
-		ifnecheckv(strw,endrw)
+		ifnecheckv(strw,endrw);
 		//cout<<"ngtotnod  " <<ngtotnod_9[ikpt*nnodes+j]<<endl;//test
 		for(int k=0;k<ngtotnod_9[ik*nnodes+j];k++)
 		{
@@ -269,7 +269,7 @@ void WfPWmat:: readGKK(Wavefunc & wf,int &ik)
 		{
 			wf.Wavegg[i*ngtot+igg]=tmp_ug[igg];
 		}
-		ifnecheckv(strw,endrw)
+		ifnecheckv(strw,endrw);
 	}
 	delete[] tmp_ug;
 	return;

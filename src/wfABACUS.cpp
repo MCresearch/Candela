@@ -40,7 +40,7 @@ void WfABACUS::readOUT(Wavefunc & wf)
 	searchead(ifskwt,txt,"atom",1);
 	ifskwt>>useless>>useless>>txt>>useless>>alat;//in bohr
 	checkstr="(Bohr)";
-	ifnecheckv(txt,checkstr)
+	ifnecheckv(txt,checkstr);
 	//cout<<"lattice parameter: "<<alat<<" a.u."<<endl;
 	
 	//get crystal axes
@@ -72,14 +72,14 @@ void WfABACUS::readOUT(Wavefunc & wf)
 	searchead(ifskwt,txt,"electron",1);
 	ifskwt>>useless>>txt>>useless>>useless>>useless>>useless>>useless>>INPUT.nele;
 	checkstr="electron";
-	ifnecheckv(txt,checkstr)
+	ifnecheckv(txt,checkstr);
 	//cout<<"number of electrons: "<<INPUT.nele<<endl;
 	
 	//get nband
 	searchead(ifskwt,txt,"occupied",1);
 	ifskwt>>txt>>useless>>nband;
 	checkstr="NBANDS";
-	ifnecheckv(checkstr,txt)
+	ifnecheckv(checkstr,txt);
 	wf.nband=nband;
 
 
@@ -87,7 +87,7 @@ void WfABACUS::readOUT(Wavefunc & wf)
 	searchead(ifskwt,txt,"Input",1);
 	ifskwt>>txt>>useless>>nkpoint;
 	checkstr="nkstot";
-	ifnecheckv(checkstr,txt)
+	ifnecheckv(checkstr,txt);
 	ifskwt>>txt;
 	if(txt=="nkstot_ibz") 	
 	{
@@ -113,7 +113,7 @@ void WfABACUS::readOUT(Wavefunc & wf)
 	searchead(ifskwt,txt,"E_exx",1);
 	ifskwt>>txt>>useless>>INPUT.fermiE; //in eV
 	checkstr="E_Fermi";
-	ifnecheckv(checkstr,txt)
+	ifnecheckv(checkstr,txt);
 	wf.factor=1;
 	ifskwt.close();
 	
@@ -172,10 +172,10 @@ void WfABACUS::readWF(Wavefunc &wf, int &ik)
 	//get data
 	rwswf>>strw>>ik_2>>nkpoint_2>>kx_cry>>ky_cry>>kz_cry>>wk_2>>ngtot>>nband_2>>ecut>>lat0>>invlat0>>endrw;
 	ik_2-=1;
-	ifnecheckv(ik,ik_2)
-	ifnecheckv(nkpoint_2,nkpoint)
-	ifnecheckv(nband,nband_2)
-	ifnecheckv(strw,endrw)
+	ifnecheckv(ik,ik_2);
+	ifnecheckv(nkpoint_2,nkpoint);
+	ifnecheckv(nband,nband_2);
+	ifnecheckv(strw,endrw);
 	//cout<<"ngtot: "<<ngtot<<endl;
 	wf.ngtot=ngtot;
 
@@ -188,7 +188,7 @@ void WfABACUS::readWF(Wavefunc &wf, int &ik)
 	//get inverse lattice matrix
 	double e11,e12,e13,e21,e22,e23,e31,e32,e33;
 	rwswf>>strw>>e11>>e12>>e13>>e21>>e22>>e23>>e31>>e32>>e33>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 	
 	//get gkk
 	rwswf>>strw;
@@ -201,7 +201,7 @@ void WfABACUS::readWF(Wavefunc &wf, int &ik)
 	wf.gkk_z=new double [ngtot];
 
 	int inttmp=((ngtot)*3)*8;
-	ifnecheckv(strw,inttmp)
+	ifnecheckv(strw,inttmp);
 	for(int i=0;i<ngtot;i++)
 	{
 		rwswf>>gcar_x[i]>>gcar_y[i]>>gcar_z[i];
@@ -211,7 +211,7 @@ void WfABACUS::readWF(Wavefunc &wf, int &ik)
 		wf.gkk_z[i]=gcar_z[i]*invlat0;
 	}
 	rwswf>>endrw;
-	ifnecheckv(strw,endrw)
+	ifnecheckv(strw,endrw);
 
 	delete []gcar_x;
 	delete []gcar_y;
@@ -234,7 +234,7 @@ void WfABACUS::readWF(Wavefunc &wf, int &ik)
 			//sum[i]+=pow(wf.Wavegg[index].real(),2)+pow(wf.Wavegg[index].imag(),2);
 		}
 		rwswf>>endrw;
-		ifnecheckv(strw,endrw)
+		ifnecheckv(strw,endrw);
 	}
 	for(int i=0;i<nband;i++)
 	{
