@@ -199,3 +199,64 @@ double distance
 	const double dz = shortest(pos1.z, pos2.z, a3);
 	return sqrt(dx*dx+dy*dy+dz*dz); 
 }
+
+int str2int(const string str)
+{
+    stringstream ss;
+    int y;
+    ss<<str;
+    ss>>y;
+    return y;
+}
+string int2str(const int y)
+{
+    stringstream ss;
+    string str;
+    ss<<y;
+    ss>>str;
+    return str;
+}
+string dou2str(const double y)
+{
+    stringstream ss;
+    string str;
+    ss<<y;
+    ss>>str;
+    return str;
+}
+double str2dou(const string str)
+{
+    stringstream ss;
+    double y;
+    ss<<str;
+    ss>>y;
+    return y;
+}
+//qianrui 2020-2-18
+void searchead(ifstream &ifskwt,string& txt,const string obj,int n)
+{
+ 	int find=0;
+	string useless;
+	while(ifskwt>>useless)
+    {
+		getline(ifskwt,txt);
+        if(useless==obj)
+        {
+            find++;
+			if(find==n)
+				break;
+        }
+		//cout<<useless<<" "<<txt<<endl;//test
+    }
+    if(ifskwt.eof())
+    {
+        cout<<"Can't find  "<<obj<<". File isn't enough!"<<endl;
+        exit(0);
+    }
+	return;
+}
+
+double mysecond(long int& time)
+{
+	return double(time)/CLOCKS_PER_SEC;
+}

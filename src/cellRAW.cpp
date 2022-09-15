@@ -23,6 +23,16 @@ bool CellFile::ReadGeometry_RAW( Cell &cel, ifstream &ifs)
 	TITLE("CellFile","ReadGeometry_RAW");
 	const int ntype = INPUT.ntype;
 
+	//----------------------------------------------------------
+    // mohan added 2020-03-24
+    static int count_geometry=0;
+    cel.snapshot_index = count_geometry;
+    ++count_geometry;
+    // mohan updated on 2020-03-24, msd_dt is in ps!
+    cel.snapshot_time = cel.snapshot_index * INPUT.msd_dt;
+    // done
+    //----------------------------------------------------------
+
 	delete[] cel.atom;
 	cel.atom = new Atoms[ntype];
 

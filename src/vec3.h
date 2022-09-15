@@ -26,7 +26,7 @@ public:
     Vector3<T> cos(Vector3<T> v);
     Vector3<T> sin(Vector3<T> v);
 
-	void set(const T &x1, const T &y1,const T &z1);
+	void set(const T x1, const T y1,const T z1);//delete & 
 
 	inline T norm(void) const
 	{ return sqrt(x*x + y*y + z*z); }
@@ -84,7 +84,7 @@ Vector3<T>::Vector3(const T &x1,const T &y1, const T &z1)
 {}
 
 template <class T>
-void Vector3<T>::set(const T &x1,const T &y1,const T &z1)
+void Vector3<T>::set(const T x1,const T y1,const T z1)
 {
 	x = x1; y = y1; z = z1;
 }

@@ -5,7 +5,8 @@
 #include <fstream>
 #include "input.h"
 #include "vec3.h"
-
+//A program to calculate intermediate scattering function.
+//By qianrui on 2019-1-9
 class ISF2
 {
 	public:

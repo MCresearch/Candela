@@ -11,7 +11,7 @@ class Random
 
 	static void between0and1( double *v, const int &num )
 	{
-		assert( v!= NULL);
+		assert( v!= nullptr);
 		assert( num > 1);
 		for(int i=0; i<num; i++)
 		{

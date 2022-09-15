@@ -9,9 +9,9 @@ Atoms::Atoms()
 	allocate_posd=false;
 	allocate_vel=false;
 	allocate_pos_ili=false;
-	pos = NULL;
-	posd = NULL;
-	vel = NULL;
+	pos = nullptr;
+	posd = nullptr;
+	vel = nullptr;
 }
 
 

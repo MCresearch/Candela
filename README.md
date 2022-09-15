@@ -1,10 +1,11 @@
 # An introduction to Candela
-- [Overview](#Overview)
-- [Basic usage and variables](#Basic-usage-and-variables)
-    - [Compilation](#Compilation)
-    - [Using Candela](#Using-Candela)
-- [List of supported analyses](#List-of-supported-analyses)
-    - [Water-related analyses](#Water-related-analyses)
+[User's Manual](Doc/manual.md)
+- [Overview](#overview)
+- [Basic usage and variables](#basic-usage-and-variables)
+    - [Compilation](#compilation)
+    - [Using Candela](#using-candela)
+- [List of supported analyses](#list-of-supported-analyses)
+    - [Water-related analyses](#water-related-analyses)
         - [pdf](#pdf)
         - [hbs](#hbs)
         - [bdf_rcut](#bdf_rcut)
@@ -15,7 +16,7 @@
         - [hyper](#hyper)
         - [incremental_pdf](#incremental_pdf)
         - [mj](#mj)
-        - [movie/movie2/OH_movie](#movie/movie2/OH_movie)
+        - [movie/movie2/OH_movie](#movie)
         - [reorganize](#reorganize)
         - [ssf](#ssf)
         - [tetra_order](#tetra_order)
@@ -163,7 +164,7 @@ The analysis calculates the pdf of water molecules in order of distance or topol
 - **mj** <a id=mj></a>
 The analysis takes in `trans.dat` file from `hbs` analysis containing PT time and ion indexes and classify the PTs into different classes including `single`, `double`, `triple`, `quadraple` and `rattle`. For detailed classification standard and discussions refer to Chen et al. 10, 413, Nat. Chem. (2018) and Liu et al. J. Chem. Phys. 157, 024503 (2022).
 
-- **movie/movie2/OH_movie** <a id=movie/movie2/OH_movie></a>
+- **movie/movie2/OH_movie** <a id=movie></a>
 These three analyses are all designed to search certain configurations in the snapshots and output them in `xyz` format for VESTA plot. Please refer to the codes for exactly what configurations are extracted.
 
 - **reorganize** <a id=reorganize></a>

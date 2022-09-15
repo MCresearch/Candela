@@ -99,6 +99,11 @@ Input::Input()
 	d_angle = 0.5; // delta angle in degrees
 	geo_format = 1;
 	system = "none";
+	smear = 0;
+	smearinvw = true;
+	nscf = 0;
+	n_fwhm = 1;
+	localp = true;
 
 	snatom = -1;
 	satom = new int[1];
@@ -112,6 +117,7 @@ Input::Input()
 	pos_ili_file = "none";
 	shift = 0.0;
 	cell_file = "none";
+	read_velocity = false;
 
 	// for trajadj
 	ntzone = 0;
@@ -162,7 +168,13 @@ Input::Input()
 
 	geo_out = "result.dat";
 
+	bool write_cartesian;
 	cartesian = true;
+	gamma=false;
+	msd_single=false;
+	tpk=1.0; //when N goes to infinity, tpk goes to 1.
+	error_con=false;
+	wfdirectory="./";//qianrui
 
 	force_file = "none";
 	
@@ -233,7 +245,7 @@ Input::~Input()
 
 void Input::Init(const int argc, char **argv) 
 {
-	time_t time_start = std::time(NULL);
+	time_t time_start = std::time(nullptr);
 	ofs_running << " ------------------------------------------------------------------------------------" << endl;
 	ofs_running << "              WELCOME TO D310 " << ctime(&time_start) << endl;
 	ofs_running << " THIS IS A PROGRAM FOR PERFORMING ANALYSIS FOR MOLECULAR DYNAMICS" << endl;
@@ -266,7 +278,7 @@ void Input::Init(const int argc, char **argv)
 
     this->Check();
 
-    time_t  time_now = time(NULL);
+    time_t  time_now = time(nullptr);
 
 	return;
 }
@@ -324,6 +336,7 @@ void Input::Read(const string &fn)
     while (ifs.good())
     {
         ifs >> word1;
+		if(!ifs.good()) break; //qianrui fix a bug 2020-8-30
         strtolower(word1, word);
 //		cout << " word = " << word << endl;
 
@@ -339,16 +352,23 @@ void Input::Read(const string &fn)
         else if (strcmp("geo_in_type", word) == 0) read_value(ifs, geo_in_type);
         else if (strcmp("geo_out", word) == 0) read_value(ifs, geo_out);
         else if (strcmp("geo_out_type", word) == 0) read_value(ifs, geo_out_type);
-	else if (strcmp("geo_directory", word) == 0) read_value(ifs, geo_directory);
-	else if (strcmp("geo_1", word) == 0) read_value(ifs, geo_1);
-	else if (strcmp("geo_2", word) == 0) read_value(ifs, geo_2);
-	else if (strcmp("geo_target", word) == 0) read_value(ifs, geo_target);
-	else if (strcmp("geo_interval", word) == 0) read_value(ifs, geo_interval);
-	else if (strcmp("geo_ignore", word) == 0) read_value(ifs, geo_ignore);
-	else if (strcmp("geo_format", word) == 0) read_value(ifs, geo_format);
-	else if (strcmp("ntype", word) == 0) read_value(ifs, ntype);
+		else if (strcmp("geo_directory", word) == 0) read_value(ifs, geo_directory);
+		else if (strcmp("multi_directory", word) == 0) read_value(ifs, multi_directory);
+		else if (strcmp("headfile", word) == 0) read_value(ifs, headfile);
+		else if (strcmp("tailfile", word) == 0) read_value(ifs, tailfile);
+		else if (strcmp("geo_1", word) == 0) read_value(ifs, geo_1);
+		else if (strcmp("geo_2", word) == 0) read_value(ifs, geo_2);
+		else if (strcmp("geo_target", word) == 0) read_value(ifs, geo_target);
+		else if (strcmp("geo_interval", word) == 0) read_value(ifs, geo_interval);
+		else if (strcmp("geo_ignore", word) == 0) read_value(ifs, geo_ignore);
+		else if (strcmp("geo_format", word) == 0) read_value(ifs, geo_format);
+		else if (strcmp("ntype", word) == 0) read_value(ifs, ntype);
         else if (strcmp("natom", word) == 0) read_value(ifs, natom);
         else if (strcmp("cartesian", word) == 0) read_value(ifs, cartesian); //mohan add 2014-04-04
+		else if (strcmp("write_cartesian", word) == 0) read_value(ifs, write_cartesian); //qianrui 2020-3-7
+        else if (strcmp("gamma", word) == 0) read_value(ifs, gamma);
+        else if (strcmp("msd_single", word) == 0) read_value(ifs, msd_single); 
+        else if (strcmp("msd_type", word) == 0) read_value(ifs, msd_type);
 		// >>> Function 2 <<<
         else if (strcmp("dr", word) == 0) read_value(ifs, dr);
         else if (strcmp("rcut", word) == 0) read_value(ifs, rcut);
@@ -532,6 +552,29 @@ void Input::Read(const string &fn)
         else if (strcmp("dipole_file", word) == 0) read_value(ifs, dipole_file);
         else if (strcmp("vdipole_file", word) == 0) read_value(ifs, vdipole_file);
         else if (strcmp("temperature", word) == 0) read_value(ifs, temperature); // mohan add 2019-02-07
+		//for wfread qianrui
+        else if (strcmp("wf_in_type", word) == 0) read_value(ifs, wf_in_type);
+        else if (strcmp("wfdirectory", word) == 0) read_value(ifs, wfdirectory);
+		//electric conductivity qianrui
+        else if (strcmp("nele", word) == 0) read_value(ifs, nele);//qianrui add on 2020-2-11
+        else if (strcmp("nscf", word) == 0) read_value(ifs, nscf);//qianrui add on 2020-2-5
+        else if (strcmp("nkpoint", word) == 0) read_value(ifs, nkpoint);
+        else if (strcmp("tpk", word) == 0) read_value(ifs, tpk);
+        else if (strcmp("error_con", word) == 0) read_value(ifs, error_con);
+        else if (strcmp("vol", word) == 0) read_value(ifs, vol);
+        else if (strcmp("dw", word) == 0) read_value(ifs, dw);
+        else if (strcmp("wcut", word) == 0) read_value(ifs, wcut);
+        else if (strcmp("smear", word) == 0) read_value(ifs, smear);
+		else if (strcmp("smearinvw", word) == 0) read_value(ifs, smearinvw);
+        else if (strcmp("localp", word) == 0) read_value(ifs, localp);
+        else if (strcmp("n_fwhm", word) == 0) read_value(ifs, n_fwhm);
+        else if (strcmp("fwhm", word) == 0) 
+		{
+			fwhm=new double[n_fwhm];
+			for(int ii=0;ii<n_fwhm-1;ii++)
+				ifs>>fwhm[ii];
+			read_value(ifs, fwhm[n_fwhm-1]);
+		}
 		else if (strcmp("force_file", word) == 0) read_value(ifs, force_file);
 		else if (strcmp("pdf_nstd", word) == 0) read_value(ifs, pdf_nstd);
 		// cation free energy
@@ -622,11 +665,12 @@ void Input::Read(const string &fn)
 			}
 			read_value(ifs, Oindex[n_recorded_water-1]);
 		}
-		// >>> Function : new
         else
         {
-            cout << " THE PARAMETER NAME '" << word
-               << "' IS NOT USED!" << endl;
+            if (word[0] != '#' && word[0] != '/' && word[0] != '!')
+            {
+                std::cout << " THE PARAMETER NAME '" << word << "' IS NOT USED!" << std::endl;
+            }
             ifs.ignore(150, '\n');
         }
 

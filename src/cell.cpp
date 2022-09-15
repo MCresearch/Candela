@@ -24,8 +24,8 @@ Cell::~Cell()
 // transform the coordinates from direct to cartesian
 void Cell::direct2cartesian(const int &it, const int &i)
 {
-	assert( atom[it].pos != NULL);
-	assert( atom[it].posd != NULL);
+	assert( atom[it].pos != nullptr);
+	assert( atom[it].posd != nullptr);
 	atom[it].pos[i].x = atom[it].posd[i].x * a1.x + atom[it].posd[i].y * a2.x + atom[it].posd[i].z * a3.x;
 	atom[it].pos[i].y = atom[it].posd[i].x * a1.y + atom[it].posd[i].y * a2.y + atom[it].posd[i].z * a3.y;
 	atom[it].pos[i].z = atom[it].posd[i].x * a1.z + atom[it].posd[i].y * a2.z + atom[it].posd[i].z * a3.z;
@@ -36,8 +36,8 @@ void Cell::direct2cartesian(const int &it, const int &i)
 // transform the coordinates from cartesian to direct 
 void Cell::cartesian2direct(const int &it, const int &i)
 {
-	assert( atom[it].pos != NULL);
-	assert( atom[it].posd != NULL);
+	assert( atom[it].pos != nullptr);
+	assert( atom[it].posd != nullptr);
 	
 	Matrix3 lattice_vector, inv_lat;
 	lattice_vector.e11=a1.x;

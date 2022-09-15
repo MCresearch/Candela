@@ -1,5 +1,6 @@
 #include "gfun.h"    // global functions
 #include "input.h"   // input prameters
+#include "write.h"	//write geo input file, etc.
 #include "ext.h"     // extend the original cell to supercell
 #include "vacuum.h"  // add vacuum to geometry
 #include "vel.h"     // plot the distribution of velocties 
@@ -9,6 +10,7 @@
 #include "ssf.h"     // static structure factor
 #include "ssf_selected.h" // static structure factor calculated for selected vectors 
 #include "dsf.h"     // dynamics structure factor
+#include "ele_conductivity.h"   //qianrui for electric conductivity
 #include "velcor.h"  // velocity autocorrelation function
 #include "powers.h"  // power spectra (13-03-28)
 #include "data3D.h"  // arrange 3D data, such as density
@@ -136,6 +138,7 @@ int main(int argc, char **argv)
 
 	// Category A:
 	if(INPUT.calculation == "ext"){Extend ext; ext.Routine();}
+	else if(INPUT.calculation == "write"){Write write; write.Routine();}
 	else if(INPUT.calculation == "tune_stru"){Tune_Stru ts; ts.Routine();}
 	else if(INPUT.calculation == "vacuum"){Vacuum vacuum; vacuum.Routine();}
 	else if(INPUT.calculation == "void"){Void voids; voids.Routine();}
@@ -188,6 +191,7 @@ int main(int argc, char **argv)
 	else if(INPUT.calculation == "dielectric"){Dielectric die; die.Routine();} // compute infrared spectra
 	else if(INPUT.calculation == "eig"){Eig eig; eig.Routine();}
 	else if(INPUT.calculation == "dist"){Dist dist; dist.Routine();}
+	else if(INPUT.calculation == "ele_conductivity"){Ele_Conductivity ele_con; ele_con.Routine();}//
 	else if(INPUT.calculation == "xsf"){XSF xsf; xsf.Routine();} // compute XSF related properties
 	else if(INPUT.calculation == "density2d"){Density2D den; den.Routine();}
 	else if(INPUT.calculation == "HBs_near_PT"){HBs_near_PT hbsn; hbsn.Routine();} // renxi added 20200417
@@ -245,7 +249,7 @@ int main(int argc, char **argv)
     MPI_Finalize();
 #endif
 
-	time_t time_end = std::time(NULL);
+	time_t time_end = std::time(nullptr);
 	ofs_running << " HAVE A GREAT DAY! " << ctime(&time_end) << endl;
 
 	return 0;

@@ -254,7 +254,9 @@ void PDF::cal()
 
 			if(INPUT.ntype==1 || INPUT.func_c==2 ) // mohan added 2017-06-23
 			{
-				gr_tmp[i] = gr_tmp[i] / INPUT.natom / rho_ion / vv;
+				//qianrui modified 2020-2-18: In fact -1 won't change the result when N is large enough, but will affect it when N is small.
+				//gr_tmp[i] = gr_tmp[i] / INPUT.natom / rho_ion / vv;
+				gr_tmp[i] = gr_tmp[i] / (INPUT.natom-1) / rho_ion / vv;
 			}
 			//else if(INPUT.ntype==2 || (INPUT.ntype==3 and INPUT.system=="water"))
 			else if(INPUT.ntype==2 || INPUT.ntype==3) // new on 2017-06-23
@@ -283,9 +285,10 @@ void PDF::cal()
 				{
 					// rho_ion: ionic density
 					// vv: volume
-			    	gr_tmp[i] = gr_tmp[i] * INPUT.natom / n1 /n2 / rho_ion / vv;
-					//cout << i << " Normal factor = " << INPUT.natom / n1 /n2 / rho_ion / vv << endl;
-				//cout << 1 << endl;
+			    	if(INPUT.ele1==INPUT.ele2)//qianrui modified 2020-2-18
+						gr_tmp[i] = gr_tmp[i] * INPUT.natom / n1 /(n2-1) / rho_ion / vv;
+					else
+			    		gr_tmp[i] = gr_tmp[i] * INPUT.natom / n1 /n2 / rho_ion / vv;
 				}
 				else if(INPUT.func_d==2) // rho*g
 				{

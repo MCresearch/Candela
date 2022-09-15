@@ -258,6 +258,11 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 		cel.atom[it].posd = new Vector3<double>[cel.atom[it].na];
 		cel.atom[it].allocate_pos = true;
 		cel.atom[it].allocate_posd = true;
+		if(INPUT.read_velocity)
+		{
+			cel.atom[it].vel = new Vector3<double>[cel.atom[it].na];
+			cel.atom[it].allocate_vel = true;
+		}
 	}
 
 //	cout << " This is Cartesian coordinates" << endl;
@@ -311,53 +316,62 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 		{
 			ifs >> cel.atom[type_index].pos[aifet[ia0]].x 
 			>> cel.atom[type_index].pos[aifet[ia0]].y; 
-			READ_VALUE(ifs, cel.atom[type_index].pos[aifet[ia0]].z);
-			//cout << type_index << " " << aifet[ia0] << " " << cel.atom[type_index].pos[aifet[ia0]].x << " " << cel.atom[type_index].pos[aifet[ia0]].y << " " << cel.atom[type_index].pos[aifet[ia0]].z << endl;
+			if(INPUT.read_velocity)//qianrui add 2020-5-20
+			{
+				ifs>>cel.atom[type_index].pos[aifet[ia0]].z>>cel.atom[type_index].vel[aifet[ia0]].x>>cel.atom[type_index].vel[aifet[ia0]].y;
+				READ_VALUE(ifs, cel.atom[type_index].vel[aifet[ia0]].z);
+			}
+			else 
+				READ_VALUE(ifs, cel.atom[type_index].pos[aifet[ia0]].z);
 			cel.cartesian2direct(type_index, aifet[ia0]);
-			//ofs_running << type_index << " " << ia0 << " " << cel.atom[type_index].pos[aifet[ia0]].x 
-			//<< " " <<  cel.atom[type_index].pos[aifet[ia0]].y
-			//<< " " << cel.atom[type_index].pos[aifet[ia0]].z << endl; 
 		}
 		if (INPUT.cartesian==true and INPUT.geo_format==4)
 		{
 			if (type_index == 0)
 			{
 				ifs >> cel.atom[type_index].pos[int(ia0/3)].x 
-			>> cel.atom[type_index].pos[int(ia0/3)].y; 
-			READ_VALUE(ifs, cel.atom[type_index].pos[int(ia0/3)].z);
-			//cout << cel.atom[type_index].pos[int(ia0/3)].x << " " << cel.atom[type_index].pos[int(ia0/3)].y <<
-			//" " << cel.atom[type_index].pos[int(ia0/3)].z << endl;
+				>> cel.atom[type_index].pos[int(ia0/3)].y;
+				if(INPUT.read_velocity)//qianrui add 2020-5-20
+				{
+					ifs>>cel.atom[type_index].pos[int(ia0/3)].z>>cel.atom[type_index].vel[aifet[ia0]].x>>cel.atom[type_index].vel[aifet[ia0]].y;
+					READ_VALUE(ifs, cel.atom[type_index].vel[aifet[ia0]].z);
+				}
+				else 
+					READ_VALUE(ifs, cel.atom[type_index].pos[int(ia0/3)].z);
 			}
 			else if (type_index == 1)
 			{
 				int Hindex = int(ia0/3)*2;
 				if (ia0%3 == 2) Hindex++;
 				ifs >> cel.atom[type_index].pos[Hindex].x 
-			>> cel.atom[type_index].pos[Hindex].y; 
-			READ_VALUE(ifs, cel.atom[type_index].pos[Hindex].z);
-			//cout << cel.atom[type_index].pos[Hindex].x << " " << cel.atom[type_index].pos[Hindex].y << " "
-			//<< cel.atom[type_index].pos[Hindex].z << endl;
+				>> cel.atom[type_index].pos[Hindex].y;
+				if(INPUT.read_velocity)//qianrui add 2020-5-20
+				{
+					ifs>>cel.atom[type_index].pos[Hindex].z>>cel.atom[type_index].vel[aifet[ia0]].x>>cel.atom[type_index].vel[aifet[ia0]].y;
+					READ_VALUE(ifs, cel.atom[type_index].vel[aifet[ia0]].z);
+				}
+				else 
+					READ_VALUE(ifs, cel.atom[type_index].pos[Hindex].z);
 			}
 		}
 		else if(INPUT.cartesian==false)
 		{
 			ifs >> cel.atom[type_index].posd[aifet[ia0]].x 
 			>> cel.atom[type_index].posd[aifet[ia0]].y; 
-			READ_VALUE(ifs, cel.atom[type_index].posd[aifet[ia0]].z);
+			if(INPUT.read_velocity)
+			{
+				ifs>>cel.atom[type_index].posd[aifet[ia0]].z>>cel.atom[type_index].vel[aifet[ia0]].x>>cel.atom[type_index].vel[aifet[ia0]].y;
+				READ_VALUE(ifs, cel.atom[type_index].vel[aifet[ia0]].z);
+			}
+			else 
+				READ_VALUE(ifs, cel.atom[type_index].posd[aifet[ia0]].z);
 			cel.direct2cartesian(type_index, aifet[ia0]);
 
 		}
 
 	}
 
-	//cout << "Read done." << endl;
 	delete[] aifet;
-	//cout << "done" << endl;
-	//for(int it=0; it<ntype; ++it)
-        //{
-	//	delete[] cel.atom[it].pos; // added ny renxi 20200612
-	//	delete[] cel.atom[it].posd; // added by renxi 20200612	
-	//}
 
 	return true;
 }

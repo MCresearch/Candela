@@ -35,6 +35,8 @@ public:
 	string geo_out; 
 	string geo_out_type;
 	string geo_directory;
+	string headfile;//qianrui add 2020-2-9
+	string tailfile;//qianrui add 2020-2-9
 	int geo_format;
 	int geo_1; // start geometry file for PDF, SSF, ...
 	int geo_2; // last geometry file for PDF, SSF, ...
@@ -44,6 +46,10 @@ public:
 	int ntype;
 	int natom;
 	bool cartesian;
+	bool write_cartesian;
+	bool gamma;//qianrui 2020-2-11
+	bool msd_single;//qianrui 2020-2-18
+	int msd_type; //qianrui 2020-2-18
 
 	// >>> For function 2 : pdf <<<
 	double dr;
@@ -132,6 +138,7 @@ public:
 	string velcor_out;
 	int velcor_atom;
 	int step_interval_dynamics;
+	bool read_velocity; //qianrui add 2020-5-10
 
 	// >>> For Function : power spectra
 	int ps_nv;     // number of velocity autocorrelation functions (VAF) points
@@ -239,6 +246,25 @@ public:
 	double rcut_clo;
 	double acut_hoo;
 	double d_angle;
+	//for wfread //qianrui add 2020-1-6
+	string wf_in_type;
+	string wfdirectory;
+	string multi_directory;//qianrui add 2020-2-9
+	//for electric conductivity qianrui add 2020-1-6
+	double nele;//QE use double type! qianrui on 2020-2-11
+	int nscf;//qianrui on 2020-2-5
+	int nkpoint;//2020-2-5
+	double fermiE;//qianrui 2020-3-24
+	bool  error_con;//To print the std of averaged conductivity (used with nscf) by qianrui 2020-5-13
+	double tpk;//qianrui 2020-3-25 tpk (amendment between student distribution and normal distribution )
+	double vol;
+	double dw;
+	double wcut;
+	int smear;//linear smear for delta function by default
+	bool smearinvw;
+	double *fwhm;
+	int n_fwhm; //calculate different fwhm at the same time by qianrui 2020-5-13
+	bool localp; //if the pseudopotential is a local potential
 
 	// for movie
 	int snatom;
