@@ -14,9 +14,13 @@ https://github.com/MCresearch/Candela
 ## 3. Structure of the CANDELA Code
 
 <font color="blue">Blue</font>: commonly used.
+
 <font color="black">Black</font>: base modules.
+
 <font color="red">Red</font>: analysis for liquid water system.
+
 <font color="purple">Purple</font>: analysis for mechanical properties.
+
 (Colors have not been completely painted yet.)
 | files | introduction|
 |:------|:------------|
@@ -102,32 +106,58 @@ https://github.com/MCresearch/Candela
 
 
 ## 4. List of Examples:
-1).	[Radial distribution functions for O-O with varying cells](#rdf-O-O).
+1).	[Radial distribution functions for O-O with varying cells](#rdf-O-O)
+
 2).	[Bond angle distribution function for O triplets with varying cells](#adf-O)
+
 3).	[Bond angle distribution function for O triplets with cutoff in varying cells](#bdf-vc)
+
 4).	[Hydrogen bond analysis](#hba)
+
 5).	[Mean square displacement](#msd)
+
 6).	[Mean square displacement computed by multiple sections](#multi-msd)
+
 7).	[Wannier centers and dipoles](#wannier-c-d)
+
 8).	[Tetrahedrality](#tetrahedrality)
+
 9).	[Reorganize](#reorganize)
+
 10). [Radial distribution function of O*H in hydroxide solution](#rdf-OH)
+
 11). [Hydrogen bonds for hydroxide](#hb-H)
+
 12). [Multiple jumps](#multi-j)
+
 13). [Planarity of hydroxide ion and its neighbors](#planarity-H)
+
 14). [Movie](#movie)
+
 15). [Distance 2D](#dis-2D)
+
 16). [XSF 3D](#xsf-3D)
+
 17). [Distance 2D Wannier](#dis-2D-wannier)
+
 18). [PDF O(donate)-O(accept)](#pdf-d-a)
+
 19). [Presolvation](#presolvation)
+
 20). [Hydroxide Wannier](#wannier-HO)
+
 21). [Waterwire2](#waterwire)
+
 22). [Waterwire compress](#waterwire-compression)
+
 23). [Static Structure Factor](#ssf)
+
 24). [Instantaneous Liquid Interface](#ili)
+
 25). [Infrared Spectra](#infs)
+
 26). [Dynamic Structure Factor](#dsf)
+
 27). [Electrical Conductivity](#ele-cond)
 
 
@@ -1178,7 +1208,8 @@ Step 2 : Calculate  DSF and get maximam.
 	   dw : the minimal energy step for DSF (in eV)
 	   nwt : the maximal number of dw for DSF
 	   interval : dt_snapshots in INPUT
-	   `sh onedsf.sh`
+
+`sh onedsf.sh`
  
 ### 3.27) Electric Conductivity<a id="ele-cond"></a>
 
