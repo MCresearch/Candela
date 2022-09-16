@@ -2,3 +2,5 @@ candela
 .vscode
 *.o
 *.log
+*.txt
+*.pyc

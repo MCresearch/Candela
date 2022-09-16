@@ -1,0 +1,16 @@
+calculation  pdf # Pair Distribution Function.
+system Al
+geo_in_type  LAMMPS
+geo_directory ../geo/Al64.dump
+geo_1        0
+geo_2        20
+geo_interval 1
+geo_ignore   4
+
+geo_out      pdf.txt # output pdf name.
+
+ntype        1        # number of different types of atoms.
+natom        64   # total number of atoms.
+natom1       64
+rcut         6
+dr           0.01     # delta r in real space

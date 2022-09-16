@@ -33,13 +33,19 @@ endif
 ifeq ($(TEST), ON)
 #CC must be a gnu compiler, or else it will fail.
 	OPTION += -fsanitize=address -fno-omit-frame-pointer
-	HONG += D__DEBUG
+	HONG += -D__DEBUG
+	ifeq ($(findstring mpi, $(CC)), mpi)
+		CC = mpicxx
+	else
+		CC = g++
+	endif
 endif
 
 
 ${TARGET}:$(OBJ_CPP)
 	@if [ ! -d $(D_BIN) ]; then mkdir $(D_BIN); fi
 	$(CC) $(OPTION) -o $@ $^
+	@if [ $(TEST) == ON ]; then cd test;./Autotest.sh;cd ..; fi
 
 $(D_OBJ)/%.o: $(D_SRC)/%.cpp $(D_OBJ)/readme.log
 	$(CC) $(OPTION) $(HONG) -c $< -o $@
