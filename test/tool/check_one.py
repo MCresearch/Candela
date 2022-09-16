@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import CompareFile as comf
 import os
+import sys
 def red(txt):
     txt="\033[31m"+txt+"\033[0m"
     return txt
@@ -30,6 +31,7 @@ if __name__ == "__main__":
     comf.ReadFile("compare",lines)
     threshold = 0.01
     enable_mpi = False
+    mpicompile = sys.argv[1]
     filepair=[]
     # Read compare
     for line in lines:
@@ -52,15 +54,15 @@ if __name__ == "__main__":
     testpass = testpass and runcandela(1)
     testpass = testpass and check(filepair, threshold)
     if testpass:
-        print("  Serial version   "+green( "PASS"))
+        print("  One Processor      "+green( "PASS"))
     else:
-        print("  Serial version   "+red("FAIL"))
-    if enable_mpi:
+        print("  One Processor      "+red("FAIL"))
+    if enable_mpi and (mpicompile == "ON" or mpicompile == "on"):
         testpass = testpass and runcandela(2)
         testpass = testpass and check(filepair, threshold)
         testpass = testpass and runcandela(3)
         testpass = testpass and check(filepair, threshold)
         if testpass:
-            print("  MPI version      "+green("PASS"))
+            print("  Multi Processor    "+green("PASS"))
         else:
-            print("  MPI version      "+red("FAIL"))
+            print("  Multi Processor    "+red("FAIL"))

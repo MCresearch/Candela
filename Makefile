@@ -28,6 +28,7 @@ TARGET=$(D_BIN)/candela
 
 ifeq ($(findstring mpi, $(CC)), mpi)
 	HONG=-D__MPI
+	MPICOMPILE = ON
 endif
 
 ifeq ($(TEST), ON)
@@ -45,7 +46,7 @@ endif
 ${TARGET}:$(OBJ_CPP)
 	@if [ ! -d $(D_BIN) ]; then mkdir $(D_BIN); fi
 	$(CC) $(OPTION) -o $@ $^
-	@if [ $(TEST) == ON ]; then cd test;./Autotest.sh;cd ..; fi
+	@if [ $(TEST) == ON ]; then cd test;./Autotest.sh $(MPICOMPILE);cd ..; fi
 
 $(D_OBJ)/%.o: $(D_SRC)/%.cpp $(D_OBJ)/readme.log
 	$(CC) $(OPTION) $(HONG) -c $< -o $@
@@ -55,7 +56,9 @@ $(D_OBJ)/readme.log:
 	@echo "This is a temporary dirctory to store obj files." > $(D_OBJ)/readme.log
 
 
-.PHONY: clean
+.PHONY: clean, test
+test:
+	@cd test;./Autotest.sh $(MPICOMPILE);cd ..;
 
 clean:
 	@rm -rf $(D_OBJ) $(D_BIN)
