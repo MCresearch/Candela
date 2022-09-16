@@ -17,9 +17,9 @@ do
     cd $case
 
     echo "  Running $case..."
-    time_start=`date "+%H:%M:%S.%N"`
+    time_start=`date "+%Y-%m-%d %H:%M:%S.%N"`
     python3 ../tool/check_one.py $mpi
-    time_end=`date "+%H:%M:%S.%N"`
+    time_end=`date "+%Y-%m-%d %H:%M:%S.%N"`
     start_seconds=`date --date="$time_start" +%s.%N`
     end_seconds=`date --date="$time_end" +%s.%N`
     during=`echo "$end_seconds-$start_seconds" |bc`

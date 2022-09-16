@@ -1,5 +1,8 @@
 # An introduction to Candela
 [User's Manual](Doc/manual.md)
+
+[Developer's Manual](Doc/develop.md)
+
 - [Overview](#overview)
 - [Basic usage and variables](#basic-usage-and-variables)
     - [Compilation](#compilation)
