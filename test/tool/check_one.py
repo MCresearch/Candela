@@ -52,15 +52,15 @@ if __name__ == "__main__":
     testpass = testpass and runcandela(1)
     testpass = testpass and check(filepair, threshold)
     if testpass:
-        print("Serial version   "+green( "PASS"))
+        print("  Serial version   "+green( "PASS"))
     else:
-        print("Serial version   "+red("FAIL"))
+        print("  Serial version   "+red("FAIL"))
     if enable_mpi:
         testpass = testpass and runcandela(2)
         testpass = testpass and check(filepair, threshold)
         testpass = testpass and runcandela(3)
         testpass = testpass and check(filepair, threshold)
         if testpass:
-            print("MPI version      "+green("PASS"))
+            print("  MPI version      "+green("PASS"))
         else:
-            print("MPI version      "+red("FAIL"))
+            print("  MPI version      "+red("FAIL"))

@@ -13,4 +13,4 @@ natom         64           # total number of atoms.
 struf_dgx     0.6158415803  # delta G in G space, 2pi/a
 struf_dgy     0.6158415803  # delta G in G space
 struf_dgz     0.6158415803  # delta G in G space
-struf_ng      18           # number of G points
+struf_ng      12           # number of G points
