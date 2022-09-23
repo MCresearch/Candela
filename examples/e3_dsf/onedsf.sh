@@ -49,11 +49,13 @@ awk -v nwt=$nwt -v sigma=$sigma -v tcut=$tcut -v dw=$dw -v inte=$interval 'BEGIN
 }END{	
 	for (nw=0;nw<nwt;nw++)
 	{
-		printf "%g %g\n",nw*dw/1.5192665814,re[nw]/2/pi*100*1.519*2*1.2286;
+		printf "%g %g\n",nw*dw*0.658212,re[nw]/pi/0.658212;
 	}
 
 
 }' $file>$outfile
+#4.1356 = h*1e-15/e
+#outfile unit x: meV y: meV^-1
 
 cat $outfile|awk -v wcut=$wcut 'BEGIN{
 max=0;w=0
