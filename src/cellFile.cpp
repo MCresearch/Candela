@@ -8,6 +8,8 @@ ifstream CellFile::ifs_wan_kept;
 ifstream CellFile::ifs_eig_kept;
 ifstream CellFile::ifs_pos_ili_kept;
 ifstream CellFile::ifs_vel_kept;
+bool CellFile::first_read  = true;
+double CellFile:: celldm = 0.0;
 
 CellFile::CellFile()
 {

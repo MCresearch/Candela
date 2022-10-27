@@ -187,12 +187,8 @@ bool CellFile::ReadGeometry_QE( Cell &cel, ifstream &ifs, ifstream &ifs_cel, ifs
     //    cout << index_ili << " " << time_ili << endl;
         for(int it=0; it<INPUT.ntype; ++it)
         {
-    //        cout << "allocate_pos_ili=" << cel.atom[it].allocate_pos_ili << endl;
-            if(cel.atom[it].allocate_pos_ili==false)
-            {
-                cel.atom[it].pos_ili = new double[cel.atom[it].na];
-                cel.atom[it].allocate_pos_ili=true;
-            }
+			delete[] cel.atom[it].pos_ili;
+            cel.atom[it].pos_ili = new double[cel.atom[it].na];
             cel.read_pos_ili(ifs_pos_ili, it);
         }
     }

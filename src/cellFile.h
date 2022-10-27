@@ -18,6 +18,8 @@ class CellFile : public Cell
 	static void WriteGeometry( Cell &cel, bool cartesian=false );
 
 	static bool ReadVelocity( Cell &cel );
+	static bool first_read;
+	static double celldm;
 
 	private:
 

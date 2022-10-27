@@ -7,18 +7,18 @@ Cell::Cell()
 	nbonds=0;
 	nangles=0;
 	ntype=0;
-	atom = new Atoms[1];
-	wan_centers = new Vector3<double>[1];
-    eig = new double[1];
+	atom = nullptr;
+	wan_centers = nullptr;
+    eig = nullptr;
 	snapshot_index = -1;
 	snapshot_time = -1.0;
 }
 
 Cell::~Cell()
 {
-	//delete[] atom;
-	//delete[] wan_centers;
-	//delete[] eig;
+	delete[] atom;
+	delete[] wan_centers;
+	delete[] eig;
 }
 
 // transform the coordinates from direct to cartesian
@@ -250,6 +250,8 @@ void Cell::clean()
 	delete[] this->atom;
 	delete[] this->wan_centers;
 	delete[] this->eig;
-
+	this->atom = nullptr;
+	this->wan_centers = nullptr;
+	this->eig = nullptr;
 	return;
 }

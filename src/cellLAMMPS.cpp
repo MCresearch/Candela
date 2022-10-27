@@ -252,16 +252,12 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 
 	for(int it=0; it<ntype; ++it)
 	{	
-		//delete[] cel.atom[it].pos;
-		//delete[] cel.atom[it].posd;
-		cel.atom[it].pos = new Vector3<double>[cel.atom[it].na];
-		cel.atom[it].posd = new Vector3<double>[cel.atom[it].na];
-		cel.atom[it].allocate_pos = true;
-		cel.atom[it].allocate_posd = true;
+		delete[]cel.atom[it].pos; cel.atom[it].pos = new Vector3<double>[cel.atom[it].na];
+		delete[]cel.atom[it].posd; cel.atom[it].posd = new Vector3<double>[cel.atom[it].na];
 		if(INPUT.read_velocity)
 		{
+			delete[] cel.atom[it].vel;
 			cel.atom[it].vel = new Vector3<double>[cel.atom[it].na];
-			cel.atom[it].allocate_vel = true;
 		}
 	}
 

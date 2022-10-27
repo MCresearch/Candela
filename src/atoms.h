@@ -24,11 +24,6 @@ class Atoms
 	double charge; // charge of element, only used in LAMMPS, 2016-10-26
 	double* pos_ili; // distance to ili, mohan added 2017-04-08
 
-	bool allocate_pos;
-	bool allocate_posd;
-	bool allocate_vel;
-	bool allocate_pos_ili; // mohan added 2017-04-08
-
 	public: 
 
 	// read the 'fractional' coordinates of atoms

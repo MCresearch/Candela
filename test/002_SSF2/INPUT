@@ -1,0 +1,17 @@
+calculation  ssf # Statistic structure factor.
+system Al
+geo_in_type  QE2
+geo_directory ../geo/Al64-pwqe.txt
+geo_1        1
+geo_2        20
+geo_interval 1
+geo_ignore   4
+
+ssf_out       ssf.txt    # output static structure factor name.
+ntype         1             # number of different types of atoms.
+natom         64           # total number of atoms.
+struf_dgx     0.6158415803  # delta G in G space, 2pi/a
+struf_dgy     0.6158415803  # delta G in G space
+struf_dgz     0.6158415803  # delta G in G space
+struf_ng      12           # number of G points
+struf_avdg    0.2          # smooth ssf

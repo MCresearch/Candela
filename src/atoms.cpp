@@ -5,23 +5,20 @@ Atoms::Atoms()
 {
 	na=0;
 	mass=0;
-	allocate_pos=false;
-	allocate_posd=false;
-	allocate_vel=false;
-	allocate_pos_ili=false;
 	pos = nullptr;
 	posd = nullptr;
 	vel = nullptr;
+	pos_ili = nullptr;
 }
 
 
 Atoms::~Atoms()
 {
 	//cout << "deallocate atoms" << endl;
-	if(allocate_pos==true) delete[] pos;
-	if(allocate_posd==true) delete[] posd;
-	if(allocate_vel==true) delete[] vel;
-	if(allocate_pos_ili==true) delete[] pos_ili;
+	delete[] pos;
+	delete[] posd;
+	delete[] vel;
+	delete[] pos_ili;
 }
 
 // read the 'fractional' coordinates of atoms
@@ -30,10 +27,8 @@ void Atoms::read_pos(ifstream &ifs,bool frac)
 {
 	assert(na>0);
 	string idtmp;
-	pos = new Vector3<double>[na];
-	posd = new Vector3<double>[na];
-	allocate_pos = true;
-	allocate_posd = true;
+	delete[] pos; pos = new Vector3<double>[na];
+	delete[] posd; posd = new Vector3<double>[na];
 	for(int i=0; i<na; ++i)
 	{
 		ifs >> idtmp;
@@ -79,10 +74,8 @@ void Atoms::read_pos_2(ifstream &ifs,bool frac)
 {
 	assert(na>0);
 	string tmp;
-	pos = new Vector3<double>[na];
-	posd = new Vector3<double>[na];
-	allocate_pos = true;
-	allocate_posd = true;
+	delete[] pos; pos = new Vector3<double>[na];
+	delete[] posd; posd = new Vector3<double>[na];
 	for(int i=0; i<na; ++i)
 	{
 		if(frac)
@@ -113,10 +106,8 @@ void Atoms::read_pos_3(ifstream &ifs)
 {
     assert(na>0);
     string tmp;
-    pos = new Vector3<double>[na];
-    posd = new Vector3<double>[na];
-	allocate_pos = true;
-	allocate_posd = true;
+	delete[] pos; pos = new Vector3<double>[na];
+	delete[] posd; posd = new Vector3<double>[na];
     for(int i=0; i<na; ++i)
     {
         ifs >> id >> posd[i].x >> posd[i].y >> posd[i].z;
@@ -134,10 +125,8 @@ void Atoms::read_pos_4(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 	const double norm3 = INPUT.celldm3;
 	assert(na>0);
 	string tmp;
-	pos = new Vector3<double>[na];
-	posd = new Vector3<double>[na];
-	allocate_pos = true;
-	allocate_posd = true;
+	delete[] pos; pos = new Vector3<double>[na];
+	delete[] posd; posd = new Vector3<double>[na];
 	for(int i=0; i<na; ++i)
 	{
 		ifs >> pos[i].x >> pos[i].y;
@@ -183,10 +172,8 @@ void Atoms::read_pos_5(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 	const double norm3 = INPUT.celldm3;
 	assert(na>0);
 	string tmp;
-	pos = new Vector3<double>[na];
-	posd = new Vector3<double>[na];
-	allocate_pos = true;
-	allocate_posd = true;
+	delete[] pos; pos = new Vector3<double>[na];
+	delete[] posd; posd = new Vector3<double>[na];
 	for(int i=0; i<na; ++i)
 	{
 		ifs >> tmp >> tmp;
@@ -230,8 +217,7 @@ void Atoms::read_pos_5(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 void Atoms::read_vel(ifstream &ifs)
 {
 	assert(na>0);
-	this->vel = new Vector3<double>[na];
-	allocate_vel = true;
+	delete[] this->vel; this->vel = new Vector3<double>[na];
 //	cout << " atom number is " << na << endl;
 	for(int i=0; i<na; ++i)
 	{

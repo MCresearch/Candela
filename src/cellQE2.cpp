@@ -1,15 +1,45 @@
 #include "cellFile.h"
 #include "input.h"
 #include "gfun.h"
+#include "const.h"
 //qianrui
 void lim2cel(double &x);
 bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 {
 	TITLE("CellFile","ReadGeometry_QE2");
+	//celldm
+	if(CellFile::first_read)
+	{
+		string useless;
+		while(ifs>>useless)
+		{
+			if(useless=="celldm(1)=")
+			{
+				ifs>>CellFile::celldm;
+				CellFile::celldm *= P_BOHR;
+				break;
+			}
+		}
+		if(ifs.eof())
+		{
+			cout<<"Geo isn't enough!"<<endl;
+			exit(0);
+		}
+		CellFile::first_read = false;
+	}
 	const int ntype = INPUT.ntype;
-	const double celldm1 =INPUT.celldm1;
-	const double celldm2 =INPUT.celldm2;
-	const double celldm3 =INPUT.celldm3;
+	double celldm1, celldm2, celldm3;
+	if(INPUT.celldm1 * INPUT.celldm2 * INPUT.celldm3 > 1e-4)
+	{
+		celldm1 =INPUT.celldm1;
+		celldm2 =INPUT.celldm2;
+		celldm3 =INPUT.celldm3;
+	}
+	else
+	{
+		celldm1 = celldm2 = celldm3 = CellFile::celldm;
+	}
+	
 	cel.nat=INPUT.natom;
 	cel.a1.x=celldm1;	cel.a1.y=0;		cel.a1.z=0;
 	cel.a2.x=0;		cel.a2.y=celldm2;	cel.a2.z=0;
@@ -54,6 +84,8 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 		getline(ifs,txt);
 		if(useless=="ATOMIC_POSITIONS")
 		{
+			if(txt == " (crystal)") INPUT.cartesian = false;
+			else					INPUT.cartesian = true;
 			break;
 		}
 	}
@@ -132,13 +164,13 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 		ifs>>useless>>tmpx>>tmpy>>tmpz;
 		for(int it=0; it<ntype; ++it) // renxi fixed 20200902
 		{
-			if (useless == cel.atom[it].id)
+			if (useless == cel.atom[it].id || ntype == 1)
 			{	
 				int ia1 = record_na[it];
   				lim2cel(tmpx);
 				lim2cel(tmpy);
 				lim2cel(tmpz);
-				if(INPUT.length_unit=="angstrom")
+				if(INPUT.cartesian)
                 {
 					//cout << tmpx << " " << tmpy << " " << tmpz << endl;
 					cel.atom[it].pos[ia1].x=tmpx;
@@ -157,6 +189,7 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 			}
 		}
 	}
+	delete[] record_na;
 	
 
 //	cout << 1 << endl;
@@ -171,7 +204,7 @@ void lim2cel(double &x)
 		cout << "The function lim2cel in cellQE2.cpp requires all celldm to be equal." << endl;
 		exit(0);
 	}
-	if(INPUT.length_unit == "angstrom")
+	if(INPUT.cartesian)
 	{
 		while(x>=celldm1) x-=celldm1;
 		while(x<0) x+=celldm1;
