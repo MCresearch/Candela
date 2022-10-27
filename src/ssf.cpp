@@ -156,9 +156,11 @@ void SSF::cal()
 		ZEROS( G_1D, diff_norm );
 		ZEROS( sf_1D, diff_norm );
 		this->ssf_1D( G_1D, sf_1D, norm_index, nG_1D, sf );
-
+		this->rank_ssf( diff_norm, G_1D, sf_1D, nG_1D);
+		
 		// (4) Output the final SSF.
-		this->write_ssf( G_1D, sf_1D );
+		this->write_ssf( diff_norm, G_1D, sf_1D );
+		this->write_smoothssf(G_1D, sf_1D, nG_1D, diff_norm, INPUT.struf_avdg, "sm-"+INPUT.ssf_out);
 
 		delete[] nG_1D;
 		delete[] norm_index;
@@ -501,21 +503,25 @@ void SSF::ssf_1D(
 }
 
 
-void SSF::write_ssf( const float *G_1D, const float* sf_1D ) const
+void SSF::rank_ssf( const int diff_norm, float *G_1D, float* sf_1D, int* nG_1D ) const
 {
-	TITLE("SSF","write_ssf");
+	TITLE("SSF","rank_ssf");
 
 	// --> INITIALIZE <--
-
-	assert(this->diff_norm > 0);
-	// output the static structure factor.
-	ofstream ofs(INPUT.ssf_out.c_str());
 	bool *visited = new bool[diff_norm];
 	for(int i=0; i<diff_norm; ++i) visited[i] = false;
+	float *tmp_G1D = new float [diff_norm];
+	float *tmp_sf1D = new float [diff_norm];
+	int *tmp_nG1D = new int [diff_norm];
+	for(int i = 0 ; i < diff_norm ; ++i)
+	{
+		tmp_G1D[i] = G_1D[i];
+		tmp_sf1D[i] = sf_1D[i];
+		tmp_nG1D[i] = nG_1D[i];
+	}
 
-	
+
 	// --> BODY <--
-
 	for(int i=0; i<diff_norm; ++i)
 	{
 		int index = 0;
@@ -523,22 +529,79 @@ void SSF::write_ssf( const float *G_1D, const float* sf_1D ) const
 		for(int j=0; j<diff_norm; ++j)
 		{
 			if( visited[j] ) continue;
-			else if( G_1D[j] < min )
+			else if( tmp_G1D[j] < min )
 			{
 				index = j;
-				min = G_1D[j];
+				min = tmp_G1D[j];
 			}
 		}
 		visited[index] = true;
-		if(G_1D[index]>0)
-		{
-			ofs << G_1D[index] << " " << sf_1D[index] << endl;
-		}
+		G_1D[i] = tmp_G1D[index];
+		sf_1D[i] = tmp_sf1D[index];
+		nG_1D[i] = tmp_nG1D[index];
 	}
 
 	// --> CLEAN <--
 
 	delete[] visited;
+	delete[] tmp_G1D;
+	delete[] tmp_sf1D;
+	delete[] tmp_nG1D;
 	return;
 }
 
+void SSF::write_ssf( const int diff_norm, const float *G_1D, const float* sf_1D ) const
+{
+	assert(diff_norm > 0);
+	// output the static structure factor.
+	ofstream ofs(INPUT.ssf_out.c_str());
+	for(int i = 0 ; i < diff_norm ; ++ i)
+	{
+		if(G_1D[i]>0)
+			ofs << G_1D[i] << " " << sf_1D[i] << endl;
+	}
+}
+
+void SSF::write_smoothssf(const float *G_1D,const float *sf, const int *nG_1D, const int diff_norm, const double dG, const string filename) const
+{
+	assert(dG > 0);
+	ofstream ofs(filename.c_str());
+	int i0 = 0;
+	double tm_g = 0;
+	double tm_ssf = 0;
+	double tm_pre = 0;
+	for(int i = 0 ; i < diff_norm ; ++i)
+	{
+		float G = G_1D[i];
+		int nG = nG_1D[i];
+		if(int(G/dG) == i0)
+		{
+			tm_pre += nG;
+			tm_g += G * nG;
+			tm_ssf += sf[i] * nG; 
+		}
+		else
+		{
+			if(tm_g > 0)
+			{
+				tm_g /= tm_pre;
+				tm_ssf /= tm_pre;
+				ofs<<tm_g<<' '<<tm_ssf<<endl;
+			}
+			tm_pre = nG;
+			tm_g = G * nG;
+			tm_ssf = sf[i] * nG;
+			i0 = int(G/dG); 
+		}
+	}
+	//i == diff_norm
+	if(tm_g > 0)
+	{
+		tm_g /= tm_pre;
+		tm_ssf /= tm_pre;
+		ofs<<tm_g<<' '<<tm_ssf<<endl;
+	}
+
+	ofs.close();
+	return;
+}

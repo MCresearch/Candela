@@ -19,6 +19,7 @@ Input::Input()
 	struf_dgy = 0.0;
 	struf_dgz = 0.0;
 	struf_ng = 0;	
+	struf_avdg = 0.2;
 
 	ext_1 = 0;
 	ext_2 = 0;
@@ -380,6 +381,7 @@ void Input::Read(const string &fn)
         else if (strcmp("struf_dgy", word) == 0) read_value(ifs, struf_dgy);
         else if (strcmp("struf_dgz", word) == 0) read_value(ifs, struf_dgz);
         else if (strcmp("struf_ng", word) == 0) read_value(ifs, struf_ng);
+		else if (strcmp("struf_avdg", word) == 0) read_value(ifs, struf_avdg);
         else if (strcmp("ssf_out", word) == 0) read_value(ifs, ssf_out);
 		// >>> Function 3 <<<
         else if (strcmp("vel_in", word) == 0) read_value(ifs, vel_in);

@@ -45,10 +45,18 @@ class SSF
 	) const;
 
 	// Output the static structure factor.
+	void rank_ssf(
+		const int diff_norm, 
+		float *G_1D, 
+		float *sf_1D,
+		int *nG_1D 
+	) const;
 	void write_ssf( 
+		const int diff_norm,
 		const float *G_1D, 
 		const float *sf_1D 
 	) const;
+	void write_smoothssf(const float *G_1D,const float *sf, const int *nG_1D, const int diff_norm, const double dG, const string filename) const;
 
 	private:
 

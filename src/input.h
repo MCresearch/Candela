@@ -64,6 +64,7 @@ public:
 	double struf_dgy;
 	double struf_dgz;
 	int struf_ng;
+	double struf_avdg; //interval of smooth ssf
 	string ssf_out;
 
 	// >>> For function 3 : vel <<< 
