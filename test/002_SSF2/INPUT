@@ -1,7 +1,7 @@
 calculation  ssf # Statistic structure factor.
 system Al
 geo_in_type  QE2
-geo_directory ../geo/Al64-pwqe.txt
+geo_directory ../geo/Al64-pw.qe
 geo_1        1
 geo_2        20
 geo_interval 1
