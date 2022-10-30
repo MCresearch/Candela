@@ -574,6 +574,7 @@ void SSF::write_smoothssf(const float *G_1D,const float *sf, const int *nG_1D, c
 	{
 		float G = G_1D[i];
 		int nG = nG_1D[i];
+		if(G < 1e-6) continue;
 		if(int(G/dG) == i0)
 		{
 			tm_pre += nG;
