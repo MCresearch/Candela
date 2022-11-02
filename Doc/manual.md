@@ -1209,7 +1209,7 @@ Step 2 : Calculate  DSF and get maximam.
 	   nwt : the maximal number of dw for DSF
 	   interval : dt_snapshots in INPUT
 
-`sh onedsf.sh`
+`sh onedsf.sh` or `python onedsf.py`(recommended)
  
 ### 3.27) Electric Conductivity<a id="ele-cond"></a>
 

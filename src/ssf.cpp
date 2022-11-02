@@ -129,15 +129,7 @@ void SSF::cal()
 	}
 
 #ifdef __MPI
-    float* sf_loc = new float[ngtot];
-	for(int ig=0; ig<ngtot; ++ig)
-	{
-		//ofs_running << ig << " " << sf[ig] << endl; 
-		sf_loc[ig] = sf[ig];
-		sf[ig] = 0.0;
-	}
-	MPI_Allreduce(sf_loc, sf, ngtot, MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
-	delete[] sf_loc;
+	MPI_Allreduce(MPI_IN_PLACE, sf, ngtot, MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
 #endif
 	
 	if(RANK==0)

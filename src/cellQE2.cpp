@@ -17,6 +17,9 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 			{
 				ifs>>CellFile::celldm;
 				CellFile::celldm *= P_BOHR;
+				if(RANK == 0) cout<<"celldm1: "<<CellFile::celldm
+				                  <<"; celldm2: "<<CellFile::celldm
+								  <<"; celldm3: "<<CellFile::celldm<<endl;
 				break;
 			}
 		}
