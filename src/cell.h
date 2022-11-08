@@ -16,7 +16,7 @@ class Cell
 
 	public:
 
-	Atoms *atom; // atom class
+	Atoms *atom = nullptr; // atom class
 	string coordinate; //which type of coordinate
 	Vector3<double> a1,a2,a3; // lattice vectors
 	double volume; // volume of cell
@@ -33,8 +33,8 @@ class Cell
 	double snapshot_time;
 
 	int nbands; // number of bands, used for analyzing Wannier functions
-	Vector3<double> *wan_centers; // wannier centers
-	double* eig;
+	Vector3<double> *wan_centers = nullptr; // wannier centers
+	double* eig = nullptr;
 
 	public:
 
@@ -60,6 +60,8 @@ class Cell
 	void read_eig(ifstream &ifs_wan, const int &nbands);
 
 	void read_pos_ili(ifstream &ifs_pos_ili, const int &it);
+
+	void atom_mass();
 
 };
 

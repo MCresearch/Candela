@@ -35,6 +35,9 @@ class Atoms
 	void read_pos_5(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, Vector3<double> &a3, double &lat_const);
 	void read_vel(ifstream &ifs);
 
+	public:
+	void cal_mass();
+
 };
 
 #endif

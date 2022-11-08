@@ -123,39 +123,7 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 	}
 
 
-	// mohan updated 2018-12-14
-	for(int it=0; it<ntype; ++it)
-	{
-		if(cel.atom[it].id=="O")
-		{
-			cel.atom[it].mass=15.9994;
-		}
-		else if(cel.atom[it].id=="H")
-		{
-			cel.atom[it].mass=1.00794;
-		}
-		else if(cel.atom[it].id=="D")
-		{
-			cel.atom[it].mass=2.014;
-		}
-		else if(cel.atom[it].id=="Al")
-		{
-			cel.atom[it].mass=26.981539;
-		}
-		else if(cel.atom[it].id=="Mg")
-		{
-			cel.atom[it].mass=24.305;
-		}
-		else if(cel.atom[it].id=="Be")
-		{
-			cel.atom[it].mass=9.012182;
-		}
-		else if(cel.atom[it].id=="Ca") // Jianchuan Liu add 2022-09-07
-		{
-			
-			cel.atom[it].mass=40.078;
-		}
-	}
+	cel.atom_mass();
 
 
 	for(int it=0; it<ntype; ++it)

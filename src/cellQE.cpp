@@ -138,21 +138,7 @@ bool CellFile::ReadGeometry_QE( Cell &cel, ifstream &ifs, ifstream &ifs_cel, ifs
 	if(INPUT.ntype>=3) {cel.atom[2].na = INPUT.natom3; cel.atom[2].id = INPUT.id3; }
 //	if(INPUT.ntype>=4) {cel.atom[3].na = INPUT.natom4; cel.atom[3].id = INPUT.id4; }
 
-	// mohan aded 2017-09-11
-	for(int it=0; it<INPUT.ntype; ++it)
-	{
-		if(cel.atom[it].id=="O") cel.atom[it].mass=15.9994;
-		else if(cel.atom[it].id=="D") cel.atom[it].mass=2.014;
-		else if(cel.atom[it].id=="H") cel.atom[it].mass=1.0079;
-		else if(cel.atom[it].id=="C") cel.atom[it].mass=12.0107;
-		else if(cel.atom[it].id=="Li") cel.atom[it].mass=6.941; // mohan added 2017-12-26
-		else if(cel.atom[it].id=="Al") cel.atom[it].mass=26.981539; // mohan added 2019-03-12
-		else
-		{
-			cout << "Warning! Check the atomic mass." << endl;
-			exit(0);
-		}
-	}
+	cel.atom_mass();
 
 	cel.nat = 0;
 	for(int it=0; it<ntype; ++it)

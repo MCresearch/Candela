@@ -1,5 +1,6 @@
 #include "atoms.h"
 #include "input.h"
+#include "const.h"
 
 Atoms::Atoms()
 {
@@ -225,6 +226,66 @@ void Atoms::read_vel(ifstream &ifs)
 		//cout << " vel=" << vel[i].x << " " << vel[i].y << " " << vel[i].z << endl;
 	}
 	return;
+}
+
+void Atoms::cal_mass()
+{
+	if(this->id == "H")
+	{
+		this->mass = MASS_H;
+	}
+	else if(this->id == "D")
+	{
+		this->mass = MASS_D;
+	}
+	else if(this->id == "T")
+	{
+		this->mass = MASS_T;
+	}
+	else if(this->id == "Li")
+	{
+		this->mass = MASS_Li;
+	}
+	else if(this->id == "Be")
+	{
+		this->mass = MASS_Be;
+	}
+	else if(this->id == "B")
+	{
+		this->mass = MASS_B;
+	}
+	else if(this->id == "C")
+	{
+		this->mass = MASS_C;
+	}
+	else if(this->id == "O")
+	{
+		this->mass = MASS_O;
+	}
+	else if(this->id == "F")
+	{
+		this->mass = MASS_F;
+	}
+	else if(this->id == "Na")
+	{
+		this->mass = MASS_Na;
+	}
+	else if(this->id == "Mg")
+	{
+		this->mass = MASS_Mg;
+	}
+	else if(this->id == "Al")
+	{
+		this->mass = MASS_Al;
+	}
+	else if(this->id == "Si")
+	{
+		this->mass = MASS_Si;
+	}
+	else
+	{
+		cout<<"Warning: we do not support the mass of "<<this->id<<" yet!"<<endl;
+	}
 }
 
 

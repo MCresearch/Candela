@@ -7,9 +7,6 @@ Cell::Cell()
 	nbonds=0;
 	nangles=0;
 	ntype=0;
-	atom = nullptr;
-	wan_centers = nullptr;
-    eig = nullptr;
 	snapshot_index = -1;
 	snapshot_time = -1.0;
 }
@@ -254,4 +251,13 @@ void Cell::clean()
 	this->wan_centers = nullptr;
 	this->eig = nullptr;
 	return;
+}
+
+void Cell::atom_mass()
+{
+	if(this->atom == nullptr) return;
+	for(int it=0; it<this->ntype; ++it)
+	{
+		this->atom[it].cal_mass();
+	}
 }

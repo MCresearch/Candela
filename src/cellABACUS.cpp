@@ -177,23 +177,8 @@ bool CellFile::ReadGeometry_ABACUS( Cell &cel, ifstream &ifs )
 	if(INPUT.ntype>=2) {cel.atom[1].na = INPUT.natom2; cel.atom[1].id = INPUT.id2; }
 	if(INPUT.ntype>=3) {cel.atom[2].na = INPUT.natom3; cel.atom[2].id = INPUT.id3; }
 	if(INPUT.ntype>=4) {cel.atom[3].na = INPUT.natom4; cel.atom[3].id = INPUT.id4; }
-	for(int it=0; it<INPUT.ntype; ++it)
-	{
-		if(cel.atom[it].id=="O") cel.atom[it].mass=15.9994;
-		else if(cel.atom[it].id=="D") cel.atom[it].mass=2.014;
-		else if(cel.atom[it].id=="H") cel.atom[it].mass=1.0079;
-		else if(cel.atom[it].id=="C") cel.atom[it].mass=12.0107;
-		else if(cel.atom[it].id=="Li") cel.atom[it].mass=6.941; // mohan added 2017-12-26
-		else if(cel.atom[it].id=="Al") cel.atom[it].mass=26.981539; // mohan added 2019-03-12
-		else if(cel.atom[it].id=="P") cel.atom[it].mass=31;
-		else if(cel.atom[it].id=="S") cel.atom[it].mass=16;
-		else if(cel.atom[it].id=="Cl") cel.atom[it].mass=17;
-		else
-		{
-			cout << "Warning! Check the atomic mass." << endl;
-			//exit(0);
-		}
-	}
+	
+	cel.atom_mass();
 
 	cel.nat = 0;
 	for(int it=0; it<ntype; ++it)

@@ -76,20 +76,7 @@ bool CellFile::ReadGeometry_PROFESS( Cell &cel )
 			ifs >> cel.atom[it].id >> cel.atom[it].pot_file; 
 		}
 
-		for(int it=0; it<INPUT.ntype; ++it)
-		{
-			if(cel.atom[it].id=="O") cel.atom[it].mass=15.9994;
-			else if(cel.atom[it].id=="D") cel.atom[it].mass=2.014;
-			else if(cel.atom[it].id=="H") cel.atom[it].mass=1.0079;
-			else if(cel.atom[it].id=="C") cel.atom[it].mass=12.0107;
-			else if(cel.atom[it].id=="Li") cel.atom[it].mass=6.941; // mohan added 2017-12-26
-			else if(cel.atom[it].id=="Al") cel.atom[it].mass=26.981539; // mohan added 2019-03-12
-			else
-			{
-				cout << "Warning! Check the atomic mass." << endl;
-				exit(0);
-			}
-		}
+		cel.atom_mass();
 
 	}
 
