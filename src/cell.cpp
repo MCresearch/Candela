@@ -280,6 +280,15 @@ void Cell::init_cel(Input& Inp)
 		if(INPUT.ntype>=3) {this->atom[2].na = INPUT.natom3; this->atom[2].id = INPUT.id3; }
 		if(INPUT.ntype>=4) {this->atom[3].na = INPUT.natom4; this->atom[3].id = INPUT.id4; }
 	}
+	for(int it=0; it<ntype; ++it)
+    {
+        delete[] this->atom[it].pos;	this->atom[it].pos = new Vector3<double>[this->atom[it].na];
+		delete[] this->atom[it].posd;   this->atom[it].posd = new Vector3<double>[this->atom[it].na];
+		if(INPUT.read_velocity)
+		{
+			delete[] this->atom[it].vel; this->atom[it].vel = new Vector3<double>[this->atom[it].na];
+		}
+    }
 	return;
 }
 

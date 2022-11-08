@@ -35,7 +35,6 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 	cel.snapshot_time = cel.snapshot_index * INPUT.msd_dt; 
 	// done
 	//----------------------------------------------------------
-	cel.init_cel(INPUT);
 
 	string useless;
 	
@@ -175,19 +174,6 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 
 	READ_VALUE(ifs, useless);
 	//cout << useless << endl;
-
-
-
-	for(int it=0; it<ntype; ++it)
-	{	
-		delete[]cel.atom[it].pos; cel.atom[it].pos = new Vector3<double>[cel.atom[it].na];
-		delete[]cel.atom[it].posd; cel.atom[it].posd = new Vector3<double>[cel.atom[it].na];
-		if(INPUT.read_velocity)
-		{
-			delete[] cel.atom[it].vel;
-			cel.atom[it].vel = new Vector3<double>[cel.atom[it].na];
-		}
-	}
 
 //	cout << " This is Cartesian coordinates" << endl;
 	bool frac = false;

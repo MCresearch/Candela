@@ -28,8 +28,6 @@ void Atoms::read_pos(ifstream &ifs,bool frac)
 {
 	assert(na>0);
 	string idtmp;
-	delete[] pos; pos = new Vector3<double>[na];
-	delete[] posd; posd = new Vector3<double>[na];
 	for(int i=0; i<na; ++i)
 	{
 		ifs >> idtmp;
@@ -75,8 +73,6 @@ void Atoms::read_pos_2(ifstream &ifs,bool frac)
 {
 	assert(na>0);
 	string tmp;
-	delete[] pos; pos = new Vector3<double>[na];
-	delete[] posd; posd = new Vector3<double>[na];
 	for(int i=0; i<na; ++i)
 	{
 		if(frac)
@@ -107,8 +103,6 @@ void Atoms::read_pos_3(ifstream &ifs)
 {
     assert(na>0);
     string tmp;
-	delete[] pos; pos = new Vector3<double>[na];
-	delete[] posd; posd = new Vector3<double>[na];
     for(int i=0; i<na; ++i)
     {
         ifs >> id >> posd[i].x >> posd[i].y >> posd[i].z;
@@ -126,8 +120,6 @@ void Atoms::read_pos_4(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 	const double norm3 = INPUT.celldm3;
 	assert(na>0);
 	string tmp;
-	delete[] pos; pos = new Vector3<double>[na];
-	delete[] posd; posd = new Vector3<double>[na];
 	for(int i=0; i<na; ++i)
 	{
 		ifs >> pos[i].x >> pos[i].y;
@@ -173,8 +165,6 @@ void Atoms::read_pos_5(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 	const double norm3 = INPUT.celldm3;
 	assert(na>0);
 	string tmp;
-	delete[] pos; pos = new Vector3<double>[na];
-	delete[] posd; posd = new Vector3<double>[na];
 	for(int i=0; i<na; ++i)
 	{
 		ifs >> tmp >> tmp;
@@ -218,7 +208,6 @@ void Atoms::read_pos_5(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 void Atoms::read_vel(ifstream &ifs)
 {
 	assert(na>0);
-	delete[] this->vel; this->vel = new Vector3<double>[na];
 //	cout << " atom number is " << na << endl;
 	for(int i=0; i<na; ++i)
 	{

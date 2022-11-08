@@ -24,8 +24,6 @@ bool CellFile::ReadGeometry_QE( Cell &cel, ifstream &ifs, ifstream &ifs_cel, ifs
 	const int ntype = INPUT.ntype;
 	bool restart = true;
 
-	cel.init_cel(INPUT);
-
 	if(INPUT.eig_file != "none")
 	{
 		assert(INPUT.nbands>0);

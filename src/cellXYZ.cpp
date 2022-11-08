@@ -24,8 +24,6 @@ bool CellFile::ReadGeometry_XYZ( Cell &cel, ifstream &ifs)
 	const int ntype = INPUT.ntype;
 	bool restart = true;
 
-	cel.init_cel(INPUT);
-
 	assert(INPUT.celldm1>0.0);
 	assert(INPUT.celldm2>0.0);
 	assert(INPUT.celldm3>0.0);
@@ -77,8 +75,6 @@ bool CellFile::ReadGeometry_XYZ( Cell &cel, ifstream &ifs)
 	int *count_atom = new int[INPUT.ntype];
 	for(int it=0; it<INPUT.ntype; ++it)
 	{
-	    cel.atom[it].pos = new Vector3<double>[cel.atom[it].na];
-	    cel.atom[it].posd = new Vector3<double>[cel.atom[it].na];
 		count_atom[it] = 0;
 	}
 

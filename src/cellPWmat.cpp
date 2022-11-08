@@ -6,7 +6,6 @@ bool CellFile::ReadGeometry_PWmat( Cell &cel, ifstream &ifs )
 {
 	TITLE("CellFile", "ReadGeometry_PWmat");
 	const int ntype = INPUT.ntype;
-	cel.init_cel(INPUT);
 	const double celldm1 =INPUT.celldm1;
 	const double celldm2 =INPUT.celldm2;
 	const double celldm3 =INPUT.celldm3;
@@ -44,9 +43,6 @@ bool CellFile::ReadGeometry_PWmat( Cell &cel, ifstream &ifs )
 	++count_geometry;
 	cel.snapshot_time = cel.snapshot_index * INPUT.msd_dt; 
 
-	delete[] cel.atom;
-	cel.atom = new Atoms[ntype];
-
 	//locate atomic positions
 	while(ifs>>useless)
 	{
@@ -69,7 +65,6 @@ bool CellFile::ReadGeometry_PWmat( Cell &cel, ifstream &ifs )
 	double tmpx,tmpy,tmpz;
 	for(int it=0; it<ntype; ++it)
 	{
-		cel.atom[it].pos = new Vector3<double>[cel.atom[it].na];
 		for(int ia=0;ia<cel.atom[it].na;ia++)
 		{
 			ifs >> useless >> tmpx >> tmpy >> tmpz >> useless >> useless >> useless;

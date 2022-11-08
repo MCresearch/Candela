@@ -131,7 +131,6 @@ bool CellFile::ReadGeometry_ABACUS( Cell &cel, ifstream &ifs )
 {
 	TITLE("CellFile","ReadGeometry_ABACUS2");
 	const int ntype = INPUT.ntype;
-	cel.init_cel(INPUT);
 	bool restart = true;
 
 	string useless;

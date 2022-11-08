@@ -32,7 +32,6 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 	}
 
 	const int ntype = INPUT.ntype;
-	cel.init_cel(INPUT);
 
 	double celldm1, celldm2, celldm3;
 	if(INPUT.celldm1 * INPUT.celldm2 * INPUT.celldm3 > 1e-4)
@@ -104,15 +103,11 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 
 
 	double tmpx,tmpy,tmpz;
-	for(int it=0; it<ntype; ++it)
-        {
-                delete[] cel.atom[it].pos;
-        }// renxi added 20200902
+	
 	int* record_na = new int[ntype];
 	for(int it=0; it<ntype; ++it)
 	{
 		record_na[it] = 0;
-		cel.atom[it].pos = new Vector3<double>[cel.atom[it].na];
 	}
 	for(int ia=0; ia<INPUT.natom; ++ia)
 	{

@@ -73,7 +73,8 @@ bool CellFile::ReadGeometry( Cell &cel )
 {
 	TITLE("CellFile","ReadGeometry");
 
-//	cout << "ReadGeometry!" << endl;
+	//Init cel
+	cel.init_cel(INPUT);
 
 	// (1) read in geometry file from PROFESS
 	if(INPUT.geo_in_type=="PROFESS")
@@ -354,6 +355,11 @@ void CellFile::WriteGeometry( Cell &cel, bool cartesian )
 bool CellFile::ReadVelocity( Cell &cel )
 {
 	TITLE("CellFile","ReadVelocity");
+	for(int it=0; it<cel.ntype; ++it)
+    {
+		if(cel.atom[it].vel == nullptr)	
+			cel.atom[it].vel = new Vector3<double>[cel.atom[it].na];
+	}
 
 	// (1) read in velocity file from PROFESS
 	if(INPUT.velcor_in_type=="PROFESS")

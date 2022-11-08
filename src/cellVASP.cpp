@@ -22,7 +22,6 @@ bool CellFile::ReadGeometry_VASP( Cell &cel )
 {
 	TITLE("CellFile","ReadGeometry_VASP");
 	const int ntype = INPUT.ntype;
-	cel.init_cel(INPUT);
 
 	// (1) open the file.
 	stringstream ss;
@@ -231,8 +230,6 @@ bool CellFile::ReadVelocity_VASP( Cell &cel )
 		return false; 
 	}
 	//cout << " File name is " << ss.str() << endl;
-
-	cel.atom = new Atoms[ntype];
 
 	// (2) read lattice
 	bool restart = true;

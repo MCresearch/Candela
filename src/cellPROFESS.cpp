@@ -22,7 +22,6 @@ bool CellFile::ReadGeometry_PROFESS( Cell &cel )
 {
 	TITLE("CellFile","ReadGeometry_PROFESS");
 	const int ntype = INPUT.ntype;
-	cel.init_cel(INPUT);
 
 	// (1) open the file.
 	stringstream ss;
@@ -211,8 +210,6 @@ bool CellFile::ReadVelocity_PROFESS( Cell &cel )
 		return false; 
 	}
 //	cout << " File name is " << ss.str() << endl;
-
-	cel.atom = new Atoms[ntype];
 
 	// (2) read lattice
 	bool restart = true;
