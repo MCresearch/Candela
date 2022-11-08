@@ -62,6 +62,7 @@ class Cell
 	void read_pos_ili(ifstream &ifs_pos_ili, const int &it);
 
 	void atom_mass();
+	void init_cel(Input& Inp);
 
 };
 

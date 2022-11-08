@@ -24,8 +24,7 @@ bool CellFile::ReadGeometry_QE( Cell &cel, ifstream &ifs, ifstream &ifs_cel, ifs
 	const int ntype = INPUT.ntype;
 	bool restart = true;
 
-	delete[] cel.atom;
-	cel.atom = new Atoms[ntype];
+	cel.init_cel(INPUT);
 
 	if(INPUT.eig_file != "none")
 	{
@@ -131,12 +130,6 @@ bool CellFile::ReadGeometry_QE( Cell &cel, ifstream &ifs, ifstream &ifs_cel, ifs
 
 	ofs_running << cel.snapshot_index << " " << cel.snapshot_time << " volume " << cel.volume << " (Angstrom^3)"
 	<< " rho(64H2O)= " << 64*18*1.6605/cel.volume << endl; // temporary code
-
-	cel.atom[0].na = INPUT.natom1;
-	cel.atom[0].id = INPUT.id1;
-	if(INPUT.ntype>=2) {cel.atom[1].na = INPUT.natom2; cel.atom[1].id = INPUT.id2; }
-	if(INPUT.ntype>=3) {cel.atom[2].na = INPUT.natom3; cel.atom[2].id = INPUT.id3; }
-//	if(INPUT.ntype>=4) {cel.atom[3].na = INPUT.natom4; cel.atom[3].id = INPUT.id4; }
 
 	cel.atom_mass();
 

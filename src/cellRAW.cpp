@@ -33,8 +33,7 @@ bool CellFile::ReadGeometry_RAW( Cell &cel, ifstream &ifs)
     // done
     //----------------------------------------------------------
 
-	delete[] cel.atom;
-	cel.atom = new Atoms[ntype];
+	cel.init_cel(INPUT);
 
 	assert(INPUT.celldm1>0.0);
 	assert(INPUT.celldm2>0.0);
@@ -49,11 +48,6 @@ bool CellFile::ReadGeometry_RAW( Cell &cel, ifstream &ifs)
 	  cel.a1.x*cel.a2.z*cel.a3.y - cel.a1.y*cel.a2.x*cel.a3.z - cel.a1.z*cel.a2.y*cel.a3.x;
 
 	//cout << " volume of the cell is " << cel.volume << " (Angstrom^3)" << endl;
-
-	cel.atom[0].na = INPUT.natom1;
-	cel.atom[0].id = INPUT.id1;
-	if(INPUT.ntype>=2) {cel.atom[1].na = INPUT.natom2; cel.atom[1].id = INPUT.id2; }
-	if(INPUT.ntype>=3) {cel.atom[2].na = INPUT.natom3; cel.atom[2].id = INPUT.id3; }
 
 	cel.nat = 0;
 	for(int it=0; it<ntype; ++it)

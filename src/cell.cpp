@@ -261,3 +261,24 @@ void Cell::atom_mass()
 		this->atom[it].cal_mass();
 	}
 }
+
+void Cell::init_cel(Input& Inp)
+{
+	this->ntype = Inp.ntype;
+	this->nat = Inp.natom;
+	delete[] this->atom; 
+	this->atom = new Atoms[ntype];
+	if(ntype==1)
+	{
+		this->atom[0].na = this->nat;
+		this->atom[0].id = INPUT.id1;
+	}
+	else 
+	{
+		this->atom[0].na = INPUT.natom1; this->atom[0].id = INPUT.id1;
+		if(INPUT.ntype>=2) {this->atom[1].na = INPUT.natom2; this->atom[1].id = INPUT.id2; }
+		if(INPUT.ntype>=3) {this->atom[2].na = INPUT.natom3; this->atom[2].id = INPUT.id3; }
+		if(INPUT.ntype>=4) {this->atom[3].na = INPUT.natom4; this->atom[3].id = INPUT.id4; }
+	}
+	return;
+}

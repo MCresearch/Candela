@@ -30,7 +30,10 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 		}
 		CellFile::first_read = false;
 	}
+	
 	const int ntype = INPUT.ntype;
+	cel.init_cel(INPUT);
+
 	double celldm1, celldm2, celldm3;
 	if(INPUT.celldm1 * INPUT.celldm2 * INPUT.celldm3 > 1e-4)
 	{
@@ -52,9 +55,7 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 	cel.snapshot_index = count_geometry;
 	++count_geometry;
 	cout << "count geometry " << count_geometry << endl;
-	cel.snapshot_time = cel.snapshot_index * INPUT.msd_dt; 
-	delete[] cel.atom;
-	cel.atom = new Atoms[ntype];
+	cel.snapshot_time = cel.snapshot_index * INPUT.msd_dt;
 
 	string useless;
 	string txt;
@@ -96,27 +97,6 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 	{
 		cout<<"Geo isn't enough!"<<endl;
 		return false;
-	}
-	if(ntype==1)
-	{
-		cel.atom[0].na = cel.nat;
-		cel.atom[0].id = INPUT.id1;
-	}
-	else if(ntype==2)
-	{
-		cel.atom[0].na = INPUT.natom1;
-		cel.atom[1].na = INPUT.natom2;
-		cel.atom[0].id = INPUT.id1;
-		cel.atom[1].id = INPUT.id2;
-	}
-	else if(ntype==3)
-	{
-		cel.atom[0].na = INPUT.natom1;
-		cel.atom[1].na = INPUT.natom2;
-		cel.atom[2].na = INPUT.natom3;
-		cel.atom[0].id = INPUT.id1;
-		cel.atom[1].id = INPUT.id2;
-		cel.atom[2].id = INPUT.id3;
 	}
 
 	cel.atom_mass();

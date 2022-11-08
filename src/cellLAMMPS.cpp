@@ -35,8 +35,7 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 	cel.snapshot_time = cel.snapshot_index * INPUT.msd_dt; 
 	// done
 	//----------------------------------------------------------
-	delete[] cel.atom;
-	cel.atom = new Atoms[ntype];
+	cel.init_cel(INPUT);
 
 	string useless;
 	
@@ -84,44 +83,6 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 		READ_VALUE(ifs, ntype);
 		cout << "ntype = " << ntype << endl;
 	}
-
-
-	// ***
-	// read in the number of atoms and name for each element
-	// ***
-	if(ntype==1)
-	{
-		cel.atom[0].na = cel.nat;
-		cel.atom[0].id = INPUT.id1;
-	}
-	else if(ntype==2)
-	{
-		cel.atom[0].na = INPUT.natom1;
-		cel.atom[1].na = INPUT.natom2;
-		cel.atom[0].id = INPUT.id1;
-		cel.atom[1].id = INPUT.id2;
-	}
-	else if(ntype==3)
-	{
-		cel.atom[0].na = INPUT.natom1;
-		cel.atom[1].na = INPUT.natom2;
-		cel.atom[2].na = INPUT.natom3;
-		cel.atom[0].id = INPUT.id1;
-		cel.atom[1].id = INPUT.id2;
-		cel.atom[2].id = INPUT.id3;
-	}
-	else if(ntype==4)
-	{
-		cel.atom[0].na = INPUT.natom1;
-		cel.atom[1].na = INPUT.natom2;
-		cel.atom[2].na = INPUT.natom3;
-		cel.atom[3].na = INPUT.natom4;
-		cel.atom[0].id = INPUT.id1;
-		cel.atom[1].id = INPUT.id2;
-		cel.atom[2].id = INPUT.id3;
-		cel.atom[3].id = INPUT.id4;
-	}
-
 
 	cel.atom_mass();
 

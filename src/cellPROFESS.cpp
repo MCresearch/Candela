@@ -22,6 +22,7 @@ bool CellFile::ReadGeometry_PROFESS( Cell &cel )
 {
 	TITLE("CellFile","ReadGeometry_PROFESS");
 	const int ntype = INPUT.ntype;
+	cel.init_cel(INPUT);
 
 	// (1) open the file.
 	stringstream ss;
@@ -39,9 +40,6 @@ bool CellFile::ReadGeometry_PROFESS( Cell &cel )
 	// many files does not exist, so we don't print
 	// every file's name.
 	ofs_running << " File name is " << ss.str() << endl;
-
-
-	cel.atom = new Atoms[ntype];
 
 	// (2) read lattice
 	bool restart = true;
@@ -85,49 +83,13 @@ bool CellFile::ReadGeometry_PROFESS( Cell &cel )
 	Vector3<double> add1,add2,add3;
 	if( SCAN_BEGIN(ifs, "POSITIONS_FRAC", restart) )
 	{
-//		string pos_type;
-//		READ_VALUE(ifs, pos_type);
-//		cout << " pos_type=" << pos_type << endl;
 		bool frac = true;
 		for(int it=0; it<ntype; ++it)
 		{
-			if(ntype==1) cel.atom[it].na = INPUT.natom;
-			else if(ntype==2)
-			{
-				if(it==0) cel.atom[it].na = INPUT.natom1;
-				if(it==1) cel.atom[it].na = INPUT.natom2;
-			}		
-			else if(ntype==3)
-			{
-				if(it==0) cel.atom[it].na = INPUT.natom1;
-				if(it==1) cel.atom[it].na = INPUT.natom2;
-				if(it==2) cel.atom[it].na = INPUT.natom3;
-			}
-			else if(ntype==4)
-			{
-				if(it==0) cel.atom[it].na = INPUT.natom1;
-				if(it==1) cel.atom[it].na = INPUT.natom2;
-				if(it==2) cel.atom[it].na = INPUT.natom3;
-				if(it==3) cel.atom[it].na = INPUT.natom4;
-			}
-			else
-			{
-				cout << " ntype should be no more than 4." << endl;
-				exit(0);
-			}
-
 			cel.atom[it].read_pos(ifs,frac);
 			for(int ia2=0; ia2<cel.atom[it].na; ++ia2)
 			{
 				cel.direct2cartesian(it, ia2);
-/*
-				cout << " direct now is " << cel.atom[it].posd[ia2].x << 
-				" " << cel.atom[it].posd[ia2].y <<
-				" " << cel.atom[it].posd[ia2].z << endl;
-				cout << " cartesian now is " << cel.atom[it].pos[ia2].x << 
-				" " << cel.atom[it].pos[ia2].y <<
-				" " << cel.atom[it].pos[ia2].z << endl;
-*/
 			}
 		
 		}
@@ -138,41 +100,10 @@ bool CellFile::ReadGeometry_PROFESS( Cell &cel )
 		for(int it=0; it<ntype; ++it)
 		{
 
-			if(ntype==1) cel.atom[it].na = INPUT.natom;
-			else if(ntype==2)
-			{
-				if(it==0) cel.atom[it].na = INPUT.natom1;
-				if(it==1) cel.atom[it].na = INPUT.natom2;
-				cout << " atom number is " << cel.atom[it].na << endl;
-			}		
-			else if(ntype==3)
-			{
-				if(it==0) cel.atom[it].na = INPUT.natom1;
-				if(it==1) cel.atom[it].na = INPUT.natom2;
-				if(it==2) cel.atom[it].na = INPUT.natom3;
-			}
-			else if(ntype==4)
-			{
-				if(it==0) cel.atom[it].na = INPUT.natom1;
-				if(it==1) cel.atom[it].na = INPUT.natom2;
-				if(it==2) cel.atom[it].na = INPUT.natom3;
-				if(it==3) cel.atom[it].na = INPUT.natom4;
-			}
-			else
-			{
-				cout << " ntype should be no more than 4." << endl;
-				exit(0);
-			}
-
-
 			cel.atom[it].read_pos(ifs,frac);
 			for(int ia2=0; ia2<cel.atom[it].na; ++ia2)
 			{
-	//			cout << " ia2=" << ia2 << endl;
 				cel.cartesian2direct(it, ia2);
-
-				// mohan added 2019-03-04
-				// to make sure all atoms are within the cell
 				while(cel.atom[it].posd[ia2].x<0){cel.atom[it].posd[ia2].x+=1.0;}
 				while(cel.atom[it].posd[ia2].y<0){cel.atom[it].posd[ia2].y+=1.0;}
 				while(cel.atom[it].posd[ia2].z<0){cel.atom[it].posd[ia2].z+=1.0;}

@@ -131,10 +131,9 @@ bool CellFile::ReadGeometry_ABACUS( Cell &cel, ifstream &ifs )
 {
 	TITLE("CellFile","ReadGeometry_ABACUS2");
 	const int ntype = INPUT.ntype;
+	cel.init_cel(INPUT);
 	bool restart = true;
 
-	delete[] cel.atom;
-	cel.atom = new Atoms[ntype];
 	string useless;
 	double lat_const;
 	ifs >> useless >> useless;
@@ -172,11 +171,6 @@ bool CellFile::ReadGeometry_ABACUS( Cell &cel, ifstream &ifs )
 	{
 		for (int i=0; i<4; i++) ifs >> useless;
 	}
-	cel.atom[0].na = INPUT.natom1;
-	cel.atom[0].id = INPUT.id1;
-	if(INPUT.ntype>=2) {cel.atom[1].na = INPUT.natom2; cel.atom[1].id = INPUT.id2; }
-	if(INPUT.ntype>=3) {cel.atom[2].na = INPUT.natom3; cel.atom[2].id = INPUT.id3; }
-	if(INPUT.ntype>=4) {cel.atom[3].na = INPUT.natom4; cel.atom[3].id = INPUT.id4; }
 	
 	cel.atom_mass();
 

@@ -24,8 +24,7 @@ bool CellFile::ReadGeometry_XYZ( Cell &cel, ifstream &ifs)
 	const int ntype = INPUT.ntype;
 	bool restart = true;
 
-	delete[] cel.atom;
-	cel.atom = new Atoms[ntype];
+	cel.init_cel(INPUT);
 
 	assert(INPUT.celldm1>0.0);
 	assert(INPUT.celldm2>0.0);

@@ -6,10 +6,10 @@ bool CellFile::ReadGeometry_PWmat( Cell &cel, ifstream &ifs )
 {
 	TITLE("CellFile", "ReadGeometry_PWmat");
 	const int ntype = INPUT.ntype;
+	cel.init_cel(INPUT);
 	const double celldm1 =INPUT.celldm1;
 	const double celldm2 =INPUT.celldm2;
 	const double celldm3 =INPUT.celldm3;
-	cel.nat=INPUT.natom;
 	string useless;
 	string txt;
 	while(ifs >> useless)
@@ -61,28 +61,6 @@ bool CellFile::ReadGeometry_PWmat( Cell &cel, ifstream &ifs )
 		cout<<"Geo isn't enough!"<<endl;
 		return false;
 	}
-	if(ntype==1)
-	{
-		cel.atom[0].na = cel.nat;
-		cel.atom[0].id = INPUT.id1;
-	}
-	else if(ntype==2)
-	{
-		cel.atom[0].na = INPUT.natom1;
-		cel.atom[1].na = INPUT.natom2;
-		cel.atom[0].id = INPUT.id1;
-		cel.atom[1].id = INPUT.id2;
-	}
-	else if(ntype==3)
-	{
-		cel.atom[0].na = INPUT.natom1;
-		cel.atom[0].na = INPUT.natom2;
-		cel.atom[0].na = INPUT.natom3;
-		cel.atom[0].id = INPUT.id1;
-		cel.atom[1].id = INPUT.id2;
-		cel.atom[2].id = INPUT.id3;
-	}
-
 
 	cel.atom_mass();
 
