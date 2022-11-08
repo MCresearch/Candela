@@ -71,9 +71,7 @@ bool CellFile::ReadGeometry_PROFESS( Cell &cel )
 		{
 			ifs >> cel.atom[it].id >> cel.atom[it].pot_file; 
 		}
-
 		cel.atom_mass();
-
 	}
 
 

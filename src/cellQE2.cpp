@@ -98,51 +98,64 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 		return false;
 	}
 
-	cel.atom_mass();
 
-
-
+	//read atom positions
 	double tmpx,tmpy,tmpz;
-	
 	int* record_na = new int[ntype];
-	for(int it=0; it<ntype; ++it)
-	{
-		record_na[it] = 0;
-	}
+	ZEROS(record_na, ntype);
 	for(int ia=0; ia<INPUT.natom; ++ia)
 	{
 		ifs>>useless>>tmpx>>tmpy>>tmpz;
-		for(int it=0; it<ntype; ++it) // renxi fixed 20200902
+
+		//get which it
+		int it = -1;
+		if(ntype == 1)
 		{
-			if (useless == cel.atom[it].id || ntype == 1)
-			{	
-				int ia1 = record_na[it];
-  				lim2cel(tmpx);
-				lim2cel(tmpy);
-				lim2cel(tmpz);
-				if(INPUT.cartesian)
-                {
-					//cout << tmpx << " " << tmpy << " " << tmpz << endl;
-					cel.atom[it].pos[ia1].x=tmpx;
-					cel.atom[it].pos[ia1].y=tmpy;
-					cel.atom[it].pos[ia1].z=tmpz;
-                }
-				else
+			it = 0;
+			cel.atom[0].id = useless;
+		}
+		else
+		{
+			for(int it0=0; it0<ntype; ++it0)
+			{
+				if (useless == cel.atom[it0].id)
 				{
-					cel.atom[it].pos[ia1].x=tmpx*celldm1;
-					cel.atom[it].pos[ia1].y=tmpy*celldm2;
-					cel.atom[it].pos[ia1].z=tmpz*celldm3;
+					it = it0;
 				}
-				//cout << cel.atom[it].pos[ia1].x << " " << cel.atom[it].pos[ia1].y << " " << cel.atom[it].pos[ia1].z << endl;
-				record_na[it]++;
-				//cout<<cel.atom[it].pos[ia].x<<' '<<cel.atom[it].pos[ia].y<<' '<<cel.atom[it].pos[ia].z<<endl;
 			}
 		}
+		if(it < 0)
+		{
+			cout<<"We do not find atom id "<<useless<<endl;
+			exit(0);
+		}
+
+		//get positions
+		int ia1 = record_na[it];
+  		lim2cel(tmpx);
+		lim2cel(tmpy);
+		lim2cel(tmpz);
+		if(INPUT.cartesian)
+        {
+			cel.atom[it].pos[ia1].x=tmpx;
+			cel.atom[it].pos[ia1].y=tmpy;
+			cel.atom[it].pos[ia1].z=tmpz;
+        }
+		else
+		{
+			cel.atom[it].pos[ia1].x=tmpx*celldm1;
+			cel.atom[it].pos[ia1].y=tmpy*celldm2;
+			cel.atom[it].pos[ia1].z=tmpz*celldm3;
+		}
+		record_na[it]++;
+	}
+	for(int it=0; it<ntype; ++it)
+	{
+		assert(record_na[it] == cel.atom[it].na);
 	}
 	delete[] record_na;
-	
+	cel.atom_mass();
 
-//	cout << 1 << endl;
 	return true;
 }
 

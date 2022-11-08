@@ -58,10 +58,6 @@ bool CellFile::ReadGeometry_PWmat( Cell &cel, ifstream &ifs )
 		return false;
 	}
 
-	cel.atom_mass();
-
-
-
 	double tmpx,tmpy,tmpz;
 	for(int it=0; it<ntype; ++it)
 	{
@@ -73,7 +69,7 @@ bool CellFile::ReadGeometry_PWmat( Cell &cel, ifstream &ifs )
 			cel.atom[it].pos[ia].z=tmpz*celldm3;
 		}
 	}
-	
+	cel.atom_mass();
 
 
 	return true;

@@ -169,8 +169,6 @@ bool CellFile::ReadGeometry_ABACUS( Cell &cel, ifstream &ifs )
 	{
 		for (int i=0; i<4; i++) ifs >> useless;
 	}
-	
-	cel.atom_mass();
 
 	cel.nat = 0;
 	for(int it=0; it<ntype; ++it)
@@ -194,6 +192,7 @@ bool CellFile::ReadGeometry_ABACUS( Cell &cel, ifstream &ifs )
 //				<< " " << cel.atom[it].pos[ia2].z << endl;
 		}
 	}
+	cel.atom_mass();
 	return true;
 }
 

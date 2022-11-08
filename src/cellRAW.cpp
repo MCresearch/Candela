@@ -57,12 +57,6 @@ bool CellFile::ReadGeometry_RAW( Cell &cel, ifstream &ifs)
 	//-----------------------
 	// begin reading atoms
 	//-----------------------
-	int *count_atom = new int[INPUT.ntype];
-	for(int it=0; it<INPUT.ntype; ++it)
-	{
-		count_atom[it] = 0;
-	}
-
 	double tx, ty, tz;
 	for(int it=0; it<ntype; ++it)
 	{
@@ -86,15 +80,11 @@ bool CellFile::ReadGeometry_RAW( Cell &cel, ifstream &ifs)
 	// ------------------------
 	// finish reading atoms
 	// ------------------------
-
 	for(int it=0; it<ntype; ++it)
 	{
 		for(int ia2=0; ia2<cel.atom[it].na; ++ia2)
 		{
 			cel.cartesian2direct(it, ia2);
-//			cout << cel.atom[it].pos[ia2].x
-//				<< " " << cel.atom[it].pos[ia2].y
-//				<< " " << cel.atom[it].pos[ia2].z << endl;
 		}
 	}
 

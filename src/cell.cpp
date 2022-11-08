@@ -279,6 +279,11 @@ void Cell::init_cel(Input& Inp)
 		if(INPUT.ntype>=2) {this->atom[1].na = INPUT.natom2; this->atom[1].id = INPUT.id2; }
 		if(INPUT.ntype>=3) {this->atom[2].na = INPUT.natom3; this->atom[2].id = INPUT.id3; }
 		if(INPUT.ntype>=4) {this->atom[3].na = INPUT.natom4; this->atom[3].id = INPUT.id4; }
+		if(INPUT.ntype>=5) 
+		{
+			cout<<"We do not support ntype > 4 yet."<<endl;
+			exit(0);
+		}
 	}
 	for(int it=0; it<ntype; ++it)
     {

@@ -112,7 +112,10 @@ bool CellFile::ReadGeometry_XYZ( Cell &cel, ifstream &ifs)
 			}
 		}
 	}
-
+	for(int it=0; it<ntype; ++it)
+	{
+		assert(count_atom[it] == cel.atom[it].na);
+	}
 	delete[] count_atom;
 	// ------------------------
 	// finish reading atoms

@@ -125,11 +125,6 @@ bool CellFile::ReadGeometry_QE( Cell &cel, ifstream &ifs, ifstream &ifs_cel, ifs
 	// (3) calculate the volume of the cell.
 	cel.cal_volume();
 
-	ofs_running << cel.snapshot_index << " " << cel.snapshot_time << " volume " << cel.volume << " (Angstrom^3)"
-	<< " rho(64H2O)= " << 64*18*1.6605/cel.volume << endl; // temporary code
-
-	cel.atom_mass();
-
 	cel.nat = 0;
 	for(int it=0; it<ntype; ++it)
 	{
@@ -182,7 +177,7 @@ bool CellFile::ReadGeometry_QE( Cell &cel, ifstream &ifs, ifstream &ifs_cel, ifs
 			cel.atom[it].read_vel(ifs_vel);
 		}
 	}
-
+	cel.atom_mass();
 
 
 //	cout << "Finish reading cells." << endl;

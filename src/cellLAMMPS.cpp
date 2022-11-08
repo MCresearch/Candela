@@ -83,9 +83,6 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 		cout << "ntype = " << ntype << endl;
 	}
 
-	cel.atom_mass();
-
-
 	for(int it=0; it<ntype; ++it)
 	{
 		//cout << " Element : " << cel.atom[it].id << " Atom Number : " << cel.atom[it].na << endl;
@@ -282,6 +279,7 @@ bool CellFile::ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs )
 	}
 
 	delete[] aifet;
+	cel.atom_mass();
 
 	return true;
 }
