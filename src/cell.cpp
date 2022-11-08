@@ -282,3 +282,10 @@ void Cell::init_cel(Input& Inp)
 	}
 	return;
 }
+
+double Cell::cal_volume()
+{
+	this->volume = this->a1.x*this->a2.y*this->a3.z + this->a1.y*this->a2.z*this->a3.x + this->a1.z*this->a2.x*this->a3.y -
+	  this->a1.x*this->a2.z*this->a3.y - this->a1.y*this->a2.x*this->a3.z - this->a1.z*this->a2.y*this->a3.x;
+	return this->volume;
+}

@@ -63,6 +63,7 @@ class Cell
 
 	void atom_mass();
 	void init_cel(Input& Inp);
+	double cal_volume();
 
 };
 

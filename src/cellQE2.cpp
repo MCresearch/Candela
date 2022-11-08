@@ -30,7 +30,7 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 		}
 		CellFile::first_read = false;
 	}
-	
+
 	const int ntype = INPUT.ntype;
 	cel.init_cel(INPUT);
 
@@ -50,7 +50,7 @@ bool CellFile::ReadGeometry_QE2( Cell &cel, ifstream &ifs )
 	cel.a1.x=celldm1;	cel.a1.y=0;		cel.a1.z=0;
 	cel.a2.x=0;		cel.a2.y=celldm2;	cel.a2.z=0;
 	cel.a3.x=0;		cel.a3.y=0;		cel.a3.z=celldm3;
-	cel.volume=celldm1*celldm2*celldm3;
+	cel.cal_volume();
 	static int count_geometry=0;
 	cel.snapshot_index = count_geometry;
 	++count_geometry;

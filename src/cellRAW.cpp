@@ -44,8 +44,7 @@ bool CellFile::ReadGeometry_RAW( Cell &cel, ifstream &ifs)
 	cel.a3.x = 0.0; cel.a3.y = 0.0; cel.a3.z = INPUT.celldm3;
 
 	// (3) calculate the volume of the cell.
-	cel.volume = cel.a1.x*cel.a2.y*cel.a3.z + cel.a1.y*cel.a2.z*cel.a3.x + cel.a1.z*cel.a2.x*cel.a3.y -
-	  cel.a1.x*cel.a2.z*cel.a3.y - cel.a1.y*cel.a2.x*cel.a3.z - cel.a1.z*cel.a2.y*cel.a3.x;
+	cel.cal_volume();
 
 	//cout << " volume of the cell is " << cel.volume << " (Angstrom^3)" << endl;
 

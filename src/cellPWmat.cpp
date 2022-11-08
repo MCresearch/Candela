@@ -38,7 +38,7 @@ bool CellFile::ReadGeometry_PWmat( Cell &cel, ifstream &ifs )
 	assert(INPUT.celldm2>0);
 	assert(INPUT.celldm3>0);
 	//calculate the volume of the cell
-	cel.volume = cel.a1.x*cel.a2.y*cel.a3.z + cel.a1.y*cel.a2.z*cel.a3.x + cel.a1.z*cel.a2.x*cel.a3.y - cel.a1.x*cel.a2.z*cel.a3.y - cel.a1.y*cel.a2.x*cel.a3.z - cel.a1.z*cel.a2.y*cel.a3.x;
+	cel.cal_volume();
 	static int count_geometry=0;
 	cel.snapshot_index = count_geometry;
 	++count_geometry;

@@ -150,8 +150,7 @@ bool CellFile::ReadGeometry_ABACUS( Cell &cel, ifstream &ifs )
 	INPUT.celldm1 = cel.a1.norm();
 	INPUT.celldm2 = cel.a2.norm();
 	INPUT.celldm3 = cel.a3.norm();
-	cel.volume = cel.a1.x*cel.a2.y*cel.a3.z + cel.a1.y*cel.a2.z*cel.a3.x + cel.a1.z*cel.a2.x*cel.a3.y -
-	cel.a1.x*cel.a2.z*cel.a3.y - cel.a1.y*cel.a2.x*cel.a3.z - cel.a1.z*cel.a2.y*cel.a3.x;
+	cel.cal_volume();
 
 	//ofs_running << cel.snapshot_index << " " << cel.snapshot_time << " volume " << cel.volume << " (Angstrom^3)"
 	//<< " rho(64H2O)= " << 64*18*1.6605/cel.volume << endl; // temporary code
