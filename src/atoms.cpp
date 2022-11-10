@@ -273,7 +273,7 @@ void Atoms::cal_mass()
 	}
 	else
 	{
-		cout<<"Warning: we do not support the mass of "<<this->id<<" yet!"<<endl;
+		// cout<<"Warning: we do not support the mass of "<<this->id<<" yet!"<<endl;
 	}
 }
 
