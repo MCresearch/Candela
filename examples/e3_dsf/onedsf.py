@@ -17,6 +17,7 @@ isffile = 'isf.txt'
 outfile = 'dsf.txt'
 
 isf = np.loadtxt(isffile)
+isf[0][1] /= 2
 
 if isf[-1,0]/tcut < N_max:
     n_max = int(len(isf[:, 1]) * N_max * tcut/isf[-1,0]) - len(isf[:, 1])
