@@ -1,0 +1,18 @@
+calculation  pdf # Pair Distribution Function.
+geo_in_type  ABACUS
+geo_directory ../geo/InAs32.abacus
+geo_1        0
+geo_2        10
+geo_interval 1
+geo_ignore   0 
+geo_out      pdf.txt  # output pdf name.
+ntype        2        # number of different types of atoms.
+natom        64      # total number of atoms.
+natom1       32
+natom2       32
+dr           0.01     # delta r in real space
+rcut         6.22     # real space cutoff
+id1 In
+id2 As
+ele1 In
+ele2 In

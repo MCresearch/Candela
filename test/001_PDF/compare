@@ -1,3 +1,4 @@
 threshold 1e-4
 enable_mpi ON
 pdf.ref  pdf.txt
+ssf.ref  ssf.dat

@@ -14,3 +14,6 @@ natom        64   # total number of atoms.
 natom1       64
 rcut         6
 dr           0.01     # delta r in real space
+
+struf_dgx   0.05
+struf_ng    200
