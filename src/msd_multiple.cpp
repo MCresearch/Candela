@@ -308,7 +308,7 @@ void MSD_Multiple::compute_msd(const Cell &cel, const int &igeo)
 void MSD_Multiple::each_msd(const Cell &cel, const int &ito, MSD_Single &ms, const Water* water)
 {
 	if(cel.snapshot_time < ms.t0) return;
-	else if(cel.snapshot_time + 2*INPUT.msd_dt>= ms.t1) return;
+	else if(cel.snapshot_time>= ms.t1) return;
 
     // step 1
 	bool flag_Stokes=INPUT.msd_stokes;

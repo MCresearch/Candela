@@ -6,11 +6,11 @@
 #--------------------------- Please set ---------------------------
 #------------------------------------------------------------------
 # mpi version: mpiicc/mpiicpc/mpicxx
-CC=mpiicpc 
+CXX=mpiicpc 
 # serial version: icc/icpc/g++
-# CC=g++
+# CXX=g++
 
-# Compile integrate-test version, CC must use g++/mpicxx
+# Compile integrate-test version, CXX must use g++/mpicxx
 # It can check the leak of memory.
 TEST=OFF
 #------------------------------------------------------------------
@@ -26,30 +26,29 @@ SRC_CPP = $(wildcard $(D_SRC)/*.cpp)
 OBJ_CPP = $(addprefix $(D_OBJ)/, $(patsubst %.cpp, %.o, $(notdir $(SRC_CPP))))
 TARGET=$(D_BIN)/candela
 
-ifeq ($(findstring mpi, $(CC)), mpi)
-	HONG=-D__MPI
-	MPICOMPILE = ON
+ifeq ($(findstring mpi, $(CXX)), mpi)
+    HONG = -D__MPI
+    MPICOMPILE = ON
 endif
 
 ifeq ($(TEST), ON)
-#CC must be a gnu compiler, or else it will fail.
-	OPTION += -fsanitize=address -fno-omit-frame-pointer
-	HONG += -D__DEBUG
-	ifeq ($(findstring mpi, $(CC)), mpi)
-		CC = mpicxx
+#CXX must be a gnu compiler, or else it will fail.
+    OPTION = -g -fsanitize=address -fno-omit-frame-pointer
+	ifeq ($(findstring mpi, $(CXX)), mpi)
+        CXX = mpicxx
 	else
-		CC = g++
+        CXX = g++
 	endif
 endif
 
 
 ${TARGET}:$(OBJ_CPP)
 	@if [ ! -d $(D_BIN) ]; then mkdir $(D_BIN); fi
-	$(CC) $(OPTION) -o $@ $^
+	$(CXX) $(OPTION) -o $@ $^
 	@if [ $(TEST) == ON ]; then cd test;./Autotest.sh $(MPICOMPILE);cd ..; fi
 
 $(D_OBJ)/%.o: $(D_SRC)/%.cpp $(D_OBJ)/readme.log
-	$(CC) $(OPTION) $(HONG) -c $< -o $@
+	$(CXX) $(OPTION) $(HONG) -c $< -o $@
 	
 $(D_OBJ)/readme.log:
 	@if [ ! -d $(D_OBJ) ]; then mkdir $(D_OBJ); fi

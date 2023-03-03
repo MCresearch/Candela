@@ -1,0 +1,6 @@
+threshold 1e-4
+
+enable_mpi ON
+
+MSD_each.ref  MSD_each.dat
+MSD_total.ref MSD_total.dat

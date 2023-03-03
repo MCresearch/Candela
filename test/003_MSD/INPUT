@@ -1,0 +1,20 @@
+calculation  msd_multiple # Pair Distribution Function.
+system Al
+geo_in_type  ABACUS
+geo_directory ../geo/Al32.abacus
+geo_1        0
+geo_2        400
+geo_interval 1
+geo_ignore   100
+
+ntype        1        # number of different types of atoms.
+natom        32   # total number of atoms.
+natom1       32
+
+msd_n 15
+msd_t0 5
+msd_t 1
+msd_dt0 1
+msd_dt 0.05
+msd_natom 32
+
