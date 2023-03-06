@@ -9,6 +9,7 @@
 #define P_HA 27.21138
 #define P_EV2K 11604.5
 #define P_t_AU 4.837768652311e-17
+#define P_Ry2eV 13.605698
 
 #define MASS_H  1.00794
 #define MASS_D  2.01410

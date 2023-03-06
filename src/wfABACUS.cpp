@@ -74,14 +74,6 @@ void WfABACUS::readOUT(Wavefunc & wf)
 	checkstr="electron";
 	ifnecheckv(txt,checkstr);
 	//cout<<"number of electrons: "<<INPUT.nele<<endl;
-	
-	//get nband
-	searchead(ifskwt,txt,"occupied",1);
-	ifskwt>>txt>>useless>>nband;
-	checkstr="NBANDS";
-	ifnecheckv(checkstr,txt);
-	wf.nband=nband;
-
 
 	//get number of kpoint
 	searchead(ifskwt,txt,"Input",1);
@@ -107,6 +99,13 @@ void WfABACUS::readOUT(Wavefunc & wf)
 		ifskwt>>useless>>useless>>useless>>useless>>wk[i];
 		//cout<<"wk"<<wk[i]<<endl;
 	}
+
+	//get nband
+	searchead(ifskwt,txt,"occupied",1);
+	ifskwt>>txt>>useless>>nband;
+	checkstr="NBANDS";
+	ifnecheckv(checkstr,txt);
+	wf.nband=nband;
 	
 
 	//get number of fermi energy

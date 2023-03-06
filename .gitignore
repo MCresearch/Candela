@@ -3,5 +3,4 @@ candela
 *.o
 *.log
 *.txt
-*.dat
 *.pyc

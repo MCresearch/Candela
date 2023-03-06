@@ -14,6 +14,9 @@ class Ele_Conductivity
 	~Ele_Conductivity(){};
 
 	void Routine();
+
+	void method1();
+	void method2();
 	
 
 };

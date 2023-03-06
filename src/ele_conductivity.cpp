@@ -17,6 +17,19 @@ double Velocity_Matrix_Local(const int,const int,Wavefunc &);
 
 void Ele_Conductivity::Routine()
 {
+	if(INPUT.cond_method == 1)
+	{
+		this->method1();
+	}
+	else
+	{
+		this->method2();
+	}
+	return;
+}
+
+void Ele_Conductivity::method1()
+{
 	//get current work directory 
 	char *wdbuf;
 	wdbuf=getcwd(nullptr,0);
@@ -24,19 +37,17 @@ void Ele_Conductivity::Routine()
 
 	//Init
 	const double pi=M_PI;
-	double *st,*eps;
 	int nf=INPUT.n_fwhm;//Calculate different fwhm at the same time.
+	double st[nf], eps[nf];
 	if(INPUT.smear==0)
 		nf=1;
 	else if(INPUT.smear==1)
 	{
-		st=new double[nf];
 		for(int i=0;i<nf;i++)
 			st[i]=INPUT.fwhm[i]/2.354820045030949;
 	}
 	else if(INPUT.smear==2)
 	{
-		eps=new double[nf];
 		for(int i=0;i<nf;i++)
 			eps[i]=INPUT.fwhm[i]/2;
 	}
@@ -109,6 +120,7 @@ void Ele_Conductivity::Routine()
 		}
 		chdir(ifolderstr.c_str());
 	}
+
 	Wavefunc WF;
 #ifdef __TIME
 	begin=clock();
@@ -280,7 +292,8 @@ void Ele_Conductivity::Routine()
 							else
 							{
 								smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-w,2))+1/(eps2+pow(w+INPUT.dw*(iv+0.5),2));
-								smearpre=pre*smearpre;
+								smearpre=pre*smearf;
+								
 							}
 							if(iv<iw)
 							{
@@ -376,6 +389,7 @@ void Ele_Conductivity::Routine()
 		delete[]f_L22_all;
 	}
 #endif
+    free(wdbuf);
 	return;
 }
 
@@ -394,7 +408,7 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	double* std_kappa=new double[nw];
 	double* L12=new double [nw];
 	double* L22=new double [nw];
-	if(INPUT.smear==0) lag="";
+	if(INPUT.smear==0) lag="I";
 	if(INPUT.smear==1) lag=dou2str(INPUT.fwhm[ifi])+"G";
 	if(INPUT.smear==2) lag=dou2str(INPUT.fwhm[ifi])+"L";
 	string sigmaname="sigma"+lag+".txt";
@@ -466,6 +480,8 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	delete[]std_sigma;
 	delete[]kappa;
 	delete[]std_kappa;
+	delete[]L22;
+	delete[]L12;
 	ofs.close();
 	ofs2.close();
 	ofs3.close();
