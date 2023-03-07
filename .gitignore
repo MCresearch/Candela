@@ -3,6 +3,5 @@ candela
 *.o
 *.log
 *.txt
-*.dat
 *.pyc
 .DS_Store

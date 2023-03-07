@@ -17,14 +17,32 @@ TEST=OFF
 
 
 
-OPTION=-O3 
+CFLAGS=-O3 
+FFLAGS=-O3
 D_SRC=./src
 D_OBJ=./obj
 D_BIN=./bin
 
 SRC_CPP = $(wildcard $(D_SRC)/*.cpp)
+SRC_F90 = $(wildcard $(D_SRC)/*.f90)
 OBJ_CPP = $(addprefix $(D_OBJ)/, $(patsubst %.cpp, %.o, $(notdir $(SRC_CPP))))
+OBJ_F90 = $(addprefix $(D_OBJ)/, $(patsubst %.f90, %.o, $(notdir $(SRC_F90))))
 TARGET=$(D_BIN)/candela
+
+ifeq ($(findstring mpii, $(CXX)), mpii)
+    FC = ifort
+else
+	ifeq ($(findstring mpi, $(CXX)), mpi)
+        FC = gfortran
+    else
+	    ifeq ($(findstring i, $(CXX)), i)
+            FC = ifort
+		else
+            FC = gfortran
+		endif
+	endif
+endif
+
 
 ifeq ($(findstring mpi, $(CXX)), mpi)
     HONG = -D__MPI
@@ -32,23 +50,32 @@ ifeq ($(findstring mpi, $(CXX)), mpi)
 endif
 
 ifeq ($(TEST), ON)
+    DEBUG = ON
+endif
+
+ifeq ($(DEBUG), ON)
 #CXX must be a gnu compiler, or else it will fail.
-    OPTION = -g -fsanitize=address -fno-omit-frame-pointer
+    CFLAGS = -g -fsanitize=address -fno-omit-frame-pointer
+    FFLAGS = -g -fsanitize=address -fno-omit-frame-pointer
 	ifeq ($(findstring mpi, $(CXX)), mpi)
         CXX = mpicxx
 	else
         CXX = g++
 	endif
+    FC = gfortran
 endif
 
 
-${TARGET}:$(OBJ_CPP)
+${TARGET}:$(OBJ_CPP) $(OBJ_F90)
 	@if [ ! -d $(D_BIN) ]; then mkdir $(D_BIN); fi
-	$(CXX) $(OPTION) -o $@ $^
+	$(CXX) $(CFLAGS) -o $@ $^
 	@if [ $(TEST) == ON ]; then cd test;./Autotest.sh $(MPICOMPILE);cd ..; fi
 
 $(D_OBJ)/%.o: $(D_SRC)/%.cpp $(D_OBJ)/readme.log
-	$(CXX) $(OPTION) $(HONG) -c $< -o $@
+	$(CXX) $(CFLAGS) $(HONG) -c $< -o $@
+
+$(D_OBJ)/%.o: $(D_SRC)/%.f90 $(D_OBJ)/readme.log
+	$(FC) $(FFLAGS) -c $< -o $@
 	
 $(D_OBJ)/readme.log:
 	@if [ ! -d $(D_OBJ) ]; then mkdir $(D_OBJ); fi

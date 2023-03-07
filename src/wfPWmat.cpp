@@ -100,13 +100,25 @@ void WfPWmat::Init(Wavefunc & wf)
 	delete[]ngtotnod_9_t;
 //OUT.FERMI
 	string useless;
-	ifstream ifsfermi("OUT.FERMI");
+	string fermifile=INPUT.wfdirectory+"/OUT.FERMI";
+	ifstream ifsfermi(fermifile.c_str());
+	if(!ifsfermi)
+	{
+		cout<<"No OUT.FERMI file"<<endl;
+		exit(0);
+	}
 	ifsfermi >>useless>>useless>>useless>>INPUT.fermiE;
 	ifsfermi.close();
 //REPORT
 	wk=new double [nkpoint];
 	string txt;
-    ifstream ifsrep("REPORT");
+	string reportfile=INPUT.wfdirectory+"/REPORT";
+    ifstream ifsrep(reportfile.c_str());
+	if(!ifsrep)
+	{
+		cout<<"No REPORT file"<<endl;
+		exit(0);
+	}
 	searchead(ifsrep,txt,"IN.SOLVENT",1);
 	ifsrep>>useless>>useless>>INPUT.nele;
 	searchead(ifsrep,txt,"total",1);
