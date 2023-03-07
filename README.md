@@ -102,6 +102,7 @@ The analysis calculates static structure factor (SSF) of single element. For wat
     - `struf_ng` Number of `dg` on each direction.
     - `ssf_out` SSF output file name.
 
+
 - **msd** <a id=msd></a>
 The analysis calculates the mean square displacement (MSD) by averaging square displacement over all water molecules. By Einstein's relation, MSD of molecule in liquid is linearly dependent on time by which we could deduce the diffusivity. For system with more than one type of element, the program will treat every type of element as one element. See `003_MSD` for example of `msd` calculation. The following parameters are needed for calculation of MSD:
     - `msd_dt` Time step between two printed snapshots.
