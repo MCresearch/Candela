@@ -7,20 +7,17 @@
 #define TWOSQRT2LN2 2.354820045030949 // FWHM = 2sqrt(2ln2) * \sigma
 #define FACTOR      1.839939223835727e7
 
-void jjcorr_ks(const int ik, const int nt, const double dt,  Wavefunc& wf,
-            double* ct11, double* ct12, double* ct22);
-void calcondw(const int nt, const double dt, const double fwhmin, const double wcut, 
-            const double dw_in, double *ct11, double *ct12, double *ct22);
 /**
  * @brief Calculate conducitities use time correlation funtions
  * 
  * @note In this method smear is set to 1.
  *       n_fwhm, nscf are not used
+ *       smearinvw is not used and it equivalent to smearinvw = 0
  *        
  */
 void Ele_Conductivity::method2()
 {
-	double times = 64;
+	double times = 16;
 
 	double wcut = INPUT.wcut;
 	double dw_in = INPUT.dw;
@@ -89,7 +86,7 @@ void Ele_Conductivity::method2()
 	wfr.cleanclass();
 }
 
-void jjcorr_ks(const int ik, const int nt, const double dt,  Wavefunc& wf,
+void Ele_Conductivity::jjcorr_ks(const int ik, const int nt, const double dt,  Wavefunc& wf,
             double* ct11, double* ct12, double* ct22)
 {
 	const int ndim = 3;
@@ -97,54 +94,37 @@ void jjcorr_ks(const int ik, const int nt, const double dt,  Wavefunc& wf,
 
     const int nbands = wf.nband;
     const double ef = INPUT.fermiE / P_Ry2eV;
-    complex<double> *pwave = new complex<double>[3 * npw * nbands];
-    // px|right>
-	for(int ib = 0 ; ib < nbands ; ++ib)
-	{
-		for(int ig = 0 ; ig < npw ; ++ig)
-		{
-			pwave[ig + ib*npw]                    = wf.Wavegg[ib*npw + ig] * (wf.gkk_x[ig]+wf.kpoint_x);
-            pwave[ig + ib*npw + npw * nbands]     = wf.Wavegg[ib*npw + ig] * (wf.gkk_y[ig]+wf.kpoint_y);
-            pwave[ig + ib*npw + 2 * npw * nbands] = wf.Wavegg[ib*npw + ig] * (wf.gkk_z[ig]+wf.kpoint_z);
-		}
-	}
-    for (int id = 0; id < 3; ++id)
+	double *pij2 = new double[(nbands-1) * nbands / 2];
+	getpij2(wf, pij2);
+    for (int it = 0; it < nt; ++it)
     {
-		complex<double> *pwaveid = pwave + id * npw * nbands;
-        complex<double> *pij = new complex<double>[nbands * nbands];
-		
-		multipAHB(nbands,nbands,npw, wf.Wavegg, npw, pwaveid, npw, pij, nbands);
-
-        for (int it = 0; it < nt; ++it)
+        double tmct11 = 0;
+        double tmct12 = 0;
+        double tmct22 = 0;
+        double *enb = wf.eigE;
+		int ijb = 0;
+        for (int ib = 0; ib < nbands; ++ib)
         {
-            double tmct11 = 0;
-            double tmct12 = 0;
-            double tmct22 = 0;
-            double *enb = wf.eigE;
-            for (int ib = 0; ib < nbands; ++ib)
+            double ei = enb[ib] / P_Ry2eV;
+            double fi = wf.occ[ib];
+            for (int jb = ib + 1; jb < nbands; ++jb, ++ijb)
             {
-                double ei = enb[ib] / P_Ry2eV;
-                double fi = wf.occ[ib];
-                for (int jb = ib + 1; jb < nbands; ++jb)
-                {
-                    double ej = enb[jb] / P_Ry2eV;
-                    double fj = wf.occ[jb];
-                    double tmct = sin((ej - ei) * (it)*dt) * (fi - fj) * norm(pij[ib * nbands + jb]);
-                    tmct11 += tmct;
-                    tmct12 += -tmct * ((ei + ej) / 2 - ef);
-                    tmct22 += tmct * pow((ei + ej) / 2 - ef, 2);
-                }
+                double ej = enb[jb] / P_Ry2eV;
+                double fj = wf.occ[jb];
+                double tmct = sin((ej - ei) * (it)*dt) * (fi - fj) * pij2[ijb];
+                tmct11 += tmct;
+                tmct12 += -tmct * ((ei + ej) / 2 - ef);
+                tmct22 += tmct * pow((ei + ej) / 2 - ef, 2);
             }
-            ct11[it] += tmct11;
-            ct12[it] += tmct12;
-            ct22[it] += tmct22;
         }
-        delete[] pij;
+        ct11[it] += tmct11;
+        ct12[it] += tmct12;
+        ct22[it] += tmct22;
     }
-    delete[] pwave;
+	delete[] pij2;
 }
 
-void calcondw(const int nt, const double dt, const double fwhmin, const double wcut, 
+void Ele_Conductivity::calcondw(const int nt, const double dt, const double fwhmin, const double wcut, 
             const double dw_in, double *ct11, double *ct12, double *ct22)
 {
 	double factor = FACTOR;

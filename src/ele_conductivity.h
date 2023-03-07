@@ -17,6 +17,14 @@ class Ele_Conductivity
 
 	void method1();
 	void method2();
+
+	private:
+	void getpij2(Wavefunc& wf, double *pij2);
+	void jjcorr_ks(const int ik, const int nt, const double dt,  Wavefunc& wf,
+            double* ct11, double* ct12, double* ct22);
+	void calcondw(const int nt, const double dt, const double fwhmin, const double wcut, 
+            const double dw_in, double *ct11, double *ct12, double *ct22);
+	
 	
 
 };
