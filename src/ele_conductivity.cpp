@@ -254,7 +254,7 @@ void Ele_Conductivity::method1()
 				  	}
 				}
 	
-				tot_sum=tot_sum+(WF.occ[ib]-WF.occ[jb])*(corr2/(WF.eigE[jb]-WF.eigE[ib]));
+				tot_sum=tot_sum+(WF.occ[ib]-WF.occ[jb])*(corr2*WF.factor/(WF.eigE[jb]-WF.eigE[ib]));
 				//cout<<docc<<' '<<w<<' '<<corr2<<' '<<INPUT.dw<<' '<<WF.factor<<' '<<INPUT.vol<<' '<<factor<<endl;
 	    	}
 		}
@@ -332,7 +332,7 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	double* std_kappa=new double[nw];
 	double* L12=new double [nw];
 	double* L22=new double [nw];
-	if(INPUT.smear==0) lag="I";
+	if(INPUT.smear==0) lag=dou2str(INPUT.fwhm[ifi])+"I";
 	if(INPUT.smear==1) lag=dou2str(INPUT.fwhm[ifi])+"G";
 	if(INPUT.smear==2) lag=dou2str(INPUT.fwhm[ifi])+"L";
 	string sigmaname="sigma"+lag+".txt";
