@@ -8,19 +8,27 @@ Welcome to Candela's documentation!
 ===================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Overview
    :ref:`Overview`
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Basic usage and variables
    :ref:`Basic-usage-and-variables`
+   
+   :ref:`Compilation`
+   :ref:`Using-Candela`
+   :ref:`List-of-supported-analyses`
 
 .. toctree::
    :maxdepth: 2
    :caption: Develop guide
    :ref:`Develop-guide`
+
+   :ref:`Analysis-program-template`
+   :ref:`structure-of-file`
+   :ref:`Adding-test`
 
 -------------------------
 .. _Overview:
@@ -46,6 +54,8 @@ Basic usage and variables
 ===================================
 
 -----------
+.. _Compilation:
+
 Compilation
 -----------
 
@@ -53,6 +63,8 @@ Type `make` in the `Candela` directory to compile the executable `Candela.exe` i
 The default compiler is g++, which could be switched to other compiliers by changing `CC` in `Makefile`. 
 
 -------------
+.. _Using-Candela:
+
 Using Candela
 -------------
 
@@ -171,6 +183,8 @@ List of supported analyses
 ===================================
 
 --------------------------------
+.. _PDF:
+
 PDF (Pair distribution function)
 --------------------------------
 
@@ -187,6 +201,8 @@ The following parameters are needed for `pdf` calculation:
 
 
 --------------------------------
+.. _SSF:
+
 SSF (Static structure factor)
 --------------------------------
 
@@ -201,6 +217,8 @@ The following parameters are also needed for the calculation:
 
 
 --------------------------------
+.. _MSD:
+
 MSD (Mean square displacement)
 --------------------------------
 
@@ -226,6 +244,8 @@ by learning which you could write new analysis subroutines on your own.
 
 
 --------------------------
+.. _Analysis-program-template:
+
 Analysis program template
 --------------------------
 
@@ -321,6 +341,8 @@ All of the classes are straightforwardly defined and directly correspond to phys
 +---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
 
 --------------------------------------------
+: _structure-of-file:
+
 The structure of a typical analysis C++ file
 --------------------------------------------
 
@@ -400,6 +422,8 @@ The function first initialize the memory of array used in this analysis. Then, i
 And of course, you have to add your analysis to `main.cpp` as well to let it run.
 
 --------------------------------------------
+: _Adding-test:
+
 Adding test for the subprogram
 --------------------------------------------
 
@@ -479,6 +503,7 @@ or
 .. code-block::sh
 
    make CC=mpicxx TEST=ON
+
 
 Autotest.sh will be executed after serial-version **candela** is compiled.
 
