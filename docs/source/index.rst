@@ -23,17 +23,20 @@ Section :ref:`Develop-guide` introduces the structure of a typical analysis subp
 in case you may need to add new analysis program to Candela.
 The test method is also introduced.
 
+===================================
 .. _Basic-usage-and-vars:
 
 Basic usage and variables
 ===================================
 
+-----------
 Compilation
 -----------
 
 Type `make` in the `Candela` directory to compile the executable `Candela.exe` in `\bin` directory. 
 The default compiler is g++, which could be switched to other compiliers by changing `CC` in `Makefile`. 
 
+-------------
 Using Candela
 -------------
 
@@ -144,11 +147,14 @@ Other parameters are needed for specific `calculation`,
 which you may refer to :ref:`List-of-supported-analyses` where a detailed summary of supported `calculation` of analyses is given. 
 You may refer to the example `INPUT` files in `/examples` as well for different kinds of analyses.
 
+
+===================================
 .. _List-of-supported-analyses:
 
 List of supported analyses
 ===================================
 
+--------------------------------
 PDF (Pair distribution function)
 --------------------------------
 
@@ -163,6 +169,8 @@ The following parameters are needed for `pdf` calculation:
 
     - `id2` Name of the second type of atom of the pdf. For example, for :math:`g_{OH}(r)`, `id2` is H.
 
+
+--------------------------------
 SSF (Static structure factor)
 --------------------------------
 
@@ -175,6 +183,8 @@ The following parameters are also needed for the calculation:
     
     - `ssf_out` SSF output file name.
 
+
+--------------------------------
 MSD (Mean square displacement)
 --------------------------------
 
@@ -186,6 +196,8 @@ The following parameters are needed for calculation of MSD:
    
     - `msd_dt` Time step between two printed snapshots.
 
+
+===================================
 .. _Develop-guide:
 
 Developing guide
@@ -196,10 +208,283 @@ we recommand you to go through the existing analysis subprogram list in case the
 This part introduces the basic structure of an analysis subroutine, 
 by learning which you could write new analysis subroutines on your own.
 
+
+--------------------------
 Analysis program template
 --------------------------
 
 To write new subprograms in Candela, it is necessary to understand and take use of the basic classes implemented. 
 They will greatly help you in developing your own codes.
 The following table summarizes the basic classes and their properties and methods that are most used in Candela. 
-There are mainly four kinds of classes: :code:`Vector3<T>`, `Cell`, `Atom` and `Water`. `Cellfile` is a class inherited from `Cell` and mainly contains methods reading data from MD trajectory in different formats. All of the classes are straightforwardly defined and directly correspond to physical entities.
+There are mainly four kinds of classes: :code:`Vector3<T>`, :code:`Cell`, :code:`Atom` and :code:`Water`. 
+`Cellfile` is a class inherited from :code:`Cell` and mainly contains methods reading data from MD trajectory in different formats. 
+All of the classes are straightforwardly defined and directly correspond to physical entities.
+
++---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+| Class Name (source file)  | Properties  |Property description              |Methods                        | Method description                                |
+|                           |             |                                  |                               |                                                   |
++---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|:code:`Vector3<T>`         |`T x, y, z`  |component of the vector           |:code:`Vector<T> +-*/ T`       |:math:`+-\times \div`                              |
+|  (`vec3.h`)               |             |on three directions               +-------------------------------+---------------------------------------------------+
+|                           |             |                                  |:code:`Vector cos/sin (Vector)`|:math:`\sin/ \cos`                                 |
+|                           |             |                                  +-------------------------------+---------------------------------------------------+
+|                           |             |                                  |                               |                                                   |
+|                           |             |                                  |:code:`T norm (Vector)`        |:math:`x^2+y^2+z^2`                                |
+|                           |             |                                  +-------------------------------+---------------------------------------------------+
+|                           |             |                                  |                               |                                                   |
+|                           |             |                                  |:code:`Vector +-*^/ Vector`    |^ for outer product                                |
+|                           |             |                                  +-------------------------------+---------------------------------------------------+
+|                           |             |                                  |                               |                                                   |
+|                           |             |                                  |:code:`T dot(Vector, Vector)`  |inner product                                      |
+|                           |             |                                  +-------------------------------+---------------------------------------------------+
+|                           |             |                                  |                               |                                                   |
+|                           |             |                                  |:code:`T cross(Vector, Vector)`|outer product                                      |
++---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|:code:`Atom`               |`string id`  |name of the element               |:code:`void read_pos/read_pos2`|read in positions of atom.                         |
+|(`atoms.h/atoms.cpp`)      |             |                                  |:code:`/read_pos3/read_pos4`   |Input arguements are not listed here.              |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`int na`     |number of atoms of the element    |:code:`void read_vel`          |read in velocities of atom. Currently only         |
+|                           |             |                                  |                               |available in `QE`.                                 |  
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`Vector3<dou`|positions of atoms                |                               |                                                   |
+|                           |`ble>*pos`   |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`Vector3<dou`|direct positions of atoms         |                               |                                                   |
+|                           |`ble>*posd`  |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`Vector3<dou`|velocities of atoms               |                               |                                                   |
+|                           |`ble>*vel`   |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`double mass`|mass of atom                      |                               |                                                   |
+|                           |             |                                  |                               |                                                   |
++---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|`Cell` (cell.h/cell.cpp)   |`int na`     |number of atoms of the element    |:code:`void direct2cartesian`  |convert positions in direct coordination into      |
+|                           |             |                                  |                               |Cartesian coordination                             |  
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`int ntypes` |number of elements                |:code:`void cartesian2direct`  |convert positions in Cartesian coordination into   |
+|                           |             |                                  |                               |direct coordination                                |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`Atom* atom` |atoms in the cell                 |:code:`void read_wannier`      |read in Wannier center positions.                  |
+|                           |             |                                  |:code:`_centers`               |Now only cp.x (`QE`) format is supported.          |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`Vector3`    |Wannier centers in the cell       |:code:`void read_eig ()`       |read in eigen value of the solved KS equation.     |
+|                           |`<double>*wa`|                                  |                               |Now only pw.x (`QE2`) format is supported.         |
+|                           |`n_centers`  |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`double `    |simulation time of the            |                               |                                                   |
+|                           |`snapshot`   |current snapshot                  |                               |                                                   |
+|                           |`_time`      |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`double `    |simulation snapshot index of the  |                               |                                                   |
+|                           |`snapshot`   |current snapshot                  |                               |                                                   |
+|                           |`_index`     |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`double* eig`|eigen value of the solved         |                               |                                                   |
+|                           |             |KS equation                       |                               |                                                   |
+|                           |             |                                  |                               |                                                   |
++---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|`Cell CellFile`(`cellFile` |`static ifst`|ifstream opening the file         |:code:`static`                 |read in atomic positions                           |
+|`.h/cpp, cellFilePROFESS`  |`ream ifs_`  |containing atomic positions       |:code:`bool ReadGeometry()`    |                                                   |
+|`/VASP/QE/QE2.cpp, etc.`)  |`pos_kept`   |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`static ifst`|ifstream opening the file         |:code:`static bool`            |read in atomic positions of different type         |
+|                           |`ream ifs_`  |containing Wannier centers        |:code:`ReadGeometry_PROFESS`   |                                                   |
+|                           |`wan_kept`   |                                  |:code:`/VASP/QE/QE2 ...`       |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`static ifst`|ifstream opening the file         |                               |                                                   |
+|                           |`ream ifs_`  |containing lattice vectors        |                               |                                                   |
+|                           |`cel_kept`   |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`static ifst`|ifstream opening the file         |                               |                                                   |
+|                           |`ream ifs_`  |containing eigenvalues            |                               |                                                   |
+|                           |`eig_kept`   |                                  |                               |                                                   |
+|                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+|                           |`static ifst`|ifstream opening the file         |                               |                                                   |
+|                           |`ream ifs_`  |containing velocities of atom     |                               |                                                   |
+|                           |`vel_kept`   |                                  |                               |                                                   |
++---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
+
+--------------------------------------------
+The structure of a typical analysis C++ file
+--------------------------------------------
+
+Here we give a brief description of `example.cpp` contained in `/examples/example` to show how a typical analysis of water system could be done under the frame of Candela.
+
+First, the class `Example` and its properties and methods are defined in `example.h` as follows:
+
+.. code-block :: cpp
+
+   #ifndef EXAMPLE_H
+   #define EXAMPLE_H
+   #include "Cellfile.h"
+   class Example
+   {
+      public:
+      Example();
+      ~Example();
+      void Routine();
+      void calc(CellFile &cel);
+      void output();
+      double* example_arr;
+      int example_len;
+   };
+   #endif
+
+The function `Routine()` is to be called in the `main.cpp` to implement the analysis. Function `calc()` takes in all information of a cell of a single snapshot and do the calculations. Function `output()` writes out the results in files.
+
+In `example.cpp`, function `Routine()` is realized as the follows:
+
+.. code-block :: cpp
+
+   void Example::Routine()
+   {
+      // Initialize necessary arrays.
+      this->example_arr = new double[this->example_len]; 
+
+      int count_geometry_number = 0;
+      for(int igeo=INPUT.geo_1; igeo<=INPUT.geo_2; ++igeo)
+      {
+         // cel : input geometry file
+         CellFile cel;
+
+         if(igeo<INPUT.geo_ignore || igeo%INPUT.geo_interval!=0) 
+         {
+            cel.read_and_used=false;
+         }
+         else cel.read_and_used=true;
+
+         stringstream ss; ss << igeo;
+         cel.file_name = ss.str();
+
+         // cel : input geometry file
+         if( !CellFile::ReadGeometry( cel ) ) continue;
+
+         if(cel.read_and_used==false) 
+         {
+            cel.clean(); // renxi added 20200614
+            continue;
+         }
+         ++count_geometry_number;
+         cout << "snapshot " << igeo << endl;
+         this->calc(cel);
+         cel.clean();
+      }//igeo
+
+      this->output();
+      delete[] this->example_arr;
+      return;
+   }
+
+The function first initialize the memory of array used in this analysis. Then, it iteratively do the following things to each snapshots in the MD trajectory:
+   - judge whether the snapshot has to be analyzed (`if(igeo<INPUT.geo_ignore || igeo%INPUT.geo_interval!=0) `). If so, label the snapshot as non-ignorable (`cel.read_and_used=true;`);
+   - read in the atomic positions and velocities, Wannier centers etc. if necessary (`if( !CellFile::ReadGeometry( cel ) ) continue;`);
+   - judge whether the snapshot is ignorable, if so, clean the cell and move on to the next iteration (`cel.clean(); continue;`); else, go to step 4;
+   - do some calculations to the cell of the snapshot (`this->calc(cel);`) and clean the cell.
+
+And of course, you have to add your analysis to `main.cpp` as well to let it run.
+
+--------------------------------------------
+Adding test for the subprogram
+--------------------------------------------
+
+After adding new functions into CANDELA, we must add corresponding tests.
+Directory **test** contains:
+
+**001_PDF**,...: test cases
+
+**Autotest.sh**: shell script to run auto tests.
+
+**tool**: some tool functions
+
+**geo**: contains geometry files
+
+--------------------------------------------
+Preparation for one case
+--------------------------------------------
+
+**compare**:
+
+.. code-block:: sh
+
+   threshold 1e-4
+
+   enable_mpi ON
+   
+   pdf.ref  pdf.txt
+   
+   other.ref other.result
+   
+   ...
+
+threshold: When the relative errors between reference results and calculating results are larger than threshold, the tests will fail.
+
+enable_mpi: Whether this case supports MPI or not.
+
+The remaining lines are reference files and result files. Each pair is in one line.
+
+**INPUT**:
+
+.. code-block:: sh
+
+   calculation  pdf # Pair Distribution Function.
+   system Al
+   geo_in_type  LAMMPS
+   geo_directory ../geo/Al64.dump
+   geo_1        0
+   geo_2        20
+   geo_interval 1
+   geo_ignore   4
+
+   geo_out      pdf.txt # output pdf name.
+
+   ntype        1        # number of different types of atoms.
+   natom        64   # total number of atoms.
+   natom1       64
+   rcut         6
+   dr           0.01     # delta r in real space
+
+**pdf.ref / other.ref / ...**:
+The reference results are in them.
+
+--------------------------------------------
+Run auto test
+--------------------------------------------
+
+**method 1**:
+
+.. code-block::sh
+
+   make CC=g++ TEST=ON
+
+or
+   
+.. code-block::sh
+
+   make CC=mpicxx TEST=ON
+
+Autotest.sh will be executed after serial-version **candela** is compiled.
+
+
+`make CC=mpicxx TEST=ON`
+Autotest.sh will be executed after parallel-version **candela** is compiled. Multi-processor cases will be tested at the same time.
+
+**All developers should run 
+`make CC=g++ TEST=ON`
+and `make CC=mpicxx TEST=ON`
+to make sure some functions are not be destroyed.**
+
+method 2:
+After **candela** is compiled.
+
+`make test` or `cd test;sh Autotest.sh`
+It will run one-processor tests.
+
+`make test CC=mpicxx` or `cd test;sh Autotest.sh ON`
+It will run one-processor and multi-processor tests.
+
+
+
+
+That's all we would like to say in this documentation. Please feel free to contact us for any help. 
+
+Happy using Candela and coding!
