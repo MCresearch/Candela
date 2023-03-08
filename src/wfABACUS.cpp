@@ -74,14 +74,6 @@ void WfABACUS::readOUT(Wavefunc & wf)
 	checkstr="electron";
 	ifnecheckv(txt,checkstr);
 	//cout<<"number of electrons: "<<INPUT.nele<<endl;
-	
-	//get nband
-	searchead(ifskwt,txt,"occupied",1);
-	ifskwt>>txt>>useless>>nband;
-	checkstr="NBANDS";
-	ifnecheckv(checkstr,txt);
-	wf.nband=nband;
-
 
 	//get number of kpoint
 	searchead(ifskwt,txt,"Input",1);
@@ -107,6 +99,13 @@ void WfABACUS::readOUT(Wavefunc & wf)
 		ifskwt>>useless>>useless>>useless>>useless>>wk[i];
 		//cout<<"wk"<<wk[i]<<endl;
 	}
+
+	//get nband
+	searchead(ifskwt,txt,"occupied",1);
+	ifskwt>>txt>>useless>>nband;
+	checkstr="NBANDS";
+	ifnecheckv(checkstr,txt);
+	wf.nband=nband;
 	
 
 	//get number of fermi energy
@@ -202,10 +201,17 @@ void WfABACUS::readWF(Wavefunc &wf, int &ik)
 
 	int inttmp=((ngtot)*3)*8;
 	ifnecheckv(strw,inttmp);
+
+	wf.ig0 = -1;
 	for(int i=0;i<ngtot;i++)
 	{
 		rwswf>>gcar_x[i]>>gcar_y[i]>>gcar_z[i];
-		//cout<<gcar_x[i]<<' '<<gcar_y[i]<<' '<<gcar_z[i]<<endl;
+		if(pow(gcar_x[i],2)+pow(gcar_y[i],2)+pow(gcar_z[i],2) < 1e-8)
+		{
+			wf.ig0 = i;
+			// cout<<"ig0: "<<wf.ig0<<endl;
+		}
+		// cout<<gcar_x[i]<<' '<<gcar_y[i]<<' '<<gcar_z[i]<<endl;
 		wf.gkk_x[i]=gcar_x[i]*invlat0;
 		wf.gkk_y[i]=gcar_y[i]*invlat0;
 		wf.gkk_z[i]=gcar_z[i]*invlat0;

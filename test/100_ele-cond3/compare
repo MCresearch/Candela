@@ -1,0 +1,7 @@
+threshold 1e-4
+
+enable_mpi OFF
+
+kappa1L.ref  kappa1L.txt
+sigma1L.ref sigma1L.txt
+Onsager1L.ref Onsager1L.txt

@@ -14,7 +14,8 @@ class WfABACUS
 	occ=nullptr;
 	};
 	~WfABACUS(){
-	pclean(wk);
+		pclean(wk);
+		this->clean();
 	};
 	void readWF(Wavefunc &,  int&);
 	void readOUT(Wavefunc &);

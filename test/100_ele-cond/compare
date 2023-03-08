@@ -1,0 +1,10 @@
+threshold 1e-4
+
+enable_mpi ON
+
+kappa1G.ref  kappa1G.txt
+sigma1G.ref sigma1G.txt
+Onsager1G.ref Onsager1G.txt
+kappa2G.ref  kappa2G.txt
+sigma2G.ref sigma2G.txt
+Onsager2G.ref Onsager2G.txt

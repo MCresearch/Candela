@@ -31,6 +31,8 @@ class Wavefunc
 		double *eigE; //in eV
 		int nband,ngtot;
 		double wk;//weight of kpoint
+	public:
+		int ig0 = 0; //ig when gkk = (0,0,0)
 };
 //add fftw in future.
 

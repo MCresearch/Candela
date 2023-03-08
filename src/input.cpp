@@ -105,6 +105,7 @@ Input::Input()
 	nscf = 0;
 	n_fwhm = 1;
 	localp = true;
+	cond_method = 1;
 
 	snatom = -1;
 	satom = new int[1];
@@ -569,6 +570,7 @@ void Input::Read(const string &fn)
         else if (strcmp("smear", word) == 0) read_value(ifs, smear);
 		else if (strcmp("smearinvw", word) == 0) read_value(ifs, smearinvw);
         else if (strcmp("localp", word) == 0) read_value(ifs, localp);
+		else if (strcmp("cond_method", word) == 0) read_value(ifs, cond_method);
         else if (strcmp("n_fwhm", word) == 0) read_value(ifs, n_fwhm);
         else if (strcmp("fwhm", word) == 0) 
 		{

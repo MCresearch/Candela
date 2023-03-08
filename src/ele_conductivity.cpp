@@ -2,6 +2,7 @@
 #include "const.h"
 #include "gfun.h"
 #include "ele_conductivity.h"
+#include "matrixmultip.h"
 #include <unistd.h>
 
 //sigma is electric conductivity and kappa is thermal conductivity.
@@ -17,6 +18,19 @@ double Velocity_Matrix_Local(const int,const int,Wavefunc &);
 
 void Ele_Conductivity::Routine()
 {
+	if(INPUT.cond_method == 1)
+	{
+		this->method1();
+	}
+	else
+	{
+		this->method2();
+	}
+	return;
+}
+
+void Ele_Conductivity::method1()
+{
 	//get current work directory 
 	char *wdbuf;
 	wdbuf=getcwd(nullptr,0);
@@ -24,19 +38,17 @@ void Ele_Conductivity::Routine()
 
 	//Init
 	const double pi=M_PI;
-	double *st,*eps;
 	int nf=INPUT.n_fwhm;//Calculate different fwhm at the same time.
+	double st[nf], eps[nf];
 	if(INPUT.smear==0)
 		nf=1;
 	else if(INPUT.smear==1)
 	{
-		st=new double[nf];
 		for(int i=0;i<nf;i++)
 			st[i]=INPUT.fwhm[i]/2.354820045030949;
 	}
 	else if(INPUT.smear==2)
 	{
-		eps=new double[nf];
 		for(int i=0;i<nf;i++)
 			eps[i]=INPUT.fwhm[i]/2;
 	}
@@ -46,13 +58,7 @@ void Ele_Conductivity::Routine()
 	//else
 	//	factor=2*pi/3*pow(P_QE,2)/(P_HBAR*P_BOHR*1e-10);
 	int allcount=-1;
-#ifdef __TIME
-	time_t begin,end;
-	time_t bb,ee;
-	long int testtime1=0,testtime2=0;
-	long int time1,time2,time3;
-	time1=time2=time3=0;
-#endif
+
 	int ns=INPUT.nscf;//decide dynamic space of sigma_all, L22_all and L12_all
 	int nfolder=INPUT.nscf;//number of folders containing different scf results.
 	bool multi=true;
@@ -109,15 +115,9 @@ void Ele_Conductivity::Routine()
 		}
 		chdir(ifolderstr.c_str());
 	}
+
 	Wavefunc WF;
-#ifdef __TIME
-	begin=clock();
-#endif
 	WfRead wfr(WF);
-#ifdef __TIME
-	end=clock();
-	time1+= (end-begin);
-#endif
 	wfr.Init();
 	sum_factor=2*P_ME*INPUT.vol*pow(P_BOHR,3)/M_PI/P_QE/INPUT.nele/1e30/P_HBAR;
 	int nk=INPUT.nkpoint;
@@ -135,32 +135,25 @@ void Ele_Conductivity::Routine()
 			continue;
 		}
 #endif
-#ifdef __TIME
-		begin=clock();
-#endif
 		wfr.readWF(ik);
-#ifdef __TIME
-		end=clock();
-		time1+= (end-begin);
-#endif
-		cout<<"scf "<<ifolder<<" ; kpoint "<<ik+1<<endl;
 		int nband=WF.nband;
+		for(int ib=0;ib<nband;ib++)
+		{
+			WF.checknorm(ik,ib);//check if wavefunction is normalized to 1.
+		}
+		cout<<"scf "<<ifolder<<" ; kpoint "<<ik+1<<endl;
 		cout<<"nband: "<<nband<<endl;
-#ifdef __TIME
-		begin=clock();
-#endif
-		//WF.print(0);	
-		//WF.print(1);	
-		//WF.print(2);
-	
+		//WF.print(0);
+		double *pij2 = new double[(nband-1) * nband / 2];
+		getpij2(WF, pij2);
 
 		double factor2=factor/INPUT.dw*pow(WF.factor,2)/INPUT.vol;
 		
 		//loop of band
-		for(int ib=0;ib<nband;ib++)
+		int ijb = 0;
+		for(int ib=0;ib<nband;++ib)
 		{
-			WF.checknorm(ik,ib);//check if wavefunction is normalized to 1.
-			for(int jb=ib+1;jb<nband;jb++)
+			for(int jb=ib+1;jb<nband;++jb, ++ijb)
 	    	{
 				double energyj=WF.eigE[jb];
 				double energyi=WF.eigE[ib];
@@ -170,67 +163,29 @@ void Ele_Conductivity::Routine()
 				assert(w>=0);
 				iw=int(w/INPUT.dw);
 				if(iw>=nw||w==0) continue;//add w==0, sometimes w can be 0 due to truncation error.
-//-------------------------------------------------------
-//Velocity-Matrix Part
-//Velocity_Matrix_Local for local pseudopotential
-//Velocity_Matrix_NonLocal for nonlocal pseudopotential
-//-------------------------------------------------------
-#ifdef __TIME
-				bb=clock();
-#endif
-				if(INPUT.localp)
-				{
-					corr2=Velocity_Matrix_Local(ib,jb,WF);
-				}
-				/*else
-				{
-					if(INPUT.gpu)
-						corr2=Velocity_Matrix_NonLocal(ib,jb,WF,1);
-					else
-					{
-						//corr2=CPU_Velocity_Matrix_NonLocal(ib,jb,WF);
-						double m1=Velocity_Matrix_Local(ib,jb,WF)*pow(P_HBAR/P_BOHR*1e10,2);
-						double m2=CPU_Velocity_Matrix_NonLocal(ib,jb,WF)*pow(P_QE*P_BOHR/1e10*P_ME/P_HBAR*w,2);
-						cout<<"Energy interval "<<w<<endl;
-						cout<<"P matrix "<<m1<<endl;
-						cout<<"v matrix "<<m2<<endl;
-						cout<<"ratio "<<m2/m1<<endl;
-					}
-						
-				}*/
-				//cout<<w<<'\t'<<corr2<<endl;
-#ifdef __TIME
-				ee=clock();
-				testtime1+= (ee-bb);
-#endif
-				//cout<<corrx<<' '<<corry<<' '<<corrz<<endl;
-				
+
+				corr2 = pij2[ijb];
+				// if(INPUT.localp)
+				// {
+				// 	corr2=Velocity_Matrix_Local(ib,jb,WF);
+				// }
 				
 //--------------------------------------------------------------------------------------------------
 //Smearing Part
 //Frequency-dependent functions are (or not (0)) broadened by Gaussian (0) or Lorentz (2) function.
 //--------------------------------------------------------------------------------------------------
-#ifdef __TIME
-				bb=clock();
-#endif
 				double L11fact;
 				double Eij_F=(energyj+energyi)/2-INPUT.fermiE;
-				if(INPUT.localp)
+
+				if(INPUT.smearinvw)
 				{
-					if(INPUT.smearinvw)
-					{
-						L11fact=factor2/w*docc*corr2;
-					}
-					else
-					{
-						L11fact=factor2*docc*corr2;
-					}
-					
+					L11fact=factor2/w*docc*corr2;
 				}
-				/*else
+				else
 				{
-					L11fact=factor2*w*docc*corr2;
-				}*/
+					L11fact=factor2*docc*corr2;
+				}
+
 				double L12fact=Eij_F*L11fact;
 				double L22fact=pow(Eij_F,2)*L11fact;
 				if(INPUT.smear==0)
@@ -280,7 +235,8 @@ void Ele_Conductivity::Routine()
 							else
 							{
 								smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-w,2))+1/(eps2+pow(w+INPUT.dw*(iv+0.5),2));
-								smearpre=pre*smearpre;
+								smearpre=pre*smearf;
+								
 							}
 							if(iv<iw)
 							{
@@ -297,19 +253,12 @@ void Ele_Conductivity::Routine()
 						}
 				  	}
 				}
-#ifdef __TIME
-				ee=clock();
-				testtime2+= (ee-bb);
-#endif
 	
-				tot_sum=tot_sum+(WF.occ[ib]-WF.occ[jb])*(corr2/(WF.eigE[jb]-WF.eigE[ib]));
+				tot_sum=tot_sum+(WF.occ[ib]-WF.occ[jb])*(corr2*WF.factor/(WF.eigE[jb]-WF.eigE[ib]));
 				//cout<<docc<<' '<<w<<' '<<corr2<<' '<<INPUT.dw<<' '<<WF.factor<<' '<<INPUT.vol<<' '<<factor<<endl;
 	    	}
 		}
-#ifdef __TIME
-		end=clock();
-		time2+= (end-begin);
-#endif
+		delete[] pij2;
 		wfr.clean();
 	}
 	
@@ -328,9 +277,6 @@ void Ele_Conductivity::Routine()
 	}
 	double tot_sum_fac=double(4)/3/P_ME/P_QE*P_HBAR*P_HBAR/P_BOHR/P_BOHR*1e20/nfolder/INPUT.nele;
 	tot_sum*=tot_sum_fac;
-#ifdef __TIME
-	begin=clock();
-#endif
 
 #ifdef __MPI
 	double * f_sigma_all, * f_L12_all, * f_L22_all;
@@ -356,15 +302,6 @@ void Ele_Conductivity::Routine()
 	writesigma(sigma_all,L12_all,L22_all,nf,nw,ns,nfolder);
 #endif
 
-#ifdef __TIME
-	end=clock();
-	time3= (end-begin);
-	cout<<RANK<<" Reading time: "<<mysecond(time1)<<" s"<<endl;
-	cout<<RANK<<" Velocity matrix time: "<<mysecond(testtime1)<<" s"<<endl;
-	cout<<RANK<<" Smearing time: "<<mysecond(testtime2)<<" s"<<endl;
-	cout<<RANK<<" Total calculating time: "<<mysecond(time2)<<" s"<<endl;
-	cout<<RANK<<" Writing time: "<<mysecond(time3)<<" s"<<endl;
-#endif
 	delete []sigma_all;
 	delete []L12_all;
 	delete []L22_all;
@@ -376,6 +313,7 @@ void Ele_Conductivity::Routine()
 		delete[]f_L22_all;
 	}
 #endif
+    free(wdbuf);
 	return;
 }
 
@@ -394,7 +332,7 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	double* std_kappa=new double[nw];
 	double* L12=new double [nw];
 	double* L22=new double [nw];
-	if(INPUT.smear==0) lag="";
+	if(INPUT.smear==0) lag=dou2str(INPUT.fwhm[ifi])+"I";
 	if(INPUT.smear==1) lag=dou2str(INPUT.fwhm[ifi])+"G";
 	if(INPUT.smear==2) lag=dou2str(INPUT.fwhm[ifi])+"L";
 	string sigmaname="sigma"+lag+".txt";
@@ -466,6 +404,8 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	delete[]std_sigma;
 	delete[]kappa;
 	delete[]std_kappa;
+	delete[]L22;
+	delete[]L12;
 	ofs.close();
 	ofs2.close();
 	ofs3.close();
@@ -514,145 +454,60 @@ double Velocity_Matrix_Local(const int ib,const int jb,Wavefunc & WF)
         }
 		return corr2;
 }
-
+void Ele_Conductivity::getpij2(Wavefunc& wf, double *pij2)
+{
+	const int nbands = wf.nband;
+	const int npw = wf.ngtot;
+	const int nbb = (nbands-1) * nbands / 2;
+	ZEROS(pij2, nbb);
 	
-/*double Velocity_Matrix_NonLocal(const int ib,const int jb,Wavefunc & WF,const int Npara)
-{
-		double corr2=0;
-		double corr;
-		int n=WF.ngtot;
-		double *C_ir,*C_im,*C_jr,*C_jm;
-		double *gx,*gy,*gz;
-		gx=new double[n];
-		gy=new double[n];
-		gz=new double[n];
-		C_jm=new double[n];
-		C_im=new double[n];
-		C_ir=new double[n];
-		C_jr=new double[n];
-		for(int ig=0;ig<n;ig++)
+	complex<double> *pij = new complex<double>[nbb];
+	complex<double> *pwave = new complex<double>[npw * nbands];
+	for (int id = 0; id < 3; ++id)
+    {
+		double *gid, kid;
+		if(id == 0)
 		{
-			gx[ig]=WF.gkk_x[ig];
-			gy[ig]=WF.gkk_y[ig];
-			gz[ig]=WF.gkk_z[ig];
-			C_jm[ig]=WF.Wavegg[jb*n+ig].imag();
-			C_im[ig]=WF.Wavegg[ib*n+ig].imag();
-			C_jr[ig]=WF.Wavegg[jb*n+ig].real();
-			C_ir[ig]=WF.Wavegg[ib*n+ig].real();
+			gid = wf.gkk_x;
+			kid = wf.kpoint_x;
 		}
-		int raw=int(n/Npara);
-		int i_end,i_st;
-
-		for(int ip=0;ip<Npara;ip++)
+		else if(id == 1)
 		{
-			i_st=ip*raw;
-			if(ip==Npara-1) raw=n-ip*raw;
-			i_end=i_st+raw-1;
-			corr=rmatrix(gx,i_st,i_end,n,C_ir,C_im,C_jr,C_jm);
-			corr2+=pow(corr,2);
-			corr=rmatrix(gy,i_st,i_end,n,C_ir,C_im,C_jr,C_jm);
-			corr2+=pow(corr,2);
-			corr=rmatrix(gz,i_st,i_end,n,C_ir,C_im,C_jr,C_jm);
-			corr2+=pow(corr,2);
+			gid = wf.gkk_y;
+			kid = wf.kpoint_y;
 		}
-		delete []gx;
-		delete []gy;
-		delete []gz;
-		delete []C_jm;
-		delete []C_ir;
-		delete []C_jr;
-		delete []C_im;
-		return corr2;
-}*/
-
-/*double CPU_Velocity_Matrix_NonLocal(const int ib,const int jb,Wavefunc & WF)
-{
-        int n=WF.ngtot;
-        complex<double> C_ii,C_jj;
-        double C_add,C_minus;
-		//cout<<"band "<<ib<<endl;
-        Vector3<double> gki,gkj;
-        Vector3<double> sum(0,0,0);
-		Vector3< complex<double> > csum(0,0,0);
-        for(int ig=0;ig<n;ig++)
-        {
-            C_ii=WF.Wavegg[ib*n+ig];
-            gki.x=WF.gkk_x[ig];
-            gki.y=WF.gkk_y[ig];
-            gki.z=WF.gkk_z[ig];
-            for(int jg=0;jg<n;jg++)
-            {
-				if(ig==0&&jg==0) continue;
-				gkj.x=WF.gkk_x[jg];
-                gkj.y=WF.gkk_y[jg];
-                gkj.z=WF.gkk_z[jg];
-				if(INPUT.gamma)
-				{
-					if((gkj.x==-gki.x&&gkj.y==-gki.y)||(gkj.x==-gki.x&&gkj.z==-gki.z)||(gkj.z==-gki.z&&gkj.y==-gki.y))
-					{
-					C_jj=WF.Wavegg[jb*n+jg];
-					C_add=C_ii.real()*C_jj.imag()+C_ii.imag()*C_jj.real();
-					if(gkj.x!=-gki.x)
-					{
-						sum.x+=C_add/(gkj.x+gki.x);
-					}
-					else if(gkj.y!=-gki.y)
-					{
-						sum.y+=C_add/(gkj.y+gki.y);
-					}
-                	else
-					{
-						sum.z+=C_add/(gkj.z+gki.z);
-					}
-					
-                	}
-					else if((gkj.x==gki.x&&gkj.y==gki.y)||(gkj.x==gki.x&&gkj.z==gki.z)||(gkj.z==gki.z&&gkj.y==gki.y))
-					{
-                	if(jg==ig) continue;
-					C_jj=WF.Wavegg[jb*n+jg];
-					C_minus=C_ii.real()*C_jj.imag()-C_ii.imag()*C_jj.real();
-					if(gkj.x!=gki.x)
-					{
-						sum.x+=C_minus/(gkj.x-gki.x);
-					}
-					else if(gkj.y!=gki.y)
-					{
-						sum.y+=C_minus/(gkj.y-gki.y);
-					}
-                	else
-					{
-						sum.z+=C_minus/(gkj.z-gki.z);
-					}
-					
-                	}
-            	}
-				else
-				{
-					if(ig==jg) continue;
-					if((gkj.x==gki.x&&gkj.y==gki.y)||(gkj.x==gki.x&&gkj.z==gki.z)||(gkj.z==gki.z&&gkj.y==gki.y))
-					{
-					C_jj=WF.Wavegg[jb*n+jg];
-                    if(gkj.x!=gki.x)
-                    {
-                        csum.x+=(conjugate(C_ii)*C_jj)/(gkj.x-gki.x);
-                    }
-                    else if(gkj.y!=gki.y)
-                    {
-                        csum.y+=(conjugate(C_ii)*C_jj)/(gkj.y-gki.y);
-                    }
-                    else
-                    {
-                        csum.z+=(conjugate(C_ii)*C_jj)/(gkj.z-gki.z);
-                    }
-					}
-				}
-			}
-
-        }
-		//cout<<sum.x<<' '<<sum.y<<' '<<sum.z<<endl;
-		if(INPUT.gamma)
-			return sum.norm2();
 		else
-			return (abs(csum.x)*abs(csum.x)+abs(csum.y)*abs(csum.y)+abs(csum.z)*abs(csum.z))/4;
-}*/
+		{
+			gid = wf.gkk_z;
+			kid = wf.kpoint_z;
+		}
+
+		// pxyz|right>
+		for(int ib = 0 ; ib < nbands ; ++ib)
+		{
+			for(int ig = 0 ; ig < npw ; ++ig)
+			{
+    	        pwave[ig + ib*npw] = wf.Wavegg[ib*npw + ig] * (gid[ig]+kid);
+			}
+		}
+		dtrimultipAHB(nbands,nbands,npw, wf.Wavegg, npw, pwave, npw, pij, 1);
+		if(INPUT.gamma)
+		{
+			for(int i = 0; i < nbb ; ++i)
+			{
+				pij2[i] += 4 * pow(pij[i].imag(), 2);
+			}
+		}
+		else
+		{
+			for(int i = 0; i < nbb ; ++i)
+			{
+				pij2[i] += norm(pij[i]);
+			}
+		}
+	}
+	
+	delete[] pij;
+	delete[] pwave;
+}
 	
