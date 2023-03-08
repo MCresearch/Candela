@@ -466,20 +466,26 @@ Autotest.sh will be executed after serial-version **candela** is compiled.
 
 
 `make CC=mpicxx TEST=ON`
+
 Autotest.sh will be executed after parallel-version **candela** is compiled. Multi-processor cases will be tested at the same time.
 
 **All developers should run 
+
 `make CC=g++ TEST=ON`
 and `make CC=mpicxx TEST=ON`
+
 to make sure some functions are not be destroyed.**
 
-method 2:
+**method 2**:
+
 After **candela** is compiled.
 
 `make test` or `cd test;sh Autotest.sh`
+
 It will run one-processor tests.
 
 `make test CC=mpicxx` or `cd test;sh Autotest.sh ON`
+
 It will run one-processor and multi-processor tests.
 
 
