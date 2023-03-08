@@ -60,7 +60,7 @@ Compilation
 -----------
 
 Type `make` in the `Candela` directory to compile the executable `Candela.exe` in `\bin` directory. 
-The default compiler is g++, which could be switched to other compiliers by changing `CC` in `Makefile`. 
+The default compiler is g++, which could be switched to other compiliers by changing `CXX` in `Makefile`. 
 
 -------------
 .. _Using-Candela:
@@ -492,30 +492,22 @@ Run auto test
 
 **method 1**:
 
-.. code-block::sh
+.. code-block::
 
-   make CC=g++ TEST=ON
-
-
-or
-
-
-.. code-block::sh
-
-   make CC=mpicxx TEST=ON
-
+   make CXX=g++ TEST=ON # serial 
+   make CXX=mpicxx TEST=ON # parallel
 
 Autotest.sh will be executed after serial-version **candela** is compiled.
 
 
-`make CC=mpicxx TEST=ON`
+`make CXX=mpicxx TEST=ON`
 
 Autotest.sh will be executed after parallel-version **candela** is compiled. Multi-processor cases will be tested at the same time.
 
 **All developers should run 
 
-`make CC=g++ TEST=ON`
-and `make CC=mpicxx TEST=ON`
+`make CXX=g++ TEST=ON`
+and `make CXX=mpicxx TEST=ON`
 
 to make sure some functions are not be destroyed.**
 
@@ -527,7 +519,7 @@ After **candela** is compiled.
 
 It will run one-processor tests.
 
-`make test CC=mpicxx` or `cd test;sh Autotest.sh ON`
+`make test CXX=mpicxx` or `cd test;sh Autotest.sh ON`
 
 It will run one-processor and multi-processor tests.
 
