@@ -7,7 +7,23 @@
 Welcome to Candela's documentation!
 ===================================
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Overview
+   :ref:`Overview`
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Basic usage and variables
+   :ref:`Basic-usage-and-variables`
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Develop guide
+   :ref:`Develop-guide`
+
 -------------------------
+.. _Overview:
 Overview
 -------------------------
 
@@ -221,11 +237,11 @@ There are mainly four kinds of classes: :code:`Vector3<T>`, :code:`Cell`, :code:
 All of the classes are straightforwardly defined and directly correspond to physical entities.
 
 +---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
-| Class Name (source file)  | Properties  |Property description              |Methods                        | Method description                                |
+|Class Name (source file)   | Properties  |Property description              |Methods                        | Method description                                |
 |                           |             |                                  |                               |                                                   |
 +---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
 |:code:`Vector3<T>`         |`T x, y, z`  |component of the vector           |:code:`Vector<T> +-*/ T`       |:math:`+-\times \div`                              |
-|  (`vec3.h`)               |             |on three directions               +-------------------------------+---------------------------------------------------+
+|(`vec3.h`)                 |             |on three directions               +-------------------------------+---------------------------------------------------+
 |                           |             |                                  |:code:`Vector cos/sin (Vector)`|:math:`\sin/ \cos`                                 |
 |                           |             |                                  +-------------------------------+---------------------------------------------------+
 |                           |             |                                  |                               |                                                   |
@@ -258,8 +274,8 @@ All of the classes are straightforwardly defined and directly correspond to phys
 |                           |`double mass`|mass of atom                      |                               |                                                   |
 |                           |             |                                  |                               |                                                   |
 +---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
-|`Cell` (cell.h/cell.cpp)   |`int na`     |number of atoms of the element    |:code:`void direct2cartesian`  |convert positions in direct coordination into      |
-|                           |             |                                  |                               |Cartesian coordination                             |  
+|:code:`Cell`               |`int na`     |number of atoms of the element    |:code:`void direct2cartesian`  |convert positions in direct coordination into      |
+|(`cell.h/cell.cpp`)        |             |                                  |                               |Cartesian coordination                             |  
 |                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
 |                           |`int ntypes` |number of elements                |:code:`void cartesian2direct`  |convert positions in Cartesian coordination into   |
 |                           |             |                                  |                               |direct coordination                                |
@@ -283,9 +299,9 @@ All of the classes are straightforwardly defined and directly correspond to phys
 |                           |             |KS equation                       |                               |                                                   |
 |                           |             |                                  |                               |                                                   |
 +---------------------------+-------------+----------------------------------+-------------------------------+---------------------------------------------------+
-|`Cell CellFile`(`cellFile` |`static ifst`|ifstream opening the file         |:code:`static`                 |read in atomic positions                           |
-|`.h/cpp, cellFilePROFESS`  |`ream ifs_`  |containing atomic positions       |:code:`bool ReadGeometry()`    |                                                   |
-|`/VASP/QE/QE2.cpp, etc.`)  |`pos_kept`   |                                  |                               |                                                   |
+|:code:`Cell CellFile`      |`static ifst`|ifstream opening the file         |:code:`static`                 |read in atomic positions                           |
+|(`cellFile.h/cpp`)         |`ream ifs_`  |containing atomic positions       |:code:`bool ReadGeometry()`    |                                                   |
+|                           |`pos_kept`   |                                  |                               |                                                   |
 |                           +-------------+----------------------------------+-------------------------------+---------------------------------------------------+
 |                           |`static ifst`|ifstream opening the file         |:code:`static bool`            |read in atomic positions of different type         |
 |                           |`ream ifs_`  |containing Wannier centers        |:code:`ReadGeometry_PROFESS`   |                                                   |
