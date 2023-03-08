@@ -472,8 +472,10 @@ Run auto test
 
    make CC=g++ TEST=ON
 
+
 or
-   
+
+
 .. code-block::sh
 
    make CC=mpicxx TEST=ON
