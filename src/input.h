@@ -265,7 +265,7 @@ public:
 	bool smearinvw;
 	double *fwhm;
 	int n_fwhm; //calculate different fwhm at the same time by qianrui 2020-5-13
-	bool localp; //if the pseudopotential is a local potential
+	bool nonlocal; //nonlocal effects 
 	int cond_method;
 
 	// for movie

@@ -20,6 +20,7 @@ Wavefunc:: ~Wavefunc()
     pclean(Wavegg);
     pclean(occ);
     pclean(eigE);
+	pclean(vmatrix);
 }
 void Wavefunc:: checknorm(int ik,int iband)
 {

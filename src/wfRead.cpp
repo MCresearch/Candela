@@ -1,5 +1,6 @@
 #include "wfRead.h"
 #include <stdio.h>
+#include "matrixmultip.h"
 //created by qianrui 2020-2-5
 
 WfRead::WfRead(Wavefunc &wf)
@@ -151,6 +152,80 @@ void WfRead::readOCC(int ik)
 		exit(0);
 	}
 	return;
+}
+void WfRead:: readvmatrix(const int ik)
+{
+	int nband = wfpt->nband;
+	int nbb = (nband-1) * nband / 2;
+	delete[] wfpt->vmatrix;
+	wfpt->vmatrix = new double [(nband-1) * nband / 2];
+	stringstream ss;
+    ss<<"vmatrix"<<ik<<".dat";
+	binfstream binfs(ss.str(), "r");
+	int head, tail;
+	binfs>>head;
+	ifne(nband*8, head);
+	rwread(binfs, wfpt->vmatrix, nbb);
+	binfs>>tail;
+	ifne(head, tail);
+}
+
+void WfRead::calvmatrix()
+{
+	const int nband = wfpt->nband;
+	const int nbb = (nband-1) * nband / 2;
+	const int npw = wfpt->ngtot;
+	delete[] wfpt->vmatrix;
+	wfpt->vmatrix = new double [(nband-1) * nband / 2];
+	ZEROS(wfpt->vmatrix, nbb);
+	complex<double> *pij = new complex<double>[nbb];
+	complex<double> *pwave = new complex<double>[npw * nband];
+	for (int id = 0; id < 3; ++id)
+    {
+		double *gid, kid;
+		if(id == 0)
+		{
+			gid = wfpt->gkk_x;
+			kid = wfpt->kpoint_x;
+		}
+		else if(id == 1)
+		{
+			gid = wfpt->gkk_y;
+			kid = wfpt->kpoint_y;
+		}
+		else
+		{
+			gid = wfpt->gkk_z;
+			kid = wfpt->kpoint_z;
+		}
+
+		// pxyz|right>
+		for(int ib = 0 ; ib < nband ; ++ib)
+		{
+			for(int ig = 0 ; ig < npw ; ++ig)
+			{
+    	        pwave[ig + ib*npw] = wfpt->Wavegg[ib*npw + ig] * (gid[ig]+kid);
+			}
+		}
+		dtrimultipAHB(nband,nband,npw, wfpt->Wavegg, npw, pwave, npw, pij, 1);
+		if(INPUT.gamma)
+		{
+			for(int i = 0; i < nbb ; ++i)
+			{
+				wfpt->vmatrix[i] += 4 * pow(pij[i].imag(), 2);
+			}
+		}
+		else
+		{
+			for(int i = 0; i < nbb ; ++i)
+			{
+				wfpt->vmatrix[i] += norm(pij[i]);
+			}
+		}
+	}
+	
+	delete[] pij;
+	delete[] pwave;
 }
 
 //act before the end of each loop

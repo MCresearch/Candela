@@ -2,7 +2,6 @@
 #include "const.h"
 #include "gfun.h"
 #include "ele_conductivity.h"
-#include "matrixmultip.h"
 #include <unistd.h>
 
 //sigma is electric conductivity and kappa is thermal conductivity.
@@ -52,11 +51,7 @@ void Ele_Conductivity::method1()
 		for(int i=0;i<nf;i++)
 			eps[i]=INPUT.fwhm[i]/2;
 	}
-	double factor;
-	if(INPUT.localp)
-		factor=2*pi/3*pow(P_HBAR,3)/(pow(P_ME,2)*pow(P_BOHR*1e-10,5));
-	//else
-	//	factor=2*pi/3*pow(P_QE,2)/(P_HBAR*P_BOHR*1e-10);
+	double factor = 2*pi/3*pow(P_HBAR,3)/(pow(P_ME,2)*pow(P_BOHR*1e-10,5));
 	int allcount=-1;
 
 	int ns=INPUT.nscf;//decide dynamic space of sigma_all, L22_all and L12_all
@@ -144,8 +139,16 @@ void Ele_Conductivity::method1()
 		cout<<"scf "<<ifolder<<" ; kpoint "<<ik+1<<endl;
 		cout<<"nband: "<<nband<<endl;
 		//WF.print(0);
-		double *pij2 = new double[(nband-1) * nband / 2];
-		getpij2(WF, pij2);
+
+		if(INPUT.nonlocal)
+		{
+			wfr.readvmatrix(ik);
+		}
+		else
+		{
+			wfr.calvmatrix();
+		}
+			
 
 		double factor2=factor/INPUT.dw*pow(WF.factor,2)/INPUT.vol;
 		
@@ -164,11 +167,8 @@ void Ele_Conductivity::method1()
 				iw=int(w/INPUT.dw);
 				if(iw>=nw||w==0) continue;//add w==0, sometimes w can be 0 due to truncation error.
 
-				corr2 = pij2[ijb];
-				// if(INPUT.localp)
-				// {
-				// 	corr2=Velocity_Matrix_Local(ib,jb,WF);
-				// }
+				corr2 = WF.vmatrix[ijb];
+				//corr2=Velocity_Matrix_Local(ib,jb,WF); 
 				
 //--------------------------------------------------------------------------------------------------
 //Smearing Part
@@ -258,7 +258,6 @@ void Ele_Conductivity::method1()
 				//cout<<docc<<' '<<w<<' '<<corr2<<' '<<INPUT.dw<<' '<<WF.factor<<' '<<INPUT.vol<<' '<<factor<<endl;
 	    	}
 		}
-		delete[] pij2;
 		wfr.clean();
 	}
 	
@@ -454,60 +453,5 @@ double Velocity_Matrix_Local(const int ib,const int jb,Wavefunc & WF)
         }
 		return corr2;
 }
-void Ele_Conductivity::getpij2(Wavefunc& wf, double *pij2)
-{
-	const int nbands = wf.nband;
-	const int npw = wf.ngtot;
-	const int nbb = (nbands-1) * nbands / 2;
-	ZEROS(pij2, nbb);
-	
-	complex<double> *pij = new complex<double>[nbb];
-	complex<double> *pwave = new complex<double>[npw * nbands];
-	for (int id = 0; id < 3; ++id)
-    {
-		double *gid, kid;
-		if(id == 0)
-		{
-			gid = wf.gkk_x;
-			kid = wf.kpoint_x;
-		}
-		else if(id == 1)
-		{
-			gid = wf.gkk_y;
-			kid = wf.kpoint_y;
-		}
-		else
-		{
-			gid = wf.gkk_z;
-			kid = wf.kpoint_z;
-		}
 
-		// pxyz|right>
-		for(int ib = 0 ; ib < nbands ; ++ib)
-		{
-			for(int ig = 0 ; ig < npw ; ++ig)
-			{
-    	        pwave[ig + ib*npw] = wf.Wavegg[ib*npw + ig] * (gid[ig]+kid);
-			}
-		}
-		dtrimultipAHB(nbands,nbands,npw, wf.Wavegg, npw, pwave, npw, pij, 1);
-		if(INPUT.gamma)
-		{
-			for(int i = 0; i < nbb ; ++i)
-			{
-				pij2[i] += 4 * pow(pij[i].imag(), 2);
-			}
-		}
-		else
-		{
-			for(int i = 0; i < nbb ; ++i)
-			{
-				pij2[i] += norm(pij[i]);
-			}
-		}
-	}
-	
-	delete[] pij;
-	delete[] pwave;
-}
 	

@@ -115,7 +115,7 @@ double distance
 	}\
 } 
 template<class T>//qianrui add 2020-1-6
-bool ifne(T& x,T& y)
+bool ifne(const T x, const T y)
 {
 #ifdef __DEBUG
 	if(x!=y)
@@ -130,7 +130,7 @@ bool ifne(T& x,T& y)
 }
 
 template<class T>//qianrui add 2020-1-6
-bool ifelt(T& x,T& y)
+bool ifelt(const T x, const T y)
 {
 #ifdef __DEBUG
 	double error=abs(double(x)-double(y));

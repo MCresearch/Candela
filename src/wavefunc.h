@@ -22,15 +22,16 @@ class Wavefunc
 		void print(int );
 		void checknorm(int,int);
 	public:
-		complex <double> * Wavegg; //in bohr^-3/2 or 1
+		complex <double> * Wavegg = nullptr; //in bohr^-3/2 or 1
 		double factor;// in unit 1 or bohr^3
 		//Wavegg^2*factor in unit 1
-		double *gkk_x,*gkk_y,*gkk_z;//in bohr^-1
+		double *gkk_x = nullptr,*gkk_y = nullptr,*gkk_z = nullptr;//in bohr^-1
 		double kpoint_x,kpoint_y,kpoint_z;//in bohr^-1
-		double *occ;
-		double *eigE; //in eV
+		double *occ = nullptr;
+		double *eigE = nullptr; //in eV
 		int nband,ngtot;
 		double wk;//weight of kpoint
+		double* vmatrix = nullptr;
 	public:
 		int ig0 = 0; //ig when gkk = (0,0,0)
 };
