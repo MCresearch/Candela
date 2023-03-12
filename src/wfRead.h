@@ -20,8 +20,8 @@ class WfRead
 	void Init();
 	void readWF(int ik);
 	void readOCC(int ik);
-	void readvmatrix(const int ik);
-	void calvmatrix();
+	void readvmatrix(const int ik, double* vmatrix);
+	void calvmatrix(double* vmatrix);
 	void clean();
 	void cleanclass();
 	void ignore(int );

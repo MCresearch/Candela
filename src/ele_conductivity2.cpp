@@ -59,10 +59,6 @@ void Ele_Conductivity::method2()
 #endif
 		wfr.readWF(ik);
 		int nband=WF.nband;
-		for(int ib=0;ib<nband;ib++)
-		{
-			WF.checknorm(ik,ib);//check if wavefunction is normalized to 1.
-		}
 		std::cout<<"kpoint "<<ik+1<<endl;
 		std::cout<<"nband: "<<nband<<endl;
 		jjcorr_ks(ik, nt, dt, wfr, ct11,ct12,ct22);
@@ -94,14 +90,16 @@ void Ele_Conductivity::jjcorr_ks(const int ik, const int nt, const double dt,  W
 
     const int nbands = wfr.wfpt->nband;
     const double ef = INPUT.fermiE / P_Ry2eV;
-	
+
+    const int nbb = (nbands-1) * nbands / 2;
+	double *vmatrix = new double [nbb];
 	if(INPUT.nonlocal)
 	{
-		wfr.readvmatrix(ik);
+		wfr.readvmatrix(ik, vmatrix);
 	}
 	else
 	{
-        wfr.calvmatrix();
+        wfr.calvmatrix(vmatrix);
 	}
     for (int it = 0; it < nt; ++it)
     {
@@ -118,7 +116,7 @@ void Ele_Conductivity::jjcorr_ks(const int ik, const int nt, const double dt,  W
             {
                 double ej = enb[jb] / P_Ry2eV;
                 double fj = wfr.wfpt->occ[jb];
-                double tmct = sin((ej - ei) * (it)*dt) * (fi - fj) * wfr.wfpt->vmatrix[ijb];
+                double tmct = sin((ej - ei) * (it)*dt) * (fi - fj) * vmatrix[ijb];
                 tmct11 += tmct;
                 tmct12 += -tmct * ((ei + ej) / 2 - ef);
                 tmct22 += tmct * pow((ei + ej) / 2 - ef, 2);
@@ -128,6 +126,7 @@ void Ele_Conductivity::jjcorr_ks(const int ik, const int nt, const double dt,  W
         ct12[it] += tmct12;
         ct22[it] += tmct22;
     }
+    delete[] vmatrix;
 }
 
 void Ele_Conductivity::calcondw(const int nt, const double dt, const double fwhmin, const double wcut, 

@@ -31,7 +31,6 @@ class Wavefunc
 		double *eigE = nullptr; //in eV
 		int nband,ngtot;
 		double wk;//weight of kpoint
-		double* vmatrix = nullptr;
 	public:
 		int ig0 = 0; //ig when gkk = (0,0,0)
 };

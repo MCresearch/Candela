@@ -119,6 +119,7 @@ void Ele_Conductivity::method1()
 	assert(nk>0);
 
 	//kpioint loop
+	
 	for(int ik=0;ik<nk;ik++)
 	{
 		allcount++;
@@ -132,21 +133,23 @@ void Ele_Conductivity::method1()
 #endif
 		wfr.readWF(ik);
 		int nband=WF.nband;
-		for(int ib=0;ib<nband;ib++)
-		{
-			WF.checknorm(ik,ib);//check if wavefunction is normalized to 1.
-		}
 		cout<<"scf "<<ifolder<<" ; kpoint "<<ik+1<<endl;
 		cout<<"nband: "<<nband<<endl;
 		//WF.print(0);
 
+		const int nbb = (nband-1) * nband / 2;
+		double *vmatrix = new double [nbb];
 		if(INPUT.nonlocal)
 		{
-			wfr.readvmatrix(ik);
+			wfr.readvmatrix(ik, vmatrix);
 		}
 		else
 		{
-			wfr.calvmatrix();
+			for(int ib=0;ib<nband;ib++)
+			{
+				WF.checknorm(ik,ib);//check if wavefunction is normalized to 1.
+			}
+			wfr.calvmatrix(vmatrix);
 		}
 			
 
@@ -167,7 +170,7 @@ void Ele_Conductivity::method1()
 				iw=int(w/INPUT.dw);
 				if(iw>=nw||w==0) continue;//add w==0, sometimes w can be 0 due to truncation error.
 
-				corr2 = WF.vmatrix[ijb];
+				corr2 = vmatrix[ijb];
 				//corr2=Velocity_Matrix_Local(ib,jb,WF); 
 				
 //--------------------------------------------------------------------------------------------------
@@ -259,6 +262,7 @@ void Ele_Conductivity::method1()
 	    	}
 		}
 		wfr.clean();
+		delete[] vmatrix;
 	}
 	
 	wfr.cleanclass();

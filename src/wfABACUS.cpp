@@ -76,21 +76,12 @@ void WfABACUS::readOUT(Wavefunc & wf)
 	//cout<<"number of electrons: "<<INPUT.nele<<endl;
 
 	//get number of kpoint
-	searchead(ifskwt,txt,"Input",1);
-	ifskwt>>txt>>useless>>nkpoint;
-	checkstr="nkstot";
-	ifnecheckv(checkstr,txt);
-	ifskwt>>txt;
-	if(txt=="nkstot_ibz") 	
-	{
-		ifskwt>>useless>>nkpoint; //symmetry swith is on
-		searchead(ifskwt,txt,"KPOINTS",1);
-	}
-	else
-	{
-		getline(ifskwt,txt);
-	}
+	searchead(ifskwt,txt,"nkstot_ibz",1);
+	nkpoint = str2int(txt.substr(2,10));
+	ifskwt >> txt;
+	ifnecheckv(txt,string("IBZ"));
 	
+	searchead(ifskwt,txt,"KPOINTS",1);
 	INPUT.nkpoint=nkpoint;
 	wk=new double [nkpoint];
 

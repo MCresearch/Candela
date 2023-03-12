@@ -18,28 +18,19 @@ void WfRead::ignore(int ik)
 	{
 		//There is nothing to do when data of each kpoint are stored in separate files.
 	}
-	else if(INPUT.wf_in_type=="PWmat"||INPUT.wf_in_type=="QE2"||INPUT.wf_in_type=="ABACUS")
+	else if(INPUT.wf_in_type=="PWmat")
 	{
-		this->readWF(ik);//It is needed when data of all kpoints are stored in a single file. 	
+		wfpwmat.readOCC(*wfpt,ik);
+		wfpwmat.readGKK(*wfpt,ik);
+		wfpwmat.readWF(*wfpt,ik);
 	}
-	else
+	else if(INPUT.wf_in_type=="ABACUS")
 	{
-		cout<<"No such file type!"<<endl;
-		exit(0);
+		wfabacus.readOCC(*wfpt, ik);
 	}
-	return;
-	
-}
-
-void WfRead::ignoreOCC(int ik)
-{
-	if(INPUT.wf_in_type=="QE1")//QE1 for QE v5.4 ;QE2 for QE v6.4
+	else if(INPUT.wf_in_type=="QE2")
 	{
-		//There is nothing to do when occupied numbers and eigen energies of each kpoint are stored in separate files.
-	}
-	else if(INPUT.wf_in_type=="PWmat"||INPUT.wf_in_type=="QE2"||INPUT.wf_in_type=="ABACUS")
-	{
-		this->readOCC(ik);	//It is needed when occupied numbers and eigen energies of all kpoints are sotred in a single file.
+		wfqe.readOCC2(*wfpt, ik);
 	}
 	else
 	{
@@ -72,7 +63,7 @@ void WfRead:: Init()
 	}
 	else if(INPUT.wf_in_type=="ABACUS")
 	{
-		wfabacus.readOUT(*wfpt);	
+		wfabacus.readOUT(*wfpt);
 	}
 	else
 	{
@@ -111,7 +102,7 @@ void WfRead::readWF(int ik)
 	else if(INPUT.wf_in_type=="ABACUS")
 	{
 		wfabacus.readOCC(*wfpt,ik);
-		wfabacus.readWF(*wfpt,ik);
+		if(!INPUT.nonlocal)	wfabacus.readWF(*wfpt,ik);
 	}
 	else
 	{
@@ -153,31 +144,27 @@ void WfRead::readOCC(int ik)
 	}
 	return;
 }
-void WfRead:: readvmatrix(const int ik)
+void WfRead:: readvmatrix(const int ik, double* vmatrix)
 {
 	int nband = wfpt->nband;
 	int nbb = (nband-1) * nband / 2;
-	delete[] wfpt->vmatrix;
-	wfpt->vmatrix = new double [(nband-1) * nband / 2];
 	stringstream ss;
-    ss<<"vmatrix"<<ik<<".dat";
+    ss<<INPUT.wfdirectory<<"vmatrix"<<ik<<".dat";
 	binfstream binfs(ss.str(), "r");
 	int head, tail;
 	binfs>>head;
-	ifne(nband*8, head);
-	rwread(binfs, wfpt->vmatrix, nbb);
+	ifnecheckv(nbb*8, head);
+	rwread(binfs, vmatrix, nbb);
 	binfs>>tail;
-	ifne(head, tail);
+	ifnecheckv(head, tail);
 }
 
-void WfRead::calvmatrix()
+void WfRead::calvmatrix(double* vmatrix)
 {
 	const int nband = wfpt->nband;
 	const int nbb = (nband-1) * nband / 2;
 	const int npw = wfpt->ngtot;
-	delete[] wfpt->vmatrix;
-	wfpt->vmatrix = new double [(nband-1) * nband / 2];
-	ZEROS(wfpt->vmatrix, nbb);
+	ZEROS(vmatrix, nbb);
 	complex<double> *pij = new complex<double>[nbb];
 	complex<double> *pwave = new complex<double>[npw * nband];
 	for (int id = 0; id < 3; ++id)
@@ -212,14 +199,14 @@ void WfRead::calvmatrix()
 		{
 			for(int i = 0; i < nbb ; ++i)
 			{
-				wfpt->vmatrix[i] += 4 * pow(pij[i].imag(), 2);
+				vmatrix[i] += 4 * pow(pij[i].imag(), 2);
 			}
 		}
 		else
 		{
 			for(int i = 0; i < nbb ; ++i)
 			{
-				wfpt->vmatrix[i] += norm(pij[i]);
+				vmatrix[i] += norm(pij[i]);
 			}
 		}
 	}

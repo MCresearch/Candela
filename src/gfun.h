@@ -94,7 +94,7 @@ double distance
 {\
 	if(!ifne(x,y))\
 	{\
-		cout<<"please check variation "<<#x<<" & "<<#y<<" in the "<<__LINE__<<"th line of "<<__FILE__<<'!'<<endl;\
+		cout<<"please check variation "<<#x<<" & "<<#y<<" in "<<__FILE__<<':'<<__LINE__<<'!'<<endl;\
 		exit(0);\
 	}\
 } 
@@ -102,7 +102,7 @@ double distance
 {\
 	if(!ifelt(x,y))\
 	{\
-		cout<<"please check variation "<<#x<<" & "<<#y<<" in the "<<__LINE__<<"th line of "<<__FILE__<<'!'<<endl;\
+		cout<<"please check variation "<<#x<<" & "<<#y<<" in "<<__FILE__<<':'<<__LINE__<<'!'<<endl;\
 		exit(0);\
 	}\
 } 
@@ -110,21 +110,19 @@ double distance
 {\
 	if(!ifne(x,y,n))\
 	{\
-		cout<<"please check pointer "<<#x<<" & "<<#y<<" in the "<<__LINE__<<"th line of "<<__FILE__<<'!'<<endl;\
+		cout<<"please check pointer "<<#x<<" & "<<#y<<" in "<<__FILE__<<':'<<__LINE__<<'!'<<endl;\
 		exit(0);\
 	}\
 } 
 template<class T>//qianrui add 2020-1-6
 bool ifne(const T x, const T y)
 {
-#ifdef __DEBUG
 	if(x!=y)
 	{
-		cout<<x<<"!="<<y<<endl;
+		cout<<x<<" != "<<y<<endl;
 		cout<<"Error in read data!"<<endl;
 		return false;
 	}
-#endif
 	return true;
 
 }
@@ -132,7 +130,6 @@ bool ifne(const T x, const T y)
 template<class T>//qianrui add 2020-1-6
 bool ifelt(const T x, const T y)
 {
-#ifdef __DEBUG
 	double error=abs(double(x)-double(y));
 	if(x>0&&y>0)
 	{
@@ -142,7 +139,7 @@ bool ifelt(const T x, const T y)
 			return true;
 		else
 		{
-			cout<<x<<"!="<<y<<endl;
+			cout<<x<<" != "<<y<<endl;
 			cout<<"Error in read data!"<<endl;
 			return false;
 		}
@@ -155,7 +152,7 @@ bool ifelt(const T x, const T y)
 			return true;
 		else
 		{
-			cout<<x<<"!="<<y<<endl;
+			cout<<x<<" != "<<y<<endl;
 			cout<<"Error in read data!"<<endl;
 			return false;
 		}
@@ -164,27 +161,24 @@ bool ifelt(const T x, const T y)
 		return true;
 	else
 	{
-		cout<<x<<"!="<<y<<endl;
+		cout<<x<<" != "<<y<<endl;
 		cout<<"Error in read data!"<<endl;
 		return false;
 	}
-#endif
 	return true;
 }
 template<class T>//qianrui add 2020-1-6
 bool ifne(T*x,T*y,int n)
 {
-#ifdef __DEBUG
 	for(int i=0;i<n;i++)
 	{
 		if(x[i]!=y[i])
 		{
-			cout<<i<<" : "<<x[i]<<"!="<<y[i]<<endl;
+			cout<<i<<" : "<<x[i]<<" != "<<y[i]<<endl;
 			cout<<"Error in read data!"<<endl;
 			return false;
 		}
 	}
-#endif
 	return true;
 }
 
