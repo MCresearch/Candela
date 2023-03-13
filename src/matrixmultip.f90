@@ -25,7 +25,7 @@ SUBROUTINE DTRIMULTIPAHB(M,N,K,A,LDA,B,LDB,C,BIAS)
     COMPLEX*16:: TEMP
     Q = 1;
     DO J = 1,N
-        DO I = J + 1,M
+        DO I = J + BIAS,M
             TEMP = (0.0,0.0)
             DO L = 1,K
                 TEMP = TEMP + DCONJG(A(L,I)) * B(L,J)
