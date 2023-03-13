@@ -1,15 +1,17 @@
 #ifndef CONST_H
 #define CONST_H
 
-#define P_BOHR 0.52917720859 //in QE 
-#define P_HBAR 1.05457266e-34
-#define P_ME 9.10956e-31
-#define P_QE 1.6021766341e-19
-#define P_KB 1.380649e-23
-#define P_HA 27.21138
-#define P_EV2K 11604.5
-#define P_t_AU 4.837768652311e-17
-#define P_Ry2eV 13.605698
+constexpr double P_BOHR = 0.52917720859; //in QE 
+constexpr double P_HBAR = 1.05457266e-34;
+constexpr double P_ME =  9.10956e-31;
+constexpr double P_QE = 1.6021766341e-19;
+constexpr double P_KB = 1.380649e-23;
+
+constexpr double P_HA = P_HBAR*P_HBAR/(P_BOHR * P_BOHR * 1e-20)/P_ME/P_QE;
+constexpr double P_EV2K = P_QE/P_KB;
+constexpr double P_Ry2eV = P_HA / 2;
+constexpr double P_t_AU = P_HBAR/P_Ry2eV/P_QE;
+ 
 
 #define MASS_H  1.00794
 #define MASS_D  2.01410

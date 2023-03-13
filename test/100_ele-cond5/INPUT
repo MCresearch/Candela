@@ -1,11 +1,11 @@
 calculation     ele_conductivity
 wf_in_type      ABACUS
-wfdirectory     ../wavefunc/Si1.abacus/1/
+wfdirectory     ../wavefunc/Al1.abacus/
 
-wcut    20    #maximal energy (in eV) for conductivity
-dw      0.02   #minimla energy step (in eV) for conductivity
-fwhm    1     #Full Width at Half Maximam of Gauss or Lorentz function. Only useful when smear is 1 or 2
-smear   1     #0 for linear approx.; 1 for Gauss approx.; 2 for Lorentz approx.
-smearinvw 0
+wcut    10    #maximal energy (in eV) for conductivity
+dw      1   #minimla energy step (in eV) for conductivity
+fwhm    8     #Full Width at Half Maximam of Gauss or Lorentz function. Only useful when smear is 1 or 2
+smear   1
 cond_method 2
+nonlocal 1
 temperature 94732.3422224481

@@ -4,8 +4,6 @@
 #include "ele_conductivity.h"
 #include "matrixmultip.h"
 
-#define TWOSQRT2LN2 2.354820045030949 // FWHM = 2sqrt(2ln2) * \sigma
-#define FACTOR      1.839939223835727e7
 
 /**
  * @brief Calculate conducitities use time correlation funtions
@@ -18,7 +16,6 @@
 void Ele_Conductivity::method2()
 {
 	double times = 16;
-
 	double wcut = INPUT.wcut;
 	double dw_in = INPUT.dw;
 	double fwhm_in = INPUT.fwhm[0];
@@ -27,8 +24,8 @@ void Ele_Conductivity::method2()
     double dw = dw_in / P_Ry2eV; // converge unit in eV to Ry
     double sigma = fwhm_in / TWOSQRT2LN2 / P_Ry2eV;
     double dt = M_PI / (dw * nw) / times; // unit in a.u., 1 a.u. = 4.837771834548454e-17 s
-    int nt = ceil(sqrt(20) / sigma / dt);
-    cout << "nw: " << nw << " ; dw: " << dw * P_Ry2eV << " eV" << endl;
+    int nt = ceil(sqrt(20) / sigma / dt) * 10;
+    cout << "nw: " << nw << " ; dw: " << dw_in << " eV" << endl;
     cout << "nt: " << nt << " ; dt: " << dt << " a.u.(ry^-1)" << endl;
     assert(nw >= 1);
     assert(nt >= 1);
@@ -132,7 +129,7 @@ void Ele_Conductivity::jjcorr_ks(const int ik, const int nt, const double dt,  W
 void Ele_Conductivity::calcondw(const int nt, const double dt, const double fwhmin, const double wcut, 
             const double dw_in, double *ct11, double *ct12, double *ct22)
 {
-	double factor = FACTOR;
+	double factor = 4*P_QE*P_QE/P_BOHR/1e-10/P_HBAR;
     const int ndim = 3;
     int nw = ceil(wcut / dw_in);
     double dw = dw_in / P_Ry2eV; // converge unit in eV to Ry
@@ -155,13 +152,14 @@ void Ele_Conductivity::calcondw(const int nt, const double dt, const double fwhm
     ZEROS(cw22, nw);
     for (int iw = 0; iw < nw; ++iw)
     {
-        for (int it = 0; it < nt; ++it)
+        for (int it = 1; it < nt; ++it)
         {
-            cw11[iw] += -2 * ct11[it] * sin(-(iw + 0.5) * dw * it * dt)
+            double simpsonpre = it < nt - 1 ? (2 - it%2) * 2 / 3.0 : 1.0 / 3.0; //simpson method
+            cw11[iw] += -2 * simpsonpre * ct11[it] * sin(-(iw + 0.5) * dw * it * dt)
                         * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
-            cw12[iw] += -2 * ct12[it] * sin(-(iw + 0.5) * dw * it * dt)
+            cw12[iw] += -2 * simpsonpre * ct12[it] * sin(-(iw + 0.5) * dw * it * dt)
                         * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
-            cw22[iw] += -2 * ct22[it] * sin(-(iw + 0.5) * dw * it * dt)
+            cw22[iw] += -2 * simpsonpre * ct22[it] * sin(-(iw + 0.5) * dw * it * dt)
                         * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
         }
     }
@@ -172,9 +170,9 @@ void Ele_Conductivity::calcondw(const int nt, const double dt, const double fwhm
     {
         cw11[iw] *= double(2) / ndim / INPUT.vol * factor; // unit in Sm^-1
         cw12[iw]
-            *= double(2) / ndim / INPUT.vol * factor * 2.17987092759e-18 / 1.6021766208e-19; // unit in Am^-1
+            *= double(2) / ndim / INPUT.vol * factor * P_Ry2eV; // unit in Am^-1
         cw22[iw] *= double(2) / ndim / INPUT.vol * factor
-                    * pow(2.17987092759e-18 / 1.6021766208e-19, 2); // unit in Wm^-1
+                    * pow(P_Ry2eV, 2); // unit in Wm^-1
         kappa[iw] = (cw22[iw] - pow(cw12[iw], 2) / cw11[iw]) / INPUT.temperature;
         ofscond << setw(8) << (iw + 0.5) * dw * P_Ry2eV << setw(20) << cw11[iw] << setw(20) << kappa[iw]
                 << setw(20) << cw12[iw] << setw(20) << cw22[iw] << endl;

@@ -4,6 +4,9 @@
 #include "wfRead.h"
 #include "binfstream.h"
 #include "wavefunc.h"
+
+#define TWOSQRT2LN2 2.354820045030949 // FWHM = 2sqrt(2ln2) * \sigma
+
 //Calculate electric and thermal conductivity of electrons.
 //By qianrui 2020-1-6
 class Ele_Conductivity

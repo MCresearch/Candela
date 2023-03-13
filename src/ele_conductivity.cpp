@@ -44,7 +44,7 @@ void Ele_Conductivity::method1()
 	else if(INPUT.smear==1)
 	{
 		for(int i=0;i<nf;i++)
-			st[i]=INPUT.fwhm[i]/2.354820045030949;
+			st[i]=INPUT.fwhm[i]/TWOSQRT2LN2;
 	}
 	else if(INPUT.smear==2)
 	{
