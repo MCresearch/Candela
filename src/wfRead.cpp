@@ -149,7 +149,7 @@ void WfRead:: readvmatrix(const int ik, double* vmatrix)
 	int nband = wfpt->nband;
 	int nbb = (nband-1) * nband / 2;
 	stringstream ss;
-    ss<<INPUT.wfdirectory<<"vmatrix"<<ik+1<<".dat";
+    ss<<INPUT.wfdirectory<<"/vmatrix"<<ik+1<<".dat";
 	binfstream binfs(ss.str(), "r");
 	int head, tail;
 	binfs>>head;
