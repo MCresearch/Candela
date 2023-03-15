@@ -90,7 +90,7 @@ void Ele_Conductivity::jjcorr_ks(const int ik, const int nt, const double dt,  W
 
     const int nbb = (nbands-1) * nbands / 2;
 	double *vmatrix = new double [nbb];
-	if(INPUT.nonlocal)
+	if(INPUT.readvmatrix)
 	{
 		wfr.readvmatrix(ik, vmatrix);
 	}

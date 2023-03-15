@@ -102,7 +102,7 @@ void WfRead::readWF(int ik)
 	else if(INPUT.wf_in_type=="ABACUS")
 	{
 		wfabacus.readOCC(*wfpt,ik);
-		if(!INPUT.nonlocal)	wfabacus.readWF(*wfpt,ik);
+		if(!INPUT.readvmatrix)	wfabacus.readWF(*wfpt,ik);
 	}
 	else
 	{

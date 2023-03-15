@@ -7,5 +7,5 @@ dw      1   #minimla energy step (in eV) for conductivity
 fwhm    8     #Full Width at Half Maximam of Gauss or Lorentz function. Only useful when smear is 1 or 2
 smear   1
 cond_method 2
-nonlocal 1
+readvmatrix 1
 temperature 94732.3422224481

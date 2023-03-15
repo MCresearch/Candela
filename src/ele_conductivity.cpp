@@ -12,8 +12,6 @@
 void writesigma(double*,double*,double*,int,int,int,int);
 static double sum_factor;
 double Velocity_Matrix_Local(const int,const int,Wavefunc &);
-//double Velocity_Matrix_NonLocal(const int,const int,Wavefunc &,const int);
-//double CPU_Velocity_Matrix_NonLocal(const int,const int,Wavefunc &);
 
 void Ele_Conductivity::Routine()
 {
@@ -139,7 +137,7 @@ void Ele_Conductivity::method1()
 
 		const int nbb = (nband-1) * nband / 2;
 		double *vmatrix = new double [nbb];
-		if(INPUT.nonlocal)
+		if(INPUT.readvmatrix)
 		{
 			wfr.readvmatrix(ik, vmatrix);
 		}

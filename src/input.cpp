@@ -104,7 +104,7 @@ Input::Input()
 	smearinvw = true;
 	nscf = 0;
 	n_fwhm = 1;
-	nonlocal = false;
+	readvmatrix = false;
 	cond_method = 1;
 
 	snatom = -1;
@@ -569,7 +569,7 @@ void Input::Read(const string &fn)
         else if (strcmp("wcut", word) == 0) read_value(ifs, wcut);
         else if (strcmp("smear", word) == 0) read_value(ifs, smear);
 		else if (strcmp("smearinvw", word) == 0) read_value(ifs, smearinvw);
-        else if (strcmp("nonlocal", word) == 0) read_value(ifs, nonlocal);
+        else if (strcmp("readvmatrix", word) == 0) read_value(ifs, readvmatrix);
 		else if (strcmp("cond_method", word) == 0) read_value(ifs, cond_method);
         else if (strcmp("n_fwhm", word) == 0) read_value(ifs, n_fwhm);
         else if (strcmp("fwhm", word) == 0) 
