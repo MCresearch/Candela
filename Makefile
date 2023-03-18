@@ -10,6 +10,9 @@ CXX=mpiicpc
 # serial version: icc/icpc/g++
 # CXX=g++
 
+#openmp
+OPENMP=OFF
+
 # Compile integrate-test version, CXX must use g++/mpicxx
 # It can check the leak of memory.
 TEST=OFF
@@ -18,7 +21,7 @@ TEST=OFF
 
 
 CFLAGS=-O3 
-FFLAGS=-O3
+FFLAGS=-O3 -cpp
 D_SRC=./src
 D_OBJ=./obj
 D_BIN=./bin
@@ -56,7 +59,7 @@ endif
 ifeq ($(DEBUG), ON)
 #CXX must be a gnu compiler, or else it will fail.
     CFLAGS = -g -fsanitize=address -fno-omit-frame-pointer
-    FFLAGS = -g -fsanitize=address -fno-omit-frame-pointer
+    FFLAGS = -g -fsanitize=address -fno-omit-frame-pointer -cpp
 	ifeq ($(findstring mpi, $(CXX)), mpi)
         CXX = mpicxx
 	else
@@ -65,6 +68,10 @@ ifeq ($(DEBUG), ON)
     FC = gfortran
 endif
 
+ifeq ($(OPENMP), ON)
+    CFLAGS += -fopenmp
+    FFLAGS += -fopenmp
+endif
 
 ${TARGET}:$(OBJ_CPP) $(OBJ_F90)
 	@if [ ! -d $(D_BIN) ]; then mkdir $(D_BIN); fi

@@ -64,12 +64,12 @@ def comparefile(file1,file2,threshold):
                 if IsComplex(sline1[j]) and IsComplex(sline2[j]):
                     dat1 = (x1[0]**2+x1[1]**2)**0.5
                     dat2 = (x2[0]**2+x2[1]**2)**0.5
-                    if abs(dat1-dat2)/dat1 > threshold: 
+                    if abs(dat1-dat2)/dat1 > threshold and dat1 > 1e-10 and dat2 > 1e-10: 
                         return ExitError(file1,file2,i,sline1[j],sline2[j],j)
                 elif IsFloat(sline1[j]) and IsFloat(sline2[j]):
                     dat1 = float(sline1[j])
                     dat2 = float(sline2[j])
-                    if abs(dat1-dat2)/dat1 > threshold: 
+                    if abs(dat1-dat2)/dat1 > threshold and dat1 > 1e-10 and dat2 > 1e-10: 
                         return ExitError(file1,file2,i,sline1[j],sline2[j],j)
                 else: 
                     return ExitError(file1,file2,i,sline1[j],sline2[j],j)

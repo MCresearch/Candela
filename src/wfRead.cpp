@@ -187,6 +187,9 @@ void WfRead::calvmatrix(double* vmatrix)
 		}
 
 		// pxyz|right>
+#ifdef _OPENMP
+#pragma omp parallel for collapse(2)
+#endif	
 		for(int ib = 0 ; ib < nband ; ++ib)
 		{
 			for(int ig = 0 ; ig < npw ; ++ig)
@@ -197,6 +200,9 @@ void WfRead::calvmatrix(double* vmatrix)
 		dtrimultipAHB(nband,nband,npw, wfpt->Wavegg, npw, pwave, npw, pij, 1);
 		if(INPUT.gamma)
 		{
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif	
 			for(int i = 0; i < nbb ; ++i)
 			{
 				vmatrix[i] += 4 * pow(pij[i].imag(), 2);
@@ -204,6 +210,9 @@ void WfRead::calvmatrix(double* vmatrix)
 		}
 		else
 		{
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif	
 			for(int i = 0; i < nbb ; ++i)
 			{
 				vmatrix[i] += norm(pij[i]);

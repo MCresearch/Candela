@@ -75,10 +75,7 @@ void Ele_Conductivity::method1()
 		L12_all[i]=0;
 		sigma_all[i]=0;
 	}
-	double w;
-	int iw;
-	complex<double> corrx,corry,corrz;
-	double corr2;
+
 	if(multi)
 	{
 		string command="test -e "+INPUT.multi_directory;
@@ -132,7 +129,6 @@ void Ele_Conductivity::method1()
 		wfr.readWF(ik);
 		int nband=WF.nband;
 		cout<<"scf "<<ifolder<<" ; kpoint "<<ik+1<<endl;
-		cout<<"nband: "<<nband<<endl;
 		//WF.print(0);
 
 		const int nbb = (nband-1) * nband / 2;
@@ -143,32 +139,39 @@ void Ele_Conductivity::method1()
 		}
 		else
 		{
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif	
 			for(int ib=0;ib<nband;ib++)
 			{
 				WF.checknorm(ik,ib);//check if wavefunction is normalized to 1.
 			}
 			wfr.calvmatrix(vmatrix);
 		}
+		cout<<"nband: "<<nband<<endl;
 			
 
 		double factor2=factor/INPUT.dw*pow(WF.factor,2)/INPUT.vol;
 		
 		//loop of band
-		int ijb = 0;
+#ifdef _OPENMP
+#pragma omp parallel for reduction(+:tot_sum, sigma_all[:nsnfnw], L12_all[:nsnfnw], L22_all[:nsnfnw]) schedule(dynamic)
+#endif	
 		for(int ib=0;ib<nband;++ib)
 		{
-			for(int jb=ib+1;jb<nband;++jb, ++ijb)
+			for(int jb=ib+1;jb<nband;++jb)
 	    	{
+				int ijb = nband*ib - ib*(ib+1)/2 + (jb - ib - 1);
 				double energyj=WF.eigE[jb];
 				double energyi=WF.eigE[ib];
-				w=energyj-energyi;
+				double w=energyj-energyi;
 				double docc=WF.occ[ib]-WF.occ[jb];
 				if(docc<=0.0000000001) continue;
 				assert(w>=0);
-				iw=int(w/INPUT.dw);
+				int iw=int(w/INPUT.dw);
 				if(iw>=nw||w==0) continue;//add w==0, sometimes w can be 0 due to truncation error.
 
-				corr2 = vmatrix[ijb];
+				double corr2 = vmatrix[ijb];
 				//corr2=Velocity_Matrix_Local(ib,jb,WF); 
 				
 //--------------------------------------------------------------------------------------------------
@@ -216,7 +219,7 @@ void Ele_Conductivity::method1()
 							eps2=pow(eps[ifi],2);
 							pre=1/pi*eps[ifi]*INPUT.dw;
 						}
-						
+
 						for(int iv=0;iv<nw;iv++)
 						{
 							if(INPUT.smear==1)
@@ -255,7 +258,7 @@ void Ele_Conductivity::method1()
 				  	}
 				}
 	
-				tot_sum=tot_sum+(WF.occ[ib]-WF.occ[jb])*(corr2*WF.factor/(WF.eigE[jb]-WF.eigE[ib]));
+				tot_sum += (WF.occ[ib]-WF.occ[jb])*(corr2*WF.factor/(WF.eigE[jb]-WF.eigE[ib]));
 				//cout<<docc<<' '<<w<<' '<<corr2<<' '<<INPUT.dw<<' '<<WF.factor<<' '<<INPUT.vol<<' '<<factor<<endl;
 	    	}
 		}
