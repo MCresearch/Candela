@@ -11,7 +11,7 @@ CXX=mpiicpc
 # CXX=g++
 
 #openmp
-OPENMP=OFF
+OPENMP=ON
 
 # Compile integrate-test version, CXX must use g++/mpicxx
 # It can check the leak of memory.

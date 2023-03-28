@@ -27,7 +27,10 @@ void Wavefunc:: checknorm(int ik,int iband)
 	if(!INPUT.gamma)
 	{
 		for(int i=0;i<ngtot;i++)
+		{
+			if(i==ig0) continue;
 			corr+=pow(Wavegg[i+iband*ngtot].real(),2)+pow(Wavegg[i+iband*ngtot].imag(),2);
+		}
 	}
 	else
 	{
