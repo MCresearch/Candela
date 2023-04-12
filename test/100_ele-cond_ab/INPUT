@@ -11,3 +11,5 @@ fwhm    1 2   #Full Width at Half Maximam of Gauss or Lorentz function. Only use
 smear   1     #0 for linear approx.; 1 for Gauss approx.; 2 for Lorentz approx.
 smearinvw 0
 temperature 94732.3422224481
+error_con 1
+tpk       1

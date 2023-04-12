@@ -92,8 +92,8 @@ void MSD_Multiple::Routine()
 
 	if(RANK==0)
 	{
-		ofs_msd_each.open("MSD_each.dat");
-    	ofs_msd_total.open("MSD_total.dat");
+		ofs_msd_each.open("MSD_each.txt");
+    	ofs_msd_total.open("MSD_total.txt");
 	}
 	
 	//**************************

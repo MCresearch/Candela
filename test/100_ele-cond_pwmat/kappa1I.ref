@@ -1,1002 +1,1002 @@
-#w	kappa
-0.01	-9.60068e-18
-0.03	-nan
-0.05	-nan
-0.07	-nan
-0.09	-nan
-0.11	-nan
-0.13	-nan
-0.15	-nan
-0.17	-nan
-0.19	-nan
-0.21	-nan
-0.23	-nan
-0.25	-nan
-0.27	-nan
-0.29	-nan
-0.31	-nan
-0.33	-nan
-0.35	-nan
-0.37	-nan
-0.39	-nan
-0.41	-nan
-0.43	-nan
-0.45	-nan
-0.47	-nan
-0.49	-nan
-0.51	-nan
-0.53	-nan
-0.55	-nan
-0.57	-nan
-0.59	-nan
-0.61	-nan
-0.63	0.000724352
-0.65	-nan
-0.67	-nan
-0.69	0.00036919
-0.71	-nan
-0.73	-nan
-0.75	-nan
-0.77	-nan
-0.79	-nan
-0.81	-nan
-0.83	-nan
-0.85	-nan
-0.87	-nan
-0.89	-nan
-0.91	-nan
-0.93	-nan
-0.95	-nan
-0.97	-nan
-0.99	-nan
-1.01	-nan
-1.03	-nan
-1.05	-nan
-1.07	-nan
-1.09	-nan
-1.11	-nan
-1.13	-nan
-1.15	-nan
-1.17	-nan
-1.19	-nan
-1.21	-nan
-1.23	-nan
-1.25	-nan
-1.27	-nan
-1.29	-nan
-1.31	-nan
-1.33	-nan
-1.35	-nan
-1.37	-nan
-1.39	-nan
-1.41	-nan
-1.43	-nan
-1.45	-nan
-1.47	-nan
-1.49	-nan
-1.51	-nan
-1.53	-nan
-1.55	-nan
-1.57	-nan
-1.59	-nan
-1.61	-nan
-1.63	-nan
-1.65	-nan
-1.67	-nan
-1.69	-nan
-1.71	-nan
-1.73	-nan
-1.75	-nan
-1.77	-nan
-1.79	-nan
-1.81	-nan
-1.83	-nan
-1.85	-nan
-1.87	-nan
-1.89	-nan
-1.91	-nan
-1.93	-nan
-1.95	-nan
-1.97	-nan
-1.99	-nan
-2.01	-nan
-2.03	-nan
-2.05	-nan
-2.07	-nan
-2.09	-nan
-2.11	-nan
-2.13	-nan
-2.15	-nan
-2.17	-nan
-2.19	-nan
-2.21	-nan
-2.23	-nan
-2.25	-nan
-2.27	-nan
-2.29	-nan
-2.31	-nan
-2.33	-nan
-2.35	-nan
-2.37	-nan
-2.39	-nan
-2.41	-nan
-2.43	-nan
-2.45	-nan
-2.47	-nan
-2.49	-nan
-2.51	-nan
-2.53	-nan
-2.55	-nan
-2.57	-nan
-2.59	-nan
-2.61	-nan
-2.63	-nan
-2.65	-nan
-2.67	-nan
-2.69	-nan
-2.71	-nan
-2.73	-nan
-2.75	-nan
-2.77	-nan
-2.79	-nan
-2.81	-nan
-2.83	-nan
-2.85	-nan
-2.87	-nan
-2.89	-nan
-2.91	-nan
-2.93	-nan
-2.95	-nan
-2.97	-nan
-2.99	-nan
-3.01	-nan
-3.03	-nan
-3.05	-nan
-3.07	-nan
-3.09	-nan
-3.11	-nan
-3.13	-nan
-3.15	-nan
-3.17	-nan
-3.19	-nan
-3.21	-nan
-3.23	-nan
-3.25	-nan
-3.27	-nan
-3.29	-nan
-3.31	-nan
-3.33	-nan
-3.35	-nan
-3.37	-nan
-3.39	-nan
-3.41	-nan
-3.43	-nan
-3.45	-nan
-3.47	-nan
-3.49	-nan
-3.51	-nan
-3.53	-nan
-3.55	-nan
-3.57	-nan
-3.59	-nan
-3.61	-nan
-3.63	-nan
-3.65	-nan
-3.67	-nan
-3.69	-nan
-3.71	-nan
-3.73	-nan
-3.75	-nan
-3.77	-nan
-3.79	-nan
-3.81	-nan
-3.83	-nan
-3.85	-nan
-3.87	-nan
-3.89	-nan
-3.91	-nan
-3.93	-nan
-3.95	-nan
-3.97	-nan
-3.99	-nan
-4.01	-nan
-4.03	-nan
-4.05	-nan
-4.07	-nan
-4.09	-nan
-4.11	-nan
-4.13	-nan
-4.15	-nan
-4.17	-nan
-4.19	-nan
-4.21	-nan
-4.23	-nan
-4.25	-nan
-4.27	-nan
-4.29	-nan
-4.31	-nan
-4.33	-nan
-4.35	-nan
-4.37	-nan
-4.39	-nan
-4.41	-nan
-4.43	-nan
-4.45	-nan
-4.47	-nan
-4.49	-nan
-4.51	-nan
-4.53	-nan
-4.55	-nan
-4.57	-nan
-4.59	-nan
-4.61	-nan
-4.63	-nan
-4.65	-nan
-4.67	-nan
-4.69	-nan
-4.71	-nan
-4.73	-nan
-4.75	-nan
-4.77	-nan
-4.79	-nan
-4.81	-nan
-4.83	-nan
-4.85	-nan
-4.87	-nan
-4.89	-nan
-4.91	-nan
-4.93	-nan
-4.95	-nan
-4.97	-nan
-4.99	-nan
-5.01	-nan
-5.03	-nan
-5.05	-nan
-5.07	-nan
-5.09	-nan
-5.11	-nan
-5.13	-nan
-5.15	-nan
-5.17	-nan
-5.19	-nan
-5.21	-nan
-5.23	-nan
-5.25	-nan
-5.27	-nan
-5.29	-nan
-5.31	-nan
-5.33	-nan
-5.35	-nan
-5.37	-nan
-5.39	-nan
-5.41	-nan
-5.43	-nan
-5.45	-nan
-5.47	-nan
-5.49	-nan
-5.51	-nan
-5.53	-nan
-5.55	-nan
-5.57	-nan
-5.59	-nan
-5.61	-nan
-5.63	-nan
-5.65	-nan
-5.67	-nan
-5.69	-nan
-5.71	-nan
-5.73	-nan
-5.75	-nan
-5.77	-nan
-5.79	-nan
-5.81	-nan
-5.83	-nan
-5.85	-nan
-5.87	-nan
-5.89	-nan
-5.91	-nan
-5.93	-nan
-5.95	-nan
-5.97	-nan
-5.99	-nan
-6.01	-nan
-6.03	-nan
-6.05	-nan
-6.07	-nan
-6.09	-nan
-6.11	-nan
-6.13	-nan
-6.15	-nan
-6.17	-nan
-6.19	-nan
-6.21	-nan
-6.23	-nan
-6.25	-nan
-6.27	-nan
-6.29	-nan
-6.31	-nan
-6.33	-nan
-6.35	-nan
-6.37	-nan
-6.39	-nan
-6.41	-nan
-6.43	-nan
-6.45	-nan
-6.47	-nan
-6.49	-nan
-6.51	-nan
-6.53	-nan
-6.55	-nan
-6.57	-nan
-6.59	-nan
-6.61	-nan
-6.63	-nan
-6.65	-nan
-6.67	-nan
-6.69	-nan
-6.71	-nan
-6.73	-nan
-6.75	-nan
-6.77	-nan
-6.79	-nan
-6.81	-nan
-6.83	2.03203e-21
-6.85	-nan
-6.87	-nan
-6.89	-nan
-6.91	-nan
-6.93	-nan
-6.95	-nan
-6.97	-nan
-6.99	-nan
-7.01	-nan
-7.03	-nan
-7.05	-nan
-7.07	0
-7.09	-nan
-7.11	-nan
-7.13	-nan
-7.15	1.55715e-13
-7.17	-nan
-7.19	-nan
-7.21	-nan
-7.23	-nan
-7.25	-nan
-7.27	-nan
-7.29	-nan
-7.31	-nan
-7.33	-nan
-7.35	-nan
-7.37	-nan
-7.39	-nan
-7.41	-nan
-7.43	-nan
-7.45	-nan
-7.47	-nan
-7.49	-nan
-7.51	-nan
-7.53	-nan
-7.55	-nan
-7.57	-nan
-7.59	-nan
-7.61	-nan
-7.63	-nan
-7.65	-nan
-7.67	-nan
-7.69	-nan
-7.71	-nan
-7.73	-nan
-7.75	-nan
-7.77	-nan
-7.79	-nan
-7.81	-nan
-7.83	-nan
-7.85	-nan
-7.87	-nan
-7.89	-nan
-7.91	-nan
-7.93	-nan
-7.95	-nan
-7.97	-nan
-7.99	-nan
-8.01	-nan
-8.03	-nan
-8.05	-nan
-8.07	-nan
-8.09	-nan
-8.11	-nan
-8.13	-nan
-8.15	-nan
-8.17	-nan
-8.19	-nan
-8.21	-nan
-8.23	-nan
-8.25	-nan
-8.27	-nan
-8.29	-nan
-8.31	-nan
-8.33	-nan
-8.35	-nan
-8.37	-nan
-8.39	-nan
-8.41	-nan
-8.43	-nan
-8.45	-nan
-8.47	-nan
-8.49	-nan
-8.51	-nan
-8.53	-nan
-8.55	-nan
-8.57	-nan
-8.59	-nan
-8.61	-nan
-8.63	1.1346e-16
-8.65	-nan
-8.67	-nan
-8.69	-nan
-8.71	-nan
-8.73	-nan
-8.75	-nan
-8.77	-nan
-8.79	-nan
-8.81	-nan
-8.83	-nan
-8.85	-nan
-8.87	-nan
-8.89	-nan
-8.91	-nan
-8.93	-nan
-8.95	-nan
-8.97	-1.74635e-29
-8.99	9.70859e-16
-9.01	-nan
-9.03	-nan
-9.05	-nan
-9.07	-nan
-9.09	-nan
-9.11	-nan
-9.13	-nan
-9.15	-nan
-9.17	-nan
-9.19	-nan
-9.21	-nan
-9.23	-nan
-9.25	-nan
-9.27	-nan
-9.29	-nan
-9.31	-nan
-9.33	-nan
-9.35	-nan
-9.37	-nan
-9.39	6.56739e-09
-9.41	-nan
-9.43	-nan
-9.45	-nan
-9.47	-nan
-9.49	-nan
-9.51	-nan
-9.53	-nan
-9.55	-nan
-9.57	-nan
-9.59	-nan
-9.61	1.64835e-21
-9.63	4.29184e-25
-9.65	-nan
-9.67	1.35508e-21
-9.69	-nan
-9.71	-nan
-9.73	-nan
-9.75	-nan
-9.77	-nan
-9.79	-nan
-9.81	-nan
-9.83	-nan
-9.85	-nan
-9.87	-nan
-9.89	-nan
-9.91	-nan
-9.93	-nan
-9.95	-nan
-9.97	-nan
-9.99	-nan
-10.01	-nan
-10.03	-nan
-10.05	-nan
-10.07	-nan
-10.09	-nan
-10.11	-nan
-10.13	-nan
-10.15	-nan
-10.17	-nan
-10.19	-nan
-10.21	-nan
-10.23	-nan
-10.25	-nan
-10.27	-nan
-10.29	-nan
-10.31	-nan
-10.33	-nan
-10.35	-nan
-10.37	-nan
-10.39	-nan
-10.41	-nan
-10.43	-nan
-10.45	-nan
-10.47	-nan
-10.49	-nan
-10.51	-nan
-10.53	-nan
-10.55	-nan
-10.57	-nan
-10.59	-nan
-10.61	-nan
-10.63	-nan
-10.65	-nan
-10.67	-nan
-10.69	-nan
-10.71	-nan
-10.73	-nan
-10.75	-nan
-10.77	-nan
-10.79	-nan
-10.81	-nan
-10.83	-nan
-10.85	-nan
-10.87	-nan
-10.89	-nan
-10.91	-nan
-10.93	-nan
-10.95	-nan
-10.97	-nan
-10.99	-nan
-11.01	-nan
-11.03	-nan
-11.05	-nan
-11.07	-nan
-11.09	-nan
-11.11	-nan
-11.13	-nan
-11.15	-nan
-11.17	-nan
-11.19	-nan
-11.21	-nan
-11.23	-nan
-11.25	-nan
-11.27	-nan
-11.29	-nan
-11.31	-nan
-11.33	-nan
-11.35	-nan
-11.37	-nan
-11.39	-nan
-11.41	-nan
-11.43	-nan
-11.45	-nan
-11.47	-nan
-11.49	-nan
-11.51	-nan
-11.53	-nan
-11.55	-nan
-11.57	-nan
-11.59	-nan
-11.61	-nan
-11.63	-nan
-11.65	-nan
-11.67	-nan
-11.69	-nan
-11.71	-nan
-11.73	-nan
-11.75	-nan
-11.77	-nan
-11.79	-nan
-11.81	-nan
-11.83	-nan
-11.85	-nan
-11.87	-nan
-11.89	-nan
-11.91	-nan
-11.93	-nan
-11.95	-nan
-11.97	-nan
-11.99	-nan
-12.01	-nan
-12.03	-nan
-12.05	-nan
-12.07	-nan
-12.09	-nan
-12.11	-nan
-12.13	-nan
-12.15	-nan
-12.17	-nan
-12.19	-nan
-12.21	-nan
-12.23	-nan
-12.25	-nan
-12.27	-nan
-12.29	-nan
-12.31	-nan
-12.33	-nan
-12.35	-nan
-12.37	-nan
-12.39	-nan
-12.41	-nan
-12.43	-nan
-12.45	-nan
-12.47	-nan
-12.49	-nan
-12.51	-nan
-12.53	-nan
-12.55	-nan
-12.57	-nan
-12.59	-nan
-12.61	-nan
-12.63	-nan
-12.65	-nan
-12.67	-nan
-12.69	-nan
-12.71	-nan
-12.73	-nan
-12.75	-nan
-12.77	-nan
-12.79	-nan
-12.81	-nan
-12.83	-nan
-12.85	-nan
-12.87	-nan
-12.89	-nan
-12.91	-nan
-12.93	-nan
-12.95	-nan
-12.97	-nan
-12.99	-nan
-13.01	-nan
-13.03	-nan
-13.05	-nan
-13.07	-nan
-13.09	-nan
-13.11	-nan
-13.13	-nan
-13.15	-nan
-13.17	-nan
-13.19	-nan
-13.21	-nan
-13.23	-nan
-13.25	-nan
-13.27	-nan
-13.29	-nan
-13.31	-nan
-13.33	-nan
-13.35	-nan
-13.37	-nan
-13.39	-nan
-13.41	-nan
-13.43	-nan
-13.45	-nan
-13.47	-nan
-13.49	-nan
-13.51	-nan
-13.53	-nan
-13.55	-nan
-13.57	-nan
-13.59	-nan
-13.61	-nan
-13.63	-nan
-13.65	-nan
-13.67	-nan
-13.69	-nan
-13.71	-nan
-13.73	-nan
-13.75	-nan
-13.77	-nan
-13.79	-nan
-13.81	-nan
-13.83	-nan
-13.85	-nan
-13.87	-nan
-13.89	-nan
-13.91	-nan
-13.93	-nan
-13.95	-nan
-13.97	-nan
-13.99	-nan
-14.01	-nan
-14.03	-nan
-14.05	-nan
-14.07	-nan
-14.09	-nan
-14.11	-nan
-14.13	-nan
-14.15	-nan
-14.17	-nan
-14.19	-nan
-14.21	-nan
-14.23	-nan
-14.25	-nan
-14.27	-nan
-14.29	-nan
-14.31	-nan
-14.33	-nan
-14.35	-nan
-14.37	-nan
-14.39	-nan
-14.41	-nan
-14.43	-nan
-14.45	-nan
-14.47	-nan
-14.49	-nan
-14.51	-nan
-14.53	-nan
-14.55	-nan
-14.57	-nan
-14.59	-nan
-14.61	-nan
-14.63	-nan
-14.65	-nan
-14.67	-nan
-14.69	-nan
-14.71	-nan
-14.73	-nan
-14.75	-nan
-14.77	-nan
-14.79	-nan
-14.81	-nan
-14.83	-nan
-14.85	-nan
-14.87	-nan
-14.89	-nan
-14.91	-nan
-14.93	-nan
-14.95	-nan
-14.97	-nan
-14.99	-nan
-15.01	-nan
-15.03	-nan
-15.05	-nan
-15.07	-nan
-15.09	-nan
-15.11	-nan
-15.13	-nan
-15.15	-nan
-15.17	-nan
-15.19	-nan
-15.21	-nan
-15.23	-nan
-15.25	-nan
-15.27	-nan
-15.29	-nan
-15.31	-nan
-15.33	-nan
-15.35	-nan
-15.37	-nan
-15.39	-nan
-15.41	-nan
-15.43	-nan
-15.45	-nan
-15.47	-nan
-15.49	-nan
-15.51	-nan
-15.53	-nan
-15.55	-nan
-15.57	-nan
-15.59	-nan
-15.61	-nan
-15.63	-nan
-15.65	-nan
-15.67	-nan
-15.69	-nan
-15.71	-nan
-15.73	-nan
-15.75	-nan
-15.77	-nan
-15.79	-nan
-15.81	-nan
-15.83	-nan
-15.85	-nan
-15.87	-nan
-15.89	-nan
-15.91	-nan
-15.93	-nan
-15.95	-nan
-15.97	-nan
-15.99	-nan
-16.01	-nan
-16.03	-nan
-16.05	-nan
-16.07	-nan
-16.09	-nan
-16.11	-nan
-16.13	5.49649e-20
-16.15	-nan
-16.17	-nan
-16.19	-nan
-16.21	-nan
-16.23	-nan
-16.25	-nan
-16.27	-nan
-16.29	-nan
-16.31	-nan
-16.33	-nan
-16.35	4.36588e-30
-16.37	-nan
-16.39	-nan
-16.41	-nan
-16.43	-nan
-16.45	-nan
-16.47	-nan
-16.49	-nan
-16.51	-nan
-16.53	-nan
-16.55	-nan
-16.57	-nan
-16.59	-nan
-16.61	-nan
-16.63	-nan
-16.65	-nan
-16.67	-nan
-16.69	-nan
-16.71	-nan
-16.73	-nan
-16.75	-nan
-16.77	-nan
-16.79	-nan
-16.81	-nan
-16.83	-nan
-16.85	-nan
-16.87	-nan
-16.89	-nan
-16.91	-nan
-16.93	-nan
-16.95	-nan
-16.97	-nan
-16.99	-nan
-17.01	-nan
-17.03	-nan
-17.05	-nan
-17.07	-nan
-17.09	-nan
-17.11	-nan
-17.13	-nan
-17.15	-nan
-17.17	-nan
-17.19	-nan
-17.21	-nan
-17.23	-nan
-17.25	-nan
-17.27	-nan
-17.29	-nan
-17.31	-nan
-17.33	-nan
-17.35	-nan
-17.37	-nan
-17.39	-nan
-17.41	-nan
-17.43	-nan
-17.45	-nan
-17.47	-nan
-17.49	-nan
-17.51	-nan
-17.53	-nan
-17.55	-nan
-17.57	-nan
-17.59	-nan
-17.61	1.63454e-08
-17.63	-nan
-17.65	-nan
-17.67	-nan
-17.69	-nan
-17.71	-nan
-17.73	-nan
-17.75	-nan
-17.77	-nan
-17.79	-nan
-17.81	-nan
-17.83	-nan
-17.85	-nan
-17.87	-nan
-17.89	-nan
-17.91	-nan
-17.93	-nan
-17.95	-nan
-17.97	-nan
-17.99	-nan
-18.01	-nan
-18.03	-nan
-18.05	-nan
-18.07	-nan
-18.09	-nan
-18.11	-nan
-18.13	-nan
-18.15	-nan
-18.17	-nan
-18.19	-nan
-18.21	-nan
-18.23	-nan
-18.25	-nan
-18.27	-nan
-18.29	-nan
-18.31	-nan
-18.33	-nan
-18.35	-nan
-18.37	-nan
-18.39	-nan
-18.41	-nan
-18.43	-nan
-18.45	-nan
-18.47	-nan
-18.49	-nan
-18.51	-nan
-18.53	-nan
-18.55	-nan
-18.57	-nan
-18.59	-nan
-18.61	-nan
-18.63	-nan
-18.65	-nan
-18.67	-nan
-18.69	-nan
-18.71	-nan
-18.73	-nan
-18.75	-nan
-18.77	-nan
-18.79	-nan
-18.81	-nan
-18.83	-nan
-18.85	-nan
-18.87	-nan
-18.89	-nan
-18.91	-nan
-18.93	7.32474e-23
-18.95	-nan
-18.97	-nan
-18.99	-nan
-19.01	-nan
-19.03	-nan
-19.05	-nan
-19.07	-nan
-19.09	-nan
-19.11	-nan
-19.13	-nan
-19.15	-nan
-19.17	-nan
-19.19	-nan
-19.21	-nan
-19.23	-nan
-19.25	-nan
-19.27	-nan
-19.29	-nan
-19.31	-nan
-19.33	-nan
-19.35	-nan
-19.37	-nan
-19.39	-nan
-19.41	-nan
-19.43	-nan
-19.45	-nan
-19.47	-nan
-19.49	-nan
-19.51	-nan
-19.53	-nan
-19.55	-nan
-19.57	-nan
-19.59	-nan
-19.61	-nan
-19.63	-nan
-19.65	-nan
-19.67	-nan
-19.69	-nan
-19.71	-nan
-19.73	-nan
-19.75	-nan
-19.77	-nan
-19.79	-nan
-19.81	-nan
-19.83	-nan
-19.85	-nan
-19.87	-nan
-19.89	-nan
-19.91	-nan
-19.93	-nan
-19.95	-nan
-19.97	-nan
-19.99	-nan
-20.01	-nan
+## w(eV)      kappa(W(mK)^-1)
+    0.01        -9.60068e-18
+    0.03                -nan
+    0.05                -nan
+    0.07                -nan
+    0.09                -nan
+    0.11                -nan
+    0.13                -nan
+    0.15                -nan
+    0.17                -nan
+    0.19                -nan
+    0.21                -nan
+    0.23                -nan
+    0.25                -nan
+    0.27                -nan
+    0.29                -nan
+    0.31                -nan
+    0.33                -nan
+    0.35                -nan
+    0.37                -nan
+    0.39                -nan
+    0.41                -nan
+    0.43                -nan
+    0.45                -nan
+    0.47                -nan
+    0.49                -nan
+    0.51                -nan
+    0.53                -nan
+    0.55                -nan
+    0.57                -nan
+    0.59                -nan
+    0.61                -nan
+    0.63         0.000724352
+    0.65                -nan
+    0.67                -nan
+    0.69          0.00036919
+    0.71                -nan
+    0.73                -nan
+    0.75                -nan
+    0.77                -nan
+    0.79                -nan
+    0.81                -nan
+    0.83                -nan
+    0.85                -nan
+    0.87                -nan
+    0.89                -nan
+    0.91                -nan
+    0.93                -nan
+    0.95                -nan
+    0.97                -nan
+    0.99                -nan
+    1.01                -nan
+    1.03                -nan
+    1.05                -nan
+    1.07                -nan
+    1.09                -nan
+    1.11                -nan
+    1.13                -nan
+    1.15                -nan
+    1.17                -nan
+    1.19                -nan
+    1.21                -nan
+    1.23                -nan
+    1.25                -nan
+    1.27                -nan
+    1.29                -nan
+    1.31                -nan
+    1.33                -nan
+    1.35                -nan
+    1.37                -nan
+    1.39                -nan
+    1.41                -nan
+    1.43                -nan
+    1.45                -nan
+    1.47                -nan
+    1.49                -nan
+    1.51                -nan
+    1.53                -nan
+    1.55                -nan
+    1.57                -nan
+    1.59                -nan
+    1.61                -nan
+    1.63                -nan
+    1.65                -nan
+    1.67                -nan
+    1.69                -nan
+    1.71                -nan
+    1.73                -nan
+    1.75                -nan
+    1.77                -nan
+    1.79                -nan
+    1.81                -nan
+    1.83                -nan
+    1.85                -nan
+    1.87                -nan
+    1.89                -nan
+    1.91                -nan
+    1.93                -nan
+    1.95                -nan
+    1.97                -nan
+    1.99                -nan
+    2.01                -nan
+    2.03                -nan
+    2.05                -nan
+    2.07                -nan
+    2.09                -nan
+    2.11                -nan
+    2.13                -nan
+    2.15                -nan
+    2.17                -nan
+    2.19                -nan
+    2.21                -nan
+    2.23                -nan
+    2.25                -nan
+    2.27                -nan
+    2.29                -nan
+    2.31                -nan
+    2.33                -nan
+    2.35                -nan
+    2.37                -nan
+    2.39                -nan
+    2.41                -nan
+    2.43                -nan
+    2.45                -nan
+    2.47                -nan
+    2.49                -nan
+    2.51                -nan
+    2.53                -nan
+    2.55                -nan
+    2.57                -nan
+    2.59                -nan
+    2.61                -nan
+    2.63                -nan
+    2.65                -nan
+    2.67                -nan
+    2.69                -nan
+    2.71                -nan
+    2.73                -nan
+    2.75                -nan
+    2.77                -nan
+    2.79                -nan
+    2.81                -nan
+    2.83                -nan
+    2.85                -nan
+    2.87                -nan
+    2.89                -nan
+    2.91                -nan
+    2.93                -nan
+    2.95                -nan
+    2.97                -nan
+    2.99                -nan
+    3.01                -nan
+    3.03                -nan
+    3.05                -nan
+    3.07                -nan
+    3.09                -nan
+    3.11                -nan
+    3.13                -nan
+    3.15                -nan
+    3.17                -nan
+    3.19                -nan
+    3.21                -nan
+    3.23                -nan
+    3.25                -nan
+    3.27                -nan
+    3.29                -nan
+    3.31                -nan
+    3.33                -nan
+    3.35                -nan
+    3.37                -nan
+    3.39                -nan
+    3.41                -nan
+    3.43                -nan
+    3.45                -nan
+    3.47                -nan
+    3.49                -nan
+    3.51                -nan
+    3.53                -nan
+    3.55                -nan
+    3.57                -nan
+    3.59                -nan
+    3.61                -nan
+    3.63                -nan
+    3.65                -nan
+    3.67                -nan
+    3.69                -nan
+    3.71                -nan
+    3.73                -nan
+    3.75                -nan
+    3.77                -nan
+    3.79                -nan
+    3.81                -nan
+    3.83                -nan
+    3.85                -nan
+    3.87                -nan
+    3.89                -nan
+    3.91                -nan
+    3.93                -nan
+    3.95                -nan
+    3.97                -nan
+    3.99                -nan
+    4.01                -nan
+    4.03                -nan
+    4.05                -nan
+    4.07                -nan
+    4.09                -nan
+    4.11                -nan
+    4.13                -nan
+    4.15                -nan
+    4.17                -nan
+    4.19                -nan
+    4.21                -nan
+    4.23                -nan
+    4.25                -nan
+    4.27                -nan
+    4.29                -nan
+    4.31                -nan
+    4.33                -nan
+    4.35                -nan
+    4.37                -nan
+    4.39                -nan
+    4.41                -nan
+    4.43                -nan
+    4.45                -nan
+    4.47                -nan
+    4.49                -nan
+    4.51                -nan
+    4.53                -nan
+    4.55                -nan
+    4.57                -nan
+    4.59                -nan
+    4.61                -nan
+    4.63                -nan
+    4.65                -nan
+    4.67                -nan
+    4.69                -nan
+    4.71                -nan
+    4.73                -nan
+    4.75                -nan
+    4.77                -nan
+    4.79                -nan
+    4.81                -nan
+    4.83                -nan
+    4.85                -nan
+    4.87                -nan
+    4.89                -nan
+    4.91                -nan
+    4.93                -nan
+    4.95                -nan
+    4.97                -nan
+    4.99                -nan
+    5.01                -nan
+    5.03                -nan
+    5.05                -nan
+    5.07                -nan
+    5.09                -nan
+    5.11                -nan
+    5.13                -nan
+    5.15                -nan
+    5.17                -nan
+    5.19                -nan
+    5.21                -nan
+    5.23                -nan
+    5.25                -nan
+    5.27                -nan
+    5.29                -nan
+    5.31                -nan
+    5.33                -nan
+    5.35                -nan
+    5.37                -nan
+    5.39                -nan
+    5.41                -nan
+    5.43                -nan
+    5.45                -nan
+    5.47                -nan
+    5.49                -nan
+    5.51                -nan
+    5.53                -nan
+    5.55                -nan
+    5.57                -nan
+    5.59                -nan
+    5.61                -nan
+    5.63                -nan
+    5.65                -nan
+    5.67                -nan
+    5.69                -nan
+    5.71                -nan
+    5.73                -nan
+    5.75                -nan
+    5.77                -nan
+    5.79                -nan
+    5.81                -nan
+    5.83                -nan
+    5.85                -nan
+    5.87                -nan
+    5.89                -nan
+    5.91                -nan
+    5.93                -nan
+    5.95                -nan
+    5.97                -nan
+    5.99                -nan
+    6.01                -nan
+    6.03                -nan
+    6.05                -nan
+    6.07                -nan
+    6.09                -nan
+    6.11                -nan
+    6.13                -nan
+    6.15                -nan
+    6.17                -nan
+    6.19                -nan
+    6.21                -nan
+    6.23                -nan
+    6.25                -nan
+    6.27                -nan
+    6.29                -nan
+    6.31                -nan
+    6.33                -nan
+    6.35                -nan
+    6.37                -nan
+    6.39                -nan
+    6.41                -nan
+    6.43                -nan
+    6.45                -nan
+    6.47                -nan
+    6.49                -nan
+    6.51                -nan
+    6.53                -nan
+    6.55                -nan
+    6.57                -nan
+    6.59                -nan
+    6.61                -nan
+    6.63                -nan
+    6.65                -nan
+    6.67                -nan
+    6.69                -nan
+    6.71                -nan
+    6.73                -nan
+    6.75                -nan
+    6.77                -nan
+    6.79                -nan
+    6.81                -nan
+    6.83         2.03203e-21
+    6.85                -nan
+    6.87                -nan
+    6.89                -nan
+    6.91                -nan
+    6.93                -nan
+    6.95                -nan
+    6.97                -nan
+    6.99                -nan
+    7.01                -nan
+    7.03                -nan
+    7.05                -nan
+    7.07                   0
+    7.09                -nan
+    7.11                -nan
+    7.13                -nan
+    7.15         1.55715e-13
+    7.17                -nan
+    7.19                -nan
+    7.21                -nan
+    7.23                -nan
+    7.25                -nan
+    7.27                -nan
+    7.29                -nan
+    7.31                -nan
+    7.33                -nan
+    7.35                -nan
+    7.37                -nan
+    7.39                -nan
+    7.41                -nan
+    7.43                -nan
+    7.45                -nan
+    7.47                -nan
+    7.49                -nan
+    7.51                -nan
+    7.53                -nan
+    7.55                -nan
+    7.57                -nan
+    7.59                -nan
+    7.61                -nan
+    7.63                -nan
+    7.65                -nan
+    7.67                -nan
+    7.69                -nan
+    7.71                -nan
+    7.73                -nan
+    7.75                -nan
+    7.77                -nan
+    7.79                -nan
+    7.81                -nan
+    7.83                -nan
+    7.85                -nan
+    7.87                -nan
+    7.89                -nan
+    7.91                -nan
+    7.93                -nan
+    7.95                -nan
+    7.97                -nan
+    7.99                -nan
+    8.01                -nan
+    8.03                -nan
+    8.05                -nan
+    8.07                -nan
+    8.09                -nan
+    8.11                -nan
+    8.13                -nan
+    8.15                -nan
+    8.17                -nan
+    8.19                -nan
+    8.21                -nan
+    8.23                -nan
+    8.25                -nan
+    8.27                -nan
+    8.29                -nan
+    8.31                -nan
+    8.33                -nan
+    8.35                -nan
+    8.37                -nan
+    8.39                -nan
+    8.41                -nan
+    8.43                -nan
+    8.45                -nan
+    8.47                -nan
+    8.49                -nan
+    8.51                -nan
+    8.53                -nan
+    8.55                -nan
+    8.57                -nan
+    8.59                -nan
+    8.61                -nan
+    8.63          1.1346e-16
+    8.65                -nan
+    8.67                -nan
+    8.69                -nan
+    8.71                -nan
+    8.73                -nan
+    8.75                -nan
+    8.77                -nan
+    8.79                -nan
+    8.81                -nan
+    8.83                -nan
+    8.85                -nan
+    8.87                -nan
+    8.89                -nan
+    8.91                -nan
+    8.93                -nan
+    8.95                -nan
+    8.97        -1.74635e-29
+    8.99         9.70859e-16
+    9.01                -nan
+    9.03                -nan
+    9.05                -nan
+    9.07                -nan
+    9.09                -nan
+    9.11                -nan
+    9.13                -nan
+    9.15                -nan
+    9.17                -nan
+    9.19                -nan
+    9.21                -nan
+    9.23                -nan
+    9.25                -nan
+    9.27                -nan
+    9.29                -nan
+    9.31                -nan
+    9.33                -nan
+    9.35                -nan
+    9.37                -nan
+    9.39         6.56739e-09
+    9.41                -nan
+    9.43                -nan
+    9.45                -nan
+    9.47                -nan
+    9.49                -nan
+    9.51                -nan
+    9.53                -nan
+    9.55                -nan
+    9.57                -nan
+    9.59                -nan
+    9.61         1.64835e-21
+    9.63         4.29184e-25
+    9.65                -nan
+    9.67         1.35508e-21
+    9.69                -nan
+    9.71                -nan
+    9.73                -nan
+    9.75                -nan
+    9.77                -nan
+    9.79                -nan
+    9.81                -nan
+    9.83                -nan
+    9.85                -nan
+    9.87                -nan
+    9.89                -nan
+    9.91                -nan
+    9.93                -nan
+    9.95                -nan
+    9.97                -nan
+    9.99                -nan
+   10.01                -nan
+   10.03                -nan
+   10.05                -nan
+   10.07                -nan
+   10.09                -nan
+   10.11                -nan
+   10.13                -nan
+   10.15                -nan
+   10.17                -nan
+   10.19                -nan
+   10.21                -nan
+   10.23                -nan
+   10.25                -nan
+   10.27                -nan
+   10.29                -nan
+   10.31                -nan
+   10.33                -nan
+   10.35                -nan
+   10.37                -nan
+   10.39                -nan
+   10.41                -nan
+   10.43                -nan
+   10.45                -nan
+   10.47                -nan
+   10.49                -nan
+   10.51                -nan
+   10.53                -nan
+   10.55                -nan
+   10.57                -nan
+   10.59                -nan
+   10.61                -nan
+   10.63                -nan
+   10.65                -nan
+   10.67                -nan
+   10.69                -nan
+   10.71                -nan
+   10.73                -nan
+   10.75                -nan
+   10.77                -nan
+   10.79                -nan
+   10.81                -nan
+   10.83                -nan
+   10.85                -nan
+   10.87                -nan
+   10.89                -nan
+   10.91                -nan
+   10.93                -nan
+   10.95                -nan
+   10.97                -nan
+   10.99                -nan
+   11.01                -nan
+   11.03                -nan
+   11.05                -nan
+   11.07                -nan
+   11.09                -nan
+   11.11                -nan
+   11.13                -nan
+   11.15                -nan
+   11.17                -nan
+   11.19                -nan
+   11.21                -nan
+   11.23                -nan
+   11.25                -nan
+   11.27                -nan
+   11.29                -nan
+   11.31                -nan
+   11.33                -nan
+   11.35                -nan
+   11.37                -nan
+   11.39                -nan
+   11.41                -nan
+   11.43                -nan
+   11.45                -nan
+   11.47                -nan
+   11.49                -nan
+   11.51                -nan
+   11.53                -nan
+   11.55                -nan
+   11.57                -nan
+   11.59                -nan
+   11.61                -nan
+   11.63                -nan
+   11.65                -nan
+   11.67                -nan
+   11.69                -nan
+   11.71                -nan
+   11.73                -nan
+   11.75                -nan
+   11.77                -nan
+   11.79                -nan
+   11.81                -nan
+   11.83                -nan
+   11.85                -nan
+   11.87                -nan
+   11.89                -nan
+   11.91                -nan
+   11.93                -nan
+   11.95                -nan
+   11.97                -nan
+   11.99                -nan
+   12.01                -nan
+   12.03                -nan
+   12.05                -nan
+   12.07                -nan
+   12.09                -nan
+   12.11                -nan
+   12.13                -nan
+   12.15                -nan
+   12.17                -nan
+   12.19                -nan
+   12.21                -nan
+   12.23                -nan
+   12.25                -nan
+   12.27                -nan
+   12.29                -nan
+   12.31                -nan
+   12.33                -nan
+   12.35                -nan
+   12.37                -nan
+   12.39                -nan
+   12.41                -nan
+   12.43                -nan
+   12.45                -nan
+   12.47                -nan
+   12.49                -nan
+   12.51                -nan
+   12.53                -nan
+   12.55                -nan
+   12.57                -nan
+   12.59                -nan
+   12.61                -nan
+   12.63                -nan
+   12.65                -nan
+   12.67                -nan
+   12.69                -nan
+   12.71                -nan
+   12.73                -nan
+   12.75                -nan
+   12.77                -nan
+   12.79                -nan
+   12.81                -nan
+   12.83                -nan
+   12.85                -nan
+   12.87                -nan
+   12.89                -nan
+   12.91                -nan
+   12.93                -nan
+   12.95                -nan
+   12.97                -nan
+   12.99                -nan
+   13.01                -nan
+   13.03                -nan
+   13.05                -nan
+   13.07                -nan
+   13.09                -nan
+   13.11                -nan
+   13.13                -nan
+   13.15                -nan
+   13.17                -nan
+   13.19                -nan
+   13.21                -nan
+   13.23                -nan
+   13.25                -nan
+   13.27                -nan
+   13.29                -nan
+   13.31                -nan
+   13.33                -nan
+   13.35                -nan
+   13.37                -nan
+   13.39                -nan
+   13.41                -nan
+   13.43                -nan
+   13.45                -nan
+   13.47                -nan
+   13.49                -nan
+   13.51                -nan
+   13.53                -nan
+   13.55                -nan
+   13.57                -nan
+   13.59                -nan
+   13.61                -nan
+   13.63                -nan
+   13.65                -nan
+   13.67                -nan
+   13.69                -nan
+   13.71                -nan
+   13.73                -nan
+   13.75                -nan
+   13.77                -nan
+   13.79                -nan
+   13.81                -nan
+   13.83                -nan
+   13.85                -nan
+   13.87                -nan
+   13.89                -nan
+   13.91                -nan
+   13.93                -nan
+   13.95                -nan
+   13.97                -nan
+   13.99                -nan
+   14.01                -nan
+   14.03                -nan
+   14.05                -nan
+   14.07                -nan
+   14.09                -nan
+   14.11                -nan
+   14.13                -nan
+   14.15                -nan
+   14.17                -nan
+   14.19                -nan
+   14.21                -nan
+   14.23                -nan
+   14.25                -nan
+   14.27                -nan
+   14.29                -nan
+   14.31                -nan
+   14.33                -nan
+   14.35                -nan
+   14.37                -nan
+   14.39                -nan
+   14.41                -nan
+   14.43                -nan
+   14.45                -nan
+   14.47                -nan
+   14.49                -nan
+   14.51                -nan
+   14.53                -nan
+   14.55                -nan
+   14.57                -nan
+   14.59                -nan
+   14.61                -nan
+   14.63                -nan
+   14.65                -nan
+   14.67                -nan
+   14.69                -nan
+   14.71                -nan
+   14.73                -nan
+   14.75                -nan
+   14.77                -nan
+   14.79                -nan
+   14.81                -nan
+   14.83                -nan
+   14.85                -nan
+   14.87                -nan
+   14.89                -nan
+   14.91                -nan
+   14.93                -nan
+   14.95                -nan
+   14.97                -nan
+   14.99                -nan
+   15.01                -nan
+   15.03                -nan
+   15.05                -nan
+   15.07                -nan
+   15.09                -nan
+   15.11                -nan
+   15.13                -nan
+   15.15                -nan
+   15.17                -nan
+   15.19                -nan
+   15.21                -nan
+   15.23                -nan
+   15.25                -nan
+   15.27                -nan
+   15.29                -nan
+   15.31                -nan
+   15.33                -nan
+   15.35                -nan
+   15.37                -nan
+   15.39                -nan
+   15.41                -nan
+   15.43                -nan
+   15.45                -nan
+   15.47                -nan
+   15.49                -nan
+   15.51                -nan
+   15.53                -nan
+   15.55                -nan
+   15.57                -nan
+   15.59                -nan
+   15.61                -nan
+   15.63                -nan
+   15.65                -nan
+   15.67                -nan
+   15.69                -nan
+   15.71                -nan
+   15.73                -nan
+   15.75                -nan
+   15.77                -nan
+   15.79                -nan
+   15.81                -nan
+   15.83                -nan
+   15.85                -nan
+   15.87                -nan
+   15.89                -nan
+   15.91                -nan
+   15.93                -nan
+   15.95                -nan
+   15.97                -nan
+   15.99                -nan
+   16.01                -nan
+   16.03                -nan
+   16.05                -nan
+   16.07                -nan
+   16.09                -nan
+   16.11                -nan
+   16.13         5.49649e-20
+   16.15                -nan
+   16.17                -nan
+   16.19                -nan
+   16.21                -nan
+   16.23                -nan
+   16.25                -nan
+   16.27                -nan
+   16.29                -nan
+   16.31                -nan
+   16.33                -nan
+   16.35         4.36588e-30
+   16.37                -nan
+   16.39                -nan
+   16.41                -nan
+   16.43                -nan
+   16.45                -nan
+   16.47                -nan
+   16.49                -nan
+   16.51                -nan
+   16.53                -nan
+   16.55                -nan
+   16.57                -nan
+   16.59                -nan
+   16.61                -nan
+   16.63                -nan
+   16.65                -nan
+   16.67                -nan
+   16.69                -nan
+   16.71                -nan
+   16.73                -nan
+   16.75                -nan
+   16.77                -nan
+   16.79                -nan
+   16.81                -nan
+   16.83                -nan
+   16.85                -nan
+   16.87                -nan
+   16.89                -nan
+   16.91                -nan
+   16.93                -nan
+   16.95                -nan
+   16.97                -nan
+   16.99                -nan
+   17.01                -nan
+   17.03                -nan
+   17.05                -nan
+   17.07                -nan
+   17.09                -nan
+   17.11                -nan
+   17.13                -nan
+   17.15                -nan
+   17.17                -nan
+   17.19                -nan
+   17.21                -nan
+   17.23                -nan
+   17.25                -nan
+   17.27                -nan
+   17.29                -nan
+   17.31                -nan
+   17.33                -nan
+   17.35                -nan
+   17.37                -nan
+   17.39                -nan
+   17.41                -nan
+   17.43                -nan
+   17.45                -nan
+   17.47                -nan
+   17.49                -nan
+   17.51                -nan
+   17.53                -nan
+   17.55                -nan
+   17.57                -nan
+   17.59                -nan
+   17.61         1.63454e-08
+   17.63                -nan
+   17.65                -nan
+   17.67                -nan
+   17.69                -nan
+   17.71                -nan
+   17.73                -nan
+   17.75                -nan
+   17.77                -nan
+   17.79                -nan
+   17.81                -nan
+   17.83                -nan
+   17.85                -nan
+   17.87                -nan
+   17.89                -nan
+   17.91                -nan
+   17.93                -nan
+   17.95                -nan
+   17.97                -nan
+   17.99                -nan
+   18.01                -nan
+   18.03                -nan
+   18.05                -nan
+   18.07                -nan
+   18.09                -nan
+   18.11                -nan
+   18.13                -nan
+   18.15                -nan
+   18.17                -nan
+   18.19                -nan
+   18.21                -nan
+   18.23                -nan
+   18.25                -nan
+   18.27                -nan
+   18.29                -nan
+   18.31                -nan
+   18.33                -nan
+   18.35                -nan
+   18.37                -nan
+   18.39                -nan
+   18.41                -nan
+   18.43                -nan
+   18.45                -nan
+   18.47                -nan
+   18.49                -nan
+   18.51                -nan
+   18.53                -nan
+   18.55                -nan
+   18.57                -nan
+   18.59                -nan
+   18.61                -nan
+   18.63                -nan
+   18.65                -nan
+   18.67                -nan
+   18.69                -nan
+   18.71                -nan
+   18.73                -nan
+   18.75                -nan
+   18.77                -nan
+   18.79                -nan
+   18.81                -nan
+   18.83                -nan
+   18.85                -nan
+   18.87                -nan
+   18.89                -nan
+   18.91                -nan
+   18.93         7.32474e-23
+   18.95                -nan
+   18.97                -nan
+   18.99                -nan
+   19.01                -nan
+   19.03                -nan
+   19.05                -nan
+   19.07                -nan
+   19.09                -nan
+   19.11                -nan
+   19.13                -nan
+   19.15                -nan
+   19.17                -nan
+   19.19                -nan
+   19.21                -nan
+   19.23                -nan
+   19.25                -nan
+   19.27                -nan
+   19.29                -nan
+   19.31                -nan
+   19.33                -nan
+   19.35                -nan
+   19.37                -nan
+   19.39                -nan
+   19.41                -nan
+   19.43                -nan
+   19.45                -nan
+   19.47                -nan
+   19.49                -nan
+   19.51                -nan
+   19.53                -nan
+   19.55                -nan
+   19.57                -nan
+   19.59                -nan
+   19.61                -nan
+   19.63                -nan
+   19.65                -nan
+   19.67                -nan
+   19.69                -nan
+   19.71                -nan
+   19.73                -nan
+   19.75                -nan
+   19.77                -nan
+   19.79                -nan
+   19.81                -nan
+   19.83                -nan
+   19.85                -nan
+   19.87                -nan
+   19.89                -nan
+   19.91                -nan
+   19.93                -nan
+   19.95                -nan
+   19.97                -nan
+   19.99                -nan
+   20.01                -nan

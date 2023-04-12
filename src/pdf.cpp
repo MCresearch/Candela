@@ -378,7 +378,7 @@ void PDF::cal()
 		this->static_structure_factor(rho_ion, gr, sf);
 
 		// output the static structure factor.
-		ofstream ofss("ssf.dat");
+		ofstream ofss("ssf.txt");
 		for(int ig=0; ig<ng; ++ig)
 		{
 			double k = ig*dg;

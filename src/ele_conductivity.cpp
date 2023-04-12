@@ -336,6 +336,7 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	double* std_kappa=new double[nw];
 	double* L12=new double [nw];
 	double* L22=new double [nw];
+	double* avg_kappa = new double[nw];
 	if(INPUT.smear==0) lag=dou2str(INPUT.fwhm[ifi])+"I";
 	if(INPUT.smear==1) lag=dou2str(INPUT.fwhm[ifi])+"G";
 	if(INPUT.smear==2) lag=dou2str(INPUT.fwhm[ifi])+"L";
@@ -360,6 +361,7 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 		kappa[iw]=kappa[iw]/nfolder/T;
 		L12[iw]/=nfolder;
 		L22[iw]/=nfolder;
+		avg_kappa[iw] = (L22[iw] - L12[iw] * L12[iw] / sigma[iw])/T;
 	}
 	double sum=0;
 	ofs.open(sigmaname.c_str());
@@ -367,15 +369,16 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	ofs3.open(Onsagername.c_str());
 	if(ns>1)
 	{
-		ofs<<"#w\tsigma\terror"<<endl;
-		ofs2<<"#w\tkappa\terror"<<endl;
+		ofs<<setw(8)<<"## w(eV) "<<setw(20)<<"sigma(Sm^-1)"<<setw(20)<<"error(Sm^-1)"<<endl;
+		ofs2<<setw(8)<<"## w(eV) "<<setw(20)<<"kappa(W(mK)^-1)"<<setw(20)<<"error(W(mK)^-1)"<<endl;
 	}
 	else
 	{
-		ofs<<"#w\tsigma"<<endl;
-		ofs2<<"#w\tkappa"<<endl;
+		ofs<<setw(8)<<"## w(eV) "<<setw(20)<<"sigma(Sm^-1)"<<endl;
+		ofs2<<setw(8)<<"## w(eV) "<<setw(20)<<"kappa(W(mK)^-1)"<<endl;
 	}
-		ofs3<<"#w\tL11\tL12/e\tL22/e^2"<<endl;
+	ofs3 << setw(8) << "## w(eV) " << setw(20) << "sigma(Sm^-1)" << setw(20) << "kappa(W(mK)^-1)" << setw(20)
+            << "L12/e(Am^-1)" << setw(20) << "L22/e^2(Wm^-1)" << endl;
 	for(int iw=0;iw<nw;iw++)
 	{
 	  if(ns>1)
@@ -391,15 +394,15 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 		std_sigma[iw]=sqrt(std_sigma[iw])*INPUT.tpk;
 		std_kappa[iw]=std_kappa[iw]/ns/(ns-1);
 		std_kappa[iw]=sqrt(std_kappa[iw])*INPUT.tpk;
-		ofs<<(iw+0.5)*INPUT.dw<<'\t'<<sigma[iw]<<'\t'<<std_sigma[iw]<<endl;
-		ofs2<<(iw+0.5)*INPUT.dw<<'\t'<<kappa[iw]<<'\t'<<std_kappa[iw]<<endl;
-		}
+		ofs<<setw(8)<<(iw+0.5)*INPUT.dw<<setw(20)<<sigma[iw]<<setw(20)<<std_sigma[iw]<<endl;
+		ofs2<<setw(8)<<(iw+0.5)*INPUT.dw<<setw(20)<<avg_kappa[iw]<<setw(20)<<std_kappa[iw]<<endl;
+	  }
 	  else
 	  {
-		ofs<<(iw+0.5)*INPUT.dw<<'\t'<<sigma[iw]<<endl;
-		ofs2<<(iw+0.5)*INPUT.dw<<'\t'<<kappa[iw]<<endl;
+		ofs<<setw(8)<<(iw+0.5)*INPUT.dw<<setw(20)<<sigma[iw]<<endl;
+		ofs2<<setw(8)<<(iw+0.5)*INPUT.dw<<setw(20)<<avg_kappa[iw]<<endl;
 	  }
-		ofs3<<(iw+0.5)*INPUT.dw<<'\t'<<sigma[iw]<<'\t'<<L12[iw]<<'\t'<<L22[iw]<<endl;
+		ofs3<<setw(8)<<(iw+0.5)*INPUT.dw<<setw(20)<<sigma[iw]<<setw(20)<<avg_kappa[iw]<<setw(20)<<L12[iw]<<setw(20)<<L22[iw]<<endl;
 		sum+=sigma[iw];
 	}
 	sum=sum*INPUT.dw*sum_factor;
@@ -410,6 +413,7 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	delete[]std_kappa;
 	delete[]L22;
 	delete[]L12;
+	delete[]avg_kappa; 
 	ofs.close();
 	ofs2.close();
 	ofs3.close();
