@@ -24,7 +24,7 @@ class Ele_Conductivity
 	private:
 	void jjcorr_ks(const int ik, const int nt, const double dt,  WfRead& wfr,
             double* ct11, double* ct12, double* ct22);
-	void calcondw(const int nt, const double dt, const double fwhmin, const double wcut, 
+	void calcondw(const int nt, const double dt, const double sigma, const double wcut, 
             const double dw_in, double *ct11, double *ct12, double *ct22);
 	
 	

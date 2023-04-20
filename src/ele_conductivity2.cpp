@@ -20,10 +20,25 @@ void Ele_Conductivity::method2()
 	
 	int nw = ceil(wcut / dw_in);
     double dw = dw_in / P_Ry2eV; // converge unit in eV to Ry
-    double sigma = fwhm_in / TWOSQRT2LN2 / P_Ry2eV;
     double dt = INPUT.cond_dt;
+    double sigma;
+    int nt;
+    if(INPUT.smear == 1)
+    {
+        sigma = fwhm_in / TWOSQRT2LN2 / P_Ry2eV;
+        nt = ceil(sqrt(32) / sigma / dt);
+    }
+    else if(INPUT.smear )
+    {
+        sigma = fwhm_in / 2 / P_Ry2eV;
+        nt = ceil(16 / sigma / dt);
+    }
+    else
+    {
+        std::cout<<"Wrong smear"<<endl;
+        exit(0);
+    }
 
-    int nt = ceil(sqrt(20) / sigma / dt) * 10;
     cout << "nw: " << nw << " ; dw: " << dw_in << " eV" << endl;
     cout << "nt: " << nt << " ; dt: " << dt << " a.u.(ry^-1)" << endl;
     assert(nw >= 1);
@@ -69,7 +84,7 @@ void Ele_Conductivity::method2()
 
 	if (RANK == 0)
     {
-        calcondw(nt, dt, fwhm_in, wcut, dw_in, ct11, ct12, ct22);
+        calcondw(nt, dt, sigma, wcut, dw_in, ct11, ct12, ct22);
     }
 	delete[] ct11;
     delete[] ct12;
@@ -97,6 +112,9 @@ void Ele_Conductivity::jjcorr_ks(const int ik, const int nt, const double dt,  W
 	{
         wfr.calvmatrix(vmatrix);
 	}
+#ifdef _OPENMP
+#pragma omp parallel for reduction(+:ct11[:nt], ct12[:nt], ct22[:nt])
+#endif	
     for (int it = 0; it < nt; ++it)
     {
         double tmct11 = 0;
@@ -125,21 +143,24 @@ void Ele_Conductivity::jjcorr_ks(const int ik, const int nt, const double dt,  W
     delete[] vmatrix;
 }
 
-void Ele_Conductivity::calcondw(const int nt, const double dt, const double fwhmin, const double wcut, 
+void Ele_Conductivity::calcondw(const int nt, const double dt, const double sigma, const double wcut, 
             const double dw_in, double *ct11, double *ct12, double *ct22)
 {
 	double factor = 4*P_QE*P_QE/P_BOHR/1e-10/P_HBAR;
     const int ndim = 3;
     int nw = ceil(wcut / dw_in);
     double dw = dw_in / P_Ry2eV; // converge unit in eV to Ry
-    double sigma = fwhmin / TWOSQRT2LN2 / P_Ry2eV;
     ofstream ofscond("je-je.txt");
     ofscond << setw(8) << "#t(a.u.)" << setw(15) << "c11(t)" << setw(15) << "c12(t)" << setw(15) << "c22(t)" << setw(15)
             << "decay" << endl;
     for (int it = 0; it < nt; ++it)
     {
         ofscond << setw(8) << (it)*dt << setw(15) << -2 * ct11[it] << setw(15) << -2 * ct12[it] << setw(15)
-                << -2 * ct22[it] << setw(15) << exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) << endl;
+                << -2 * ct22[it];
+        if(INPUT.smear == 1)
+                ofscond << setw(15) << exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) << endl;
+        else
+                ofscond << setw(15) << exp(- sigma * it * dt) << endl;
     }
     ofscond.close();
     double *cw11 = new double[nw];
@@ -149,16 +170,27 @@ void Ele_Conductivity::calcondw(const int nt, const double dt, const double fwhm
     ZEROS(cw11, nw);
     ZEROS(cw12, nw);
     ZEROS(cw22, nw);
+#ifdef _OPENMP
+#pragma omp parallel for reduction(+:cw11[:nw], cw12[:nw], cw22[:nw])
+#endif	
     for (int iw = 0; iw < nw; ++iw)
     {
         for (int it = 1; it < nt; ++it)
         {
-            cw11[iw] += -2 * ct11[it] * sin(-(iw + 0.5) * dw * it * dt)
+            double tmp;
+            if(INPUT.smear == 1)
+            {
+                tmp = -2 * sin(-(iw + 0.5) * dw * it * dt)
                         * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
-            cw12[iw] += -2 * ct12[it] * sin(-(iw + 0.5) * dw * it * dt)
-                        * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
-            cw22[iw] += -2 * ct22[it] * sin(-(iw + 0.5) * dw * it * dt)
-                        * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
+            }
+            else
+            {
+                tmp = -2 * sin(-(iw + 0.5) * dw * it * dt)
+                        * exp(-sigma * it * dt) / (iw + 0.5) / dw * dt;
+            }
+            cw11[iw] += ct11[it] * tmp;
+            cw12[iw] += ct12[it] * tmp;
+            cw22[iw] += ct22[it] * tmp;
         }
     }
     ofscond.open("Onsager.txt");

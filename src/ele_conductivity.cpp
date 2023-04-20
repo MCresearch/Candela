@@ -226,7 +226,7 @@ void Ele_Conductivity::method1()
 							{
 								if(INPUT.smearinvw)
 								{
-									smearf=exp(pow(INPUT.dw*(iv+0.5)-w,2)*st2)+exp(pow(w+INPUT.dw*(iv+0.5),2)*st2);
+									smearf=exp(pow(INPUT.dw*(iv+0.5)-w,2)*st2) + exp(pow(w+INPUT.dw*(iv+0.5),2)*st2);
 									smearpre = pre * smearf;
 								}
 								else
@@ -238,8 +238,16 @@ void Ele_Conductivity::method1()
 							}
 							else
 							{
-								smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-w,2))+1/(eps2+pow(w+INPUT.dw*(iv+0.5),2));
-								smearpre=pre*smearf;
+								if(INPUT.smearinvw)
+								{
+									smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-w,2)) + 1/(eps2+pow(w+INPUT.dw*(iv+0.5),2));
+									smearpre = pre * smearf;
+								}
+								else
+								{
+									smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-w,2)) - 1/(eps2+pow(w+INPUT.dw*(iv+0.5),2));
+									smearpre = pre/(iv+0.5)/INPUT.dw * smearf;
+								}
 								
 							}
 							if(iv<iw)
