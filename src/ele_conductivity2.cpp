@@ -153,12 +153,11 @@ void Ele_Conductivity::calcondw(const int nt, const double dt, const double fwhm
     {
         for (int it = 1; it < nt; ++it)
         {
-            double simpsonpre = it < nt - 1 ? (2 - it%2) * 2 / 3.0 : 1.0 / 3.0; //simpson method
-            cw11[iw] += -2 * simpsonpre * ct11[it] * sin(-(iw + 0.5) * dw * it * dt)
+            cw11[iw] += -2 * ct11[it] * sin(-(iw + 0.5) * dw * it * dt)
                         * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
-            cw12[iw] += -2 * simpsonpre * ct12[it] * sin(-(iw + 0.5) * dw * it * dt)
+            cw12[iw] += -2 * ct12[it] * sin(-(iw + 0.5) * dw * it * dt)
                         * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
-            cw22[iw] += -2 * simpsonpre * ct22[it] * sin(-(iw + 0.5) * dw * it * dt)
+            cw22[iw] += -2 * ct22[it] * sin(-(iw + 0.5) * dw * it * dt)
                         * exp(-double(1) / 2 * sigma * sigma * pow((it)*dt, 2)) / (iw + 0.5) / dw * dt;
         }
     }
