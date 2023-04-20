@@ -37,7 +37,7 @@ void WfABACUS::readOUT(Wavefunc & wf)
 	string checkstr;
 
 	//get lattice parameter
-	searchead(ifskwt,txt,"atom",1);
+	searchead(ifskwt,txt,"ntype",1);
 	ifskwt>>useless>>useless>>txt>>useless>>alat;//in bohr
 	checkstr="(Bohr)";
 	ifnecheckv(txt,checkstr);

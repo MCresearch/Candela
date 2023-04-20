@@ -106,6 +106,7 @@ Input::Input()
 	n_fwhm = 1;
 	readvmatrix = false;
 	cond_method = 1;
+	cond_dt = 0.06;
 
 	snatom = -1;
 	satom = new int[1];
@@ -571,6 +572,7 @@ void Input::Read(const string &fn)
 		else if (strcmp("smearinvw", word) == 0) read_value(ifs, smearinvw);
         else if (strcmp("readvmatrix", word) == 0) read_value(ifs, readvmatrix);
 		else if (strcmp("cond_method", word) == 0) read_value(ifs, cond_method);
+		else if (strcmp("cond_dt", word) == 0) read_value(ifs, cond_dt);
         else if (strcmp("n_fwhm", word) == 0) read_value(ifs, n_fwhm);
         else if (strcmp("fwhm", word) == 0) 
 		{

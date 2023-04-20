@@ -8,14 +8,12 @@
 /**
  * @brief Calculate conducitities use time correlation funtions
  * 
- * @note In this method smear is set to 1.
- *       n_fwhm, nscf are not used
+ * @note In this method n_fwhm, nscf are not used
  *       smearinvw is not used and it equivalent to smearinvw = 0
  *        
  */
 void Ele_Conductivity::method2()
 {
-	double times = 16;
 	double wcut = INPUT.wcut;
 	double dw_in = INPUT.dw;
 	double fwhm_in = INPUT.fwhm[0];
@@ -23,7 +21,8 @@ void Ele_Conductivity::method2()
 	int nw = ceil(wcut / dw_in);
     double dw = dw_in / P_Ry2eV; // converge unit in eV to Ry
     double sigma = fwhm_in / TWOSQRT2LN2 / P_Ry2eV;
-    double dt = M_PI / (dw * nw) / times; // unit in a.u., 1 a.u. = 4.837771834548454e-17 s
+    double dt = INPUT.cond_dt;
+
     int nt = ceil(sqrt(20) / sigma / dt) * 10;
     cout << "nw: " << nw << " ; dw: " << dw_in << " eV" << endl;
     cout << "nt: " << nt << " ; dt: " << dt << " a.u.(ry^-1)" << endl;
