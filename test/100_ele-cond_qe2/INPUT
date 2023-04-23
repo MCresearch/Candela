@@ -1,6 +1,6 @@
 calculation     ele_conductivity
 wf_in_type      QE2
-wfdirectory     ../wavefunc/Al4.qe2/
+wfdirectory     ../wavefunc/Al1.qe2/
 
 wcut    20    #maximal energy (in eV) for conductivity
 dw      0.02   #minimla energy step (in eV) for conductivity

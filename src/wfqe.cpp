@@ -240,16 +240,6 @@ void WfQE::readOCC2(Wavefunc & wf, int & ik)
 	string wkstr=findstr(txt,"weight");
 	double kweight;
 	kweight=str2dou(wkstr);
-	useless=findstr(txt);
-	size_t pos1=useless.find(' ',0);
-	size_t pos2=useless.find(' ',pos1+1);
-	size_t pos3=useless.size();
-	string kvstr=useless.substr(0,pos1);
-	wf.kpoint_x=str2dou(kvstr)*2*M_PI/INPUT.celldm1;
-	kvstr=useless.substr(pos1+1,pos2-pos1-1);
-	wf.kpoint_y=str2dou(kvstr)*2*M_PI/INPUT.celldm2;
-	kvstr=useless.substr(pos2+1,pos3-pos2-1);
-	wf.kpoint_z=str2dou(kvstr)*2*M_PI/INPUT.celldm3;
 	getline(ifskwt,txt);
 	useless=findstr(txt);
 	ngtot=str2int(useless);
@@ -418,25 +408,27 @@ void WfQE::readWF2(Wavefunc &wf, int &ik)
 	}
 	cout<<wfname<<" has been opened."<<endl;
 	int strw,endrw,inttmp;
+	int ik_2, ispin, gammaonly; 
+	double scale;
 	rwswf>>strw;
-	for(int i=0;i<11;i++)
-		rwswf>>inttmp;
+	//ik kx ky kz ispin gammaonly scale
+	rwswf>>ik_2>>wf.kpoint_x>>wf.kpoint_y>>wf.kpoint_z>>ispin>>gammaonly>>scale;
 	rwswf>>endrw;
+	ifnecheckv(ik_2,ikk);
 	ifnecheckv(strw,endrw);
-	int ngtot_2,nband_2;
-	rwswf>>strw>>inttmp>>ngtot_2>>inttmp>>nband_2>>endrw;
+
+	int npwx, ngtot_2, npol, nband_2;
+	//npwx npw npol nbnd
+	rwswf>>strw>>npwx>>ngtot_2>>npol>>nband_2>>endrw;
 	ifnecheckv(strw,endrw);
 	ifnecheckv(ngtot,ngtot_2);
 	ifnecheckv(nband,nband_2);
-	double bx,by,bz;
+	double b[9];
+
 	rwswf>>strw;
-	for(int i=0;i<3;i++)
-		rwswf>>bx>>by>>bz;
+	rwread(rwswf, b, 9);
 	rwswf>>endrw;
-	int *ik_x,*ik_y,*ik_z;
-	ik_x=new int [ngtot];
-	ik_y=new int [ngtot];
-	ik_z=new int [ngtot];
+
 	wf.gkk_x=new double [ngtot];
 	wf.gkk_y=new double [ngtot];
 	wf.gkk_z=new double [ngtot];
@@ -445,10 +437,11 @@ void WfQE::readWF2(Wavefunc &wf, int &ik)
 	rwswf>>strw;
 	for(int i=0;i<ngtot;i++)
 	{
-		rwswf>>ik_x[i]>>ik_y[i]>>ik_z[i];
-		wf.gkk_x[i]=ik_x[i]*2*M_PI/INPUT.celldm1;
-		wf.gkk_y[i]=ik_y[i]*2*M_PI/INPUT.celldm2;
-		wf.gkk_z[i]=ik_z[i]*2*M_PI/INPUT.celldm3;
+		int gx,gy,gz;
+		rwswf>>gx>>gy>>gz;
+		wf.gkk_x[i] = gx*b[0] + gy*b[3] + gz*b[6];
+		wf.gkk_y[i] = gx*b[1] + gy*b[4] + gz*b[7];
+		wf.gkk_z[i] = gx*b[2] + gy*b[5] + gz*b[8];
 		//cout<<wf.gkk_x[i]<<' '<<wf.gkk_y[i]<<' '<<wf.gkk_z[i]<<endl;
 	}
 	rwswf>>endrw;
@@ -463,9 +456,6 @@ void WfQE::readWF2(Wavefunc &wf, int &ik)
 		rwswf>>endrw;
 		ifnecheckv(strw,endrw);
 	}
-	delete[]ik_x;
-	delete[]ik_y;
-	delete[]ik_z;
 	
 	rwswf.close();
 	return;

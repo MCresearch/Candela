@@ -75,7 +75,7 @@ binfstream& operator>>(binfstream& rstream,T* &data)
 	return rstream;
 }*/
 template<class T>
-void rwread(binfstream& rstream,T* &data,int n)
+void rwread(binfstream& rstream,T* data,int n)
 {
 	int size=sizeof(T);
 	size_t ch;

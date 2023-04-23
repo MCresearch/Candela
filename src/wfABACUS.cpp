@@ -168,24 +168,21 @@ void WfABACUS::readWF(Wavefunc &wf, int &ik)
 	ifnecheckv(strw,endrw);
 	//cout<<"ngtot: "<<ngtot<<endl;
 	wf.ngtot=ngtot;
-
 	//get kpoint vector	
-	wf.kpoint_x=kx_cry*invlat0;
-	wf.kpoint_y=ky_cry*invlat0;
-	wf.kpoint_z=kz_cry*invlat0;
+	wf.kpoint_x=kx_cry * invlat0;
+	wf.kpoint_y=ky_cry * invlat0;
+	wf.kpoint_z=kz_cry * invlat0;
 	//cout<<"kpoint_vector: ("<<wf.kpoint_x<<','<<wf.kpoint_y<<','<<wf.kpoint_z<<")\n";
 
 	//get inverse lattice matrix
-	double e11,e12,e13,e21,e22,e23,e31,e32,e33;
-	rwswf>>strw>>e11>>e12>>e13>>e21>>e22>>e23>>e31>>e32>>e33>>endrw;
+	double b[9];
+	rwswf>>strw;
+	rwread(rwswf, b, 9);
+	rwswf>>endrw;
 	ifnecheckv(strw,endrw);
 	
 	//get gkk
 	rwswf>>strw;
-	double *gcar_x,*gcar_y,*gcar_z;
-	gcar_x=new double [ngtot];
-	gcar_y=new double [ngtot];
-	gcar_z=new double [ngtot];
 	wf.gkk_x=new double [ngtot];
 	wf.gkk_y=new double [ngtot];
 	wf.gkk_z=new double [ngtot];
@@ -196,23 +193,20 @@ void WfABACUS::readWF(Wavefunc &wf, int &ik)
 	wf.ig0 = -1;
 	for(int i=0;i<ngtot;i++)
 	{
-		rwswf>>gcar_x[i]>>gcar_y[i]>>gcar_z[i];
-		if(pow(gcar_x[i],2)+pow(gcar_y[i],2)+pow(gcar_z[i],2) < 1e-8)
+		double gx,gy,gz;
+		rwswf>>gx>>gy>>gz;
+		wf.gkk_x[i] = gx * invlat0;
+		wf.gkk_y[i] = gy * invlat0;
+		wf.gkk_z[i] = gz * invlat0;
+
+		if(pow(gx,2)+pow(gy,2)+pow(gz,2) < 1e-8)
 		{
 			wf.ig0 = i;
 			// cout<<"ig0: "<<wf.ig0<<endl;
 		}
-		// cout<<gcar_x[i]<<' '<<gcar_y[i]<<' '<<gcar_z[i]<<endl;
-		wf.gkk_x[i]=gcar_x[i]*invlat0;
-		wf.gkk_y[i]=gcar_y[i]*invlat0;
-		wf.gkk_z[i]=gcar_z[i]*invlat0;
 	}
 	rwswf>>endrw;
 	ifnecheckv(strw,endrw);
-
-	delete []gcar_x;
-	delete []gcar_y;
-	delete []gcar_z;
 
 	//read wavefunc
 	wf.Wavegg=new complex<double>[nband*ngtot];
