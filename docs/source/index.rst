@@ -487,7 +487,7 @@ The remaining lines are reference files and result files. Each pair is in one li
 The reference results are in them.
 
 --------------------------------------------
-Run auto test
+Run unit tests and integral tests
 --------------------------------------------
 
 **method 1**:
@@ -497,12 +497,12 @@ Run auto test
    make CXX=g++ TEST=ON # serial 
    make CXX=mpicxx TEST=ON # parallel
 
-Autotest.sh will be executed after serial-version **candela** is compiled.
+Unit tests and integral tests will be executed after serial-version **candela** is compiled.
 
 
 `make CXX=mpicxx TEST=ON`
 
-Autotest.sh will be executed after parallel-version **candela** is compiled. Multi-processor cases will be tested at the same time.
+Unit tests and integral tests will be executed after parallel-version **candela** is compiled. Multi-processor cases will be tested at the same time.
 
 **All developers should run 
 
@@ -515,11 +515,11 @@ to make sure some functions are not be destroyed.**
 
 After **candela** is compiled.
 
-`make test` or `cd test;sh Autotest.sh`
+`make test`
 
 It will run one-processor tests.
 
-`make test CXX=mpicxx` or `cd test;sh Autotest.sh ON`
+`make test CXX=mpicxx`
 
 It will run one-processor and multi-processor tests.
 

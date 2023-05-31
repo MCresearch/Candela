@@ -18,9 +18,9 @@ def check(filepair, threshold):
     return testpass
 def runcandela(np):
     if np > 1:
-        ierr=os.system("mpirun -np "+str(2)+" ../../bin/candela > /dev/null")
+        ierr=os.system("OMP_NUM_THREADS=2 ASAN_OPTIONS=protect_shadow_gap=0 mpirun -np "+str(2)+" ../../bin/candela > /dev/null")
     else:
-        ierr=os.system("../../bin/candela > /dev/null")
+        ierr=os.system("OMP_NUM_THREADS=2 ASAN_OPTIONS=protect_shadow_gap=0 ../../bin/candela > /dev/null")
     if ierr == 0:
         return True
     else:

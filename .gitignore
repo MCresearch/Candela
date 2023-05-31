@@ -5,3 +5,4 @@ candela
 *.txt
 *.pyc
 .DS_Store
+*.exe

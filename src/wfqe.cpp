@@ -406,7 +406,6 @@ void WfQE::readWF2(Wavefunc &wf, int &ik)
 		cout<<"Erro in opening WF file!"<<endl;
 		exit(0);
 	}
-	cout<<wfname<<" has been opened."<<endl;
 	int strw,endrw,inttmp;
 	int ik_2, ispin, gammaonly; 
 	double scale;
