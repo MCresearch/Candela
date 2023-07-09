@@ -1,7 +1,7 @@
 calculation  msd_multiple # Pair Distribution Function.
 system Al
-geo_in_type  ABACUS
-geo_directory ../geo/Al32.abacus
+geo_in_type  ABACUS2
+geo_directory ../geo/Al32.abacus_old
 geo_1        0
 geo_2        400
 geo_interval 1

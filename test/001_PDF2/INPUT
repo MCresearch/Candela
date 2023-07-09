@@ -1,6 +1,6 @@
 calculation  pdf # Pair Distribution Function.
-geo_in_type  ABACUS
-geo_directory ../geo/InAs32.abacus
+geo_in_type  ABACUS2
+geo_directory ../geo/InAs32.abacus_old
 geo_1        0
 geo_2        10
 geo_interval 1

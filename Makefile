@@ -96,3 +96,4 @@ test:
 
 clean:
 	@rm -rf $(D_OBJ) $(D_BIN)
+	@cd src/UTs; ${MAKE} clean

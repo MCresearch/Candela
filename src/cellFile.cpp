@@ -270,7 +270,7 @@ bool CellFile::ReadGeometry( Cell &cel )
 		return ReadGeometry_ABACUS(cel);
 	}
 	*/
-	else if (INPUT.geo_in_type == "ABACUS")
+	else if (INPUT.geo_in_type.substr(0,6) == "ABACUS")
 	{
 		if (file_open == false)
 		{
@@ -287,7 +287,10 @@ bool CellFile::ReadGeometry( Cell &cel )
 			cout << " CellFile::file_open = " << file_open << endl;
 			file_open = true;
 		}
-		return ReadGeometry_ABACUS(cel, ifs_pos_kept);
+		if(INPUT.geo_in_type == "ABACUS")
+			return ReadGeometry_ABACUS(cel, ifs_pos_kept);
+		else
+			return ReadGeometry_ABACUS_old(cel, ifs_pos_kept);
 	}
 	// (7) read in geometry file from RAW
 	else if(INPUT.geo_in_type=="RAW")

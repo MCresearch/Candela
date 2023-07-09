@@ -33,8 +33,8 @@ class CellFile : public Cell
 	static bool ReadGeometry_PWmat( Cell &cel, ifstream &ifs );//qianrui add 2020-1-6
 	static bool ReadGeometry_XYZ( Cell &cel, ifstream &ifs);
 	static bool ReadGeometry_LAMMPS( Cell &cel, ifstream &ifs );
-	//static bool ReadGeometry_ABACUS( Cell &cel ); // mohan add 2015-07-24
 	static bool ReadGeometry_ABACUS( Cell &cel, ifstream &ifs);
+	static bool ReadGeometry_ABACUS_old( Cell &cel, ifstream &ifs);
 	static bool ReadGeometry_RAW( Cell &cel, ifstream &ifs ); // mohan add 2019-03-17
 
 	// check geometry

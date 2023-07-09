@@ -115,9 +115,6 @@ void Atoms::read_pos_3(ifstream &ifs)
 
 void Atoms::read_pos_4(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, Vector3<double> &a3)
 {
-	const double norm1 = INPUT.celldm1; 
-	const double norm2 = INPUT.celldm2; 
-	const double norm3 = INPUT.celldm3;
 	assert(na>0);
 	string tmp;
 	for(int i=0; i<na; ++i)
@@ -130,14 +127,6 @@ void Atoms::read_pos_4(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 		pos[i].y *= BOHR;
 		pos[i].z *= BOHR;
 
-		// mohan added 2016-11-09
-	//	while( pos[i].x >= norm1 ) pos[i].x -= norm1;	
-	//	while( pos[i].x < 0 ) pos[i].x += norm1;
-	//	while( pos[i].y >= norm2 ) pos[i].y -= norm2;	
-	//	while( pos[i].y < 0 ) pos[i].y += norm2;
-	//	while( pos[i].z >= norm3 ) pos[i].z -= norm3;	
-	//	while( pos[i].z < 0 ) pos[i].z += norm3;
-	
 		// mohan updated 2018-04-26
 		// correct
 		while( pos[i].x >= a1.x ){ pos[i].x -= a1.x; pos[i].y -= a1.y; pos[i].z -= a1.z; }
@@ -147,22 +136,12 @@ void Atoms::read_pos_4(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 		while( pos[i].z >= a3.z ){ pos[i].x -= a3.x; pos[i].y -= a3.y; pos[i].z -= a3.z; }
 		while( pos[i].z < 0){ pos[i].x += a3.x; pos[i].y += a3.y; pos[i].z += a3.z; }
 
-		//wrong
-		//while( pos[i].x >= a1.x ){ pos[i].x -= a1.x; pos[i].y -= a2.x; pos[i].z -= a3.x; }
-		//while( pos[i].x < 0)     { pos[i].x += a1.x; pos[i].y += a2.x; pos[i].z += a3.x; }
-		//while( pos[i].y >= a2.y ){ pos[i].x -= a1.y; pos[i].y -= a2.y; pos[i].z -= a3.y; }
-		//while( pos[i].y < 0)     { pos[i].x += a1.y; pos[i].y += a2.y; pos[i].z += a3.y; }
-		//while( pos[i].z >= a3.z ){ pos[i].x -= a1.z; pos[i].y -= a2.z; pos[i].z -= a3.z; }
-		//while( pos[i].z < 0)     { pos[i].x += a1.z; pos[i].y += a2.z; pos[i].z += a3.z; }
 	}
 	return;
 }
 
 void Atoms::read_pos_5(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, Vector3<double> &a3, double &lat_const)
 {
-	const double norm1 = INPUT.celldm1; 
-	const double norm2 = INPUT.celldm2; 
-	const double norm3 = INPUT.celldm3;
 	assert(na>0);
 	string tmp;
 	for(int i=0; i<na; ++i)
@@ -177,14 +156,6 @@ void Atoms::read_pos_5(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 		pos[i].y *= BOHR*lat_const;
 		pos[i].z *= BOHR*lat_const;
 
-		// mohan added 2016-11-09
-	//	while( pos[i].x >= norm1 ) pos[i].x -= norm1;	
-	//	while( pos[i].x < 0 ) pos[i].x += norm1;
-	//	while( pos[i].y >= norm2 ) pos[i].y -= norm2;	
-	//	while( pos[i].y < 0 ) pos[i].y += norm2;
-	//	while( pos[i].z >= norm3 ) pos[i].z -= norm3;	
-	//	while( pos[i].z < 0 ) pos[i].z += norm3;
-	
 		// mohan updated 2018-04-26
 		// correct
 		while( pos[i].x >= a1.x ){ pos[i].x -= a1.x; pos[i].y -= a1.y; pos[i].z -= a1.z; }
@@ -194,13 +165,6 @@ void Atoms::read_pos_5(ifstream &ifs, Vector3<double> &a1, Vector3<double> &a2, 
 		while( pos[i].z >= a3.z ){ pos[i].x -= a3.x; pos[i].y -= a3.y; pos[i].z -= a3.z; }
 		while( pos[i].z < 0){ pos[i].x += a3.x; pos[i].y += a3.y; pos[i].z += a3.z; }
 
-		//wrong
-		//while( pos[i].x >= a1.x ){ pos[i].x -= a1.x; pos[i].y -= a2.x; pos[i].z -= a3.x; }
-		//while( pos[i].x < 0)     { pos[i].x += a1.x; pos[i].y += a2.x; pos[i].z += a3.x; }
-		//while( pos[i].y >= a2.y ){ pos[i].x -= a1.y; pos[i].y -= a2.y; pos[i].z -= a3.y; }
-		//while( pos[i].y < 0)     { pos[i].x += a1.y; pos[i].y += a2.y; pos[i].z += a3.y; }
-		//while( pos[i].z >= a3.z ){ pos[i].x -= a1.z; pos[i].y -= a2.z; pos[i].z -= a3.z; }
-		//while( pos[i].z < 0)     { pos[i].x += a1.z; pos[i].y += a2.z; pos[i].z += a3.z; }
 	}
 	return;
 }
