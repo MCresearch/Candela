@@ -9,12 +9,8 @@ except:
 import warnings
 warnings.filterwarnings('ignore')
 
-try:
-    interval = float(sys.argv[1])  # ps
-    tcut = float(sys.argv[1])  # ps
-except:
-    interval = 0.00025  # ps
-    tcut = 0.4  # ps
+interval = float(sys.argv[1])  # ps
+tcut = float(sys.argv[2])  # ps
 N_max = 25
 #dw = 2*pi/(N_max * tcut) * 0.658212 #meV
 
