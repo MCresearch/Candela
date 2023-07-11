@@ -121,6 +121,8 @@ void ISF2::cal()
 				}
             }
         }
+		delete[] mg;
+		delete[] pre;
 //converge different k
 double* cv_ddcf=new double[INPUT.isf_nt1];
 int* cv_index=new int[INPUT.isf_nt1];

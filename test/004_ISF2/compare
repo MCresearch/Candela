@@ -1,0 +1,5 @@
+threshold 1e-4
+
+enable_mpi ON
+
+isf.ref    isf.txt
