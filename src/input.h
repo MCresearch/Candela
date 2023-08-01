@@ -46,7 +46,8 @@ public:
 	int ntype;
 	int natom;
 	bool cartesian;
-	bool write_cartesian;
+	bool write_cartesian = false;
+	bool write_name = true;
 	bool gamma;//qianrui 2020-2-11
 	bool msd_single;//qianrui 2020-2-18
 	int msd_type; //qianrui 2020-2-18
@@ -261,6 +262,7 @@ public:
 	double vol;
 	double dw;
 	double wcut;
+	double target_w = 0.2;
 	int smear;//linear smear for delta function by default
 	bool smearinvw;
 	double *fwhm;
@@ -385,6 +387,9 @@ public:
 	double theta_min;
 	double r_max;
 	double r_min;
+	double E_max;
+	double E_min;
+	double dE;
 
 	int pdf_nstd; // Calculate single pdf of such length
 	string abacus_version;

@@ -85,13 +85,13 @@ void WfRead::readWF(int ik)
 	if(INPUT.wf_in_type=="QE1")
 	{
 		wfqe.readOCC(*wfpt,ik);
-		wfqe.readGKK(*wfpt,ik);
-		wfqe.readWF(*wfpt,ik);
+		if(!INPUT.readvmatrix) wfqe.readGKK(*wfpt,ik);
+		if(!INPUT.readvmatrix) wfqe.readWF(*wfpt,ik);
 	}
 	else if(INPUT.wf_in_type=="QE2")
 	{
 		wfqe.readOCC2(*wfpt,ik);
-		wfqe.readWF2(*wfpt,ik);
+		if(!INPUT.readvmatrix) wfqe.readWF2(*wfpt,ik);
 	}
 	else if(INPUT.wf_in_type=="PWmat")
 	{

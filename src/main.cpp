@@ -11,6 +11,7 @@
 #include "ssf_selected.h" // static structure factor calculated for selected vectors 
 #include "dsf.h"     // dynamics structure factor
 #include "ele_conductivity.h"   //qianrui for electric conductivity
+#include "elecond_contribute.h" //calculate contribution of each band to conductivities
 #include "velcor.h"  // velocity autocorrelation function
 #include "powers.h"  // power spectra (13-03-28)
 #include "data3D.h"  // arrange 3D data, such as density
@@ -192,6 +193,7 @@ int main(int argc, char **argv)
 	else if(INPUT.calculation == "eig"){Eig eig; eig.Routine();}
 	else if(INPUT.calculation == "dist"){Dist dist; dist.Routine();}
 	else if(INPUT.calculation == "ele_conductivity"){Ele_Conductivity ele_con; ele_con.Routine();}//
+	else if(INPUT.calculation == "elecond_contribute"){Elecond_contribute ele_contri; ele_contri.Routine();}
 	else if(INPUT.calculation == "xsf"){XSF xsf; xsf.Routine();} // compute XSF related properties
 	else if(INPUT.calculation == "density2d"){Density2D den; den.Routine();}
 	else if(INPUT.calculation == "HBs_near_PT"){HBs_near_PT hbsn; hbsn.Routine();} // renxi added 20200417
