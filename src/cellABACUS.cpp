@@ -77,7 +77,7 @@ bool CellFile::ReadGeometry_ABACUS( Cell &cel, ifstream &ifs )
 			ifs >> atomit->pos[i].x >> atomit->pos[i].y;
 			READ_VALUE(ifs, atomit->pos[i].z);
 		}
-	
+
 		for(int ia2=0; ia2<atomit->na; ++ia2)
 		{
 			//atomit->pos[ia2] *= lat_const;
