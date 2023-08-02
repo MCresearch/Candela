@@ -270,6 +270,7 @@ public:
 	bool readvmatrix; 
 	int cond_method;
 	double cond_dt;
+	bool cond_intra = false;
 
 	// for movie
 	int snatom;

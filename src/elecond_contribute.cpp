@@ -7,10 +7,6 @@
 #endif
 #include <unistd.h>
 
-static double sum_factor;
-double Velocity_Matrix_Local(const int,const int,Wavefunc &);
-int NBANDS=0;
-
 void Elecond_contribute::Routine()
 {
 	this->cal_contribute();
@@ -84,7 +80,7 @@ void Elecond_contribute::cal_contribute()
 		Wavefunc WF;
 		WfRead wfr(WF);
 		wfr.Init();
-		sum_factor=2*P_ME*INPUT.vol*pow(P_BOHR,3)/M_PI/P_QE/INPUT.nele/1e30/P_HBAR;
+		double sum_factor=2*P_ME*INPUT.vol*pow(P_BOHR,3)/M_PI/P_QE/INPUT.nele/1e30/P_HBAR;
 		int nk=INPUT.nkpoint;
 		assert(nk>0);
 
@@ -102,7 +98,6 @@ void Elecond_contribute::cal_contribute()
 #endif
 			wfr.readWF(ik);
 			int nband=WF.nband;
-			NBANDS = nband;
 			cout<<"scf "<<ifolder<<" ; kpoint "<<ik+1<<endl;
 			//WF.print(0);
 
@@ -144,7 +139,6 @@ void Elecond_contribute::cal_contribute()
 					if(iw>=nw||w==0) continue;//add w==0, sometimes w can be 0 due to truncation error.
 
 					double corr2 = vmatrix[ijb];
-					//corr2=Velocity_Matrix_Local(ib,jb,WF); 
 
 //--------------------------------------------------------------------------------------------------
 //Smearing Part
