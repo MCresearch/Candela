@@ -23,7 +23,13 @@ void MSD::Routine()
 	this->count_msd = 0;
 	this->start_time = 0.0;
 
-	allocate_water=false;
+	for (int imsd = 0; imsd < nmsd; imsd++)
+	{
+		this->msd[imsd] = 0;
+		this->msd2[imsd] = 0;
+	}
+
+		allocate_water = false;
 
 	// setup the proton transfer data
 	PT.setup_PT();
@@ -106,17 +112,23 @@ void MSD::compute_msd(const Cell &cel, const int &igeo, ofstream &ofs_msd)
 
 	if(INPUT.system=="water" and allocate_water!=true)
 	{
-		pre_wpos = new Vector3<double>[na];
-		wpos = new Vector3<double>[na];
-		wpos0 = new Vector3<double>[na];
+		if (count_msd == 0)
+		{
+			pre_wpos = new Vector3<double>[na];
+			wpos = new Vector3<double>[na];
+			wpos0 = new Vector3<double>[na];
+		}
 		allocate_water=true;
 	}
 	else if(INPUT.system=="oxygen" and allocate_water!=true)
 	{	
-		int na_o = cel.atom[ito].na;
-		pre_wpos = new Vector3<double>[na_o];
-		wpos = new Vector3<double>[na_o];
-		wpos0 = new Vector3<double>[na_o];
+		if (count_msd == 0)
+		{
+			int na_o = cel.atom[ito].na;
+			pre_wpos = new Vector3<double>[na_o];
+			wpos = new Vector3<double>[na_o];
+			wpos0 = new Vector3<double>[na_o];
+		}
 		allocate_water=true;
 	}
 	else if(INPUT.system=="HPHT_water" and allocate_water!=true)
@@ -138,9 +150,12 @@ void MSD::compute_msd(const Cell &cel, const int &igeo, ofstream &ofs_msd)
 	}
 	else 
 	{
-		pre_wpos = new Vector3<double>[na];
-		wpos = new Vector3<double>[na];
-		wpos0 = new Vector3<double>[na];
+		if (count_msd == 0)
+		{
+			pre_wpos = new Vector3<double>[na];
+			wpos = new Vector3<double>[na];
+			wpos0 = new Vector3<double>[na];
+		}
 	}
 
 	Water *water;
@@ -151,133 +166,133 @@ void MSD::compute_msd(const Cell &cel, const int &igeo, ofstream &ofs_msd)
 		Water::nions=0;
 
 		HBs::setup_water(cel, water);
-	
+	}
 
-		if(INPUT.system=="hydronium" or INPUT.system=="hydroxide")
+	if(INPUT.system=="hydronium" or INPUT.system=="hydroxide")
+	{
+		for(int ia=0; ia<cel.atom[ito].na; ++ia)
 		{
-			for(int ia=0; ia<cel.atom[ito].na; ++ia)
+			if( INPUT.system=="hydronium" and water[ia].nH!=3) continue;
+			if( INPUT.system=="hydroxide" and water[ia].nH!=1) continue;
+
+			if(Water::nions==1)
 			{
-				if( INPUT.system=="hydronium" and water[ia].nH!=3) continue;
-				if( INPUT.system=="hydroxide" and water[ia].nH!=1) continue;
-
-				if(Water::nions==1)
+				if(count_msd==0)
 				{
-					if(count_msd==0)
-					{
-						ion_pos.x = cel.atom[ito].pos[ia].x;
-						ion_pos.y = cel.atom[ito].pos[ia].y;
-						ion_pos.z = cel.atom[ito].pos[ia].z;
-						pre_pos = ion_pos;
-						ion_pos0 = ion_pos;
-						cout << setw(10) << cel.snapshot_time 
-							<< setw(10) << ion_pos.x 
-							<< setw(10) << ion_pos.y 
-							<< setw(10) << ion_pos.z << endl;
-					}
-					else
-					{
-						Vector3<double> move;
-						move.x = shortest(pre_pos.x, cel.atom[ito].pos[ia].x, INPUT.celldm1);
-						move.y = shortest(pre_pos.y, cel.atom[ito].pos[ia].y, INPUT.celldm2);
-						move.z = shortest(pre_pos.z, cel.atom[ito].pos[ia].z, INPUT.celldm3);
-						ion_pos = ion_pos + move; 
-						pre_pos = cel.atom[ito].pos[ia];
-						double dx = ion_pos.x-ion_pos0.x;
-						double dy = ion_pos.y-ion_pos0.y; // fix a bug 2017-02-08 by mohan
-						double dz = ion_pos.z-ion_pos0.z;
-						this->msd[igeo-INPUT.geo_1] = dx*dx + dy*dy + dz*dz;  // unit is A^2
-						ofs_msd << setprecision(12) << cel.snapshot_time << " " << msd[igeo-INPUT.geo_1] << endl;
-
-					}
-					++count_msd;
+					ion_pos.x = cel.atom[ito].pos[ia].x;
+					ion_pos.y = cel.atom[ito].pos[ia].y;
+					ion_pos.z = cel.atom[ito].pos[ia].z;
+					pre_pos = ion_pos;
+					ion_pos0 = ion_pos;
+					cout << setw(10) << cel.snapshot_time 
+						<< setw(10) << ion_pos.x 
+						<< setw(10) << ion_pos.y 
+						<< setw(10) << ion_pos.z << endl;
 				}
+				else
+				{
+					Vector3<double> move;
+					move.x = shortest(pre_pos.x, cel.atom[ito].pos[ia].x, INPUT.celldm1);
+					move.y = shortest(pre_pos.y, cel.atom[ito].pos[ia].y, INPUT.celldm2);
+					move.z = shortest(pre_pos.z, cel.atom[ito].pos[ia].z, INPUT.celldm3);
+					ion_pos = ion_pos + move; 
+					pre_pos = cel.atom[ito].pos[ia];
+					double dx = ion_pos.x-ion_pos0.x;
+					double dy = ion_pos.y-ion_pos0.y; // fix a bug 2017-02-08 by mohan
+					double dz = ion_pos.z-ion_pos0.z;
+					this->msd[igeo-INPUT.geo_1] = dx*dx + dy*dy + dz*dz;  // unit is A^2
+					ofs_msd << setprecision(12) << cel.snapshot_time << " " << msd[igeo-INPUT.geo_1] << endl;
+
+				}
+				++count_msd;
 			}
-		}
-		else if(INPUT.system=="oxygen")
-		{
-			if(count_msd==0)
-			{
-				this->start_time = cel.snapshot_time;
-				for(int ia=0; ia<cel.atom[ito].na; ++ia)
-				{
-					if(water[ia].nH!=2) continue;
-					//Vector3<double> mass_center = cel.atom[ito].pos[ia];
-
-					double dx0 = shortest(cel.atom[ito].pos[ia].x, cel.atom[ith].pos[water[ia].indexH[0]].x, INPUT.celldm1);
-					double dy0 = shortest(cel.atom[ito].pos[ia].y, cel.atom[ith].pos[water[ia].indexH[0]].y, INPUT.celldm2);
-					double dz0 = shortest(cel.atom[ito].pos[ia].z, cel.atom[ith].pos[water[ia].indexH[0]].z, INPUT.celldm3);
-					double dx1 = shortest(cel.atom[ito].pos[ia].x, cel.atom[ith].pos[water[ia].indexH[1]].x, INPUT.celldm1);
-					double dy1 = shortest(cel.atom[ito].pos[ia].y, cel.atom[ith].pos[water[ia].indexH[1]].y, INPUT.celldm2);
-					double dz1 = shortest(cel.atom[ito].pos[ia].z, cel.atom[ith].pos[water[ia].indexH[1]].z, INPUT.celldm3);
-					double x0 = cel.atom[ito].pos[ia].x - dx0;	
-					double y0 = cel.atom[ito].pos[ia].y - dy0;	
-					double z0 = cel.atom[ito].pos[ia].z - dz0;	
-					double x1 = cel.atom[ito].pos[ia].x - dx1;	
-					double y1 = cel.atom[ito].pos[ia].y - dy1;	
-					double z1 = cel.atom[ito].pos[ia].z - dz1;
-					Vector3<double> H0 = Vector3<double>(x0,y0,z0);
-					Vector3<double> H1 = Vector3<double>(x1,y1,z1);
-					// mohan updated on 2018-12-24
-					Vector3<double> mass_center = (cel.atom[ito].pos[ia]*cel.atom[ito].mass
-						+H0*cel.atom[ith].mass+H0*cel.atom[ith].mass)
-						/(cel.atom[ito].mass+2*cel.atom[ith].mass);
-
-					wpos[ia] = mass_center;
-					pre_wpos[ia] = wpos[ia];
-					wpos0[ia] = wpos[ia];
-				}
-			}
-			else
-			{
-				Vector3<double> move;
-				for(int ia=0; ia<cel.atom[ito].na; ++ia)
-				{
-					if(water[ia].nH!=2) continue;
-					//Vector3<double> mass_center = cel.atom[ito].pos[ia];
-
-					double dx0 = shortest(cel.atom[ito].pos[ia].x, cel.atom[ith].pos[water[ia].indexH[0]].x, INPUT.celldm1);
-					double dy0 = shortest(cel.atom[ito].pos[ia].y, cel.atom[ith].pos[water[ia].indexH[0]].y, INPUT.celldm2);
-					double dz0 = shortest(cel.atom[ito].pos[ia].z, cel.atom[ith].pos[water[ia].indexH[0]].z, INPUT.celldm3);
-					double dx1 = shortest(cel.atom[ito].pos[ia].x, cel.atom[ith].pos[water[ia].indexH[1]].x, INPUT.celldm1);
-					double dy1 = shortest(cel.atom[ito].pos[ia].y, cel.atom[ith].pos[water[ia].indexH[1]].y, INPUT.celldm2);
-					double dz1 = shortest(cel.atom[ito].pos[ia].z, cel.atom[ith].pos[water[ia].indexH[1]].z, INPUT.celldm3);
-					double x0 = cel.atom[ito].pos[ia].x - dx0;	
-					double y0 = cel.atom[ito].pos[ia].y - dy0;	
-					double z0 = cel.atom[ito].pos[ia].z - dz0;	
-					double x1 = cel.atom[ito].pos[ia].x - dx1;	
-					double y1 = cel.atom[ito].pos[ia].y - dy1;	
-					double z1 = cel.atom[ito].pos[ia].z - dz1;
-					Vector3<double> H0 = Vector3<double>(x0,y0,z0);
-					Vector3<double> H1 = Vector3<double>(x1,y1,z1);
-					Vector3<double> mass_center = (cel.atom[ito].pos[ia]*cel.atom[ito].mass
-						+H0*cel.atom[ith].mass+H0*cel.atom[ith].mass)
-						/(cel.atom[ito].mass+2*cel.atom[ith].mass);
-
-	//				Vector3<double> mass_center = 
-	//					(cel.atom[ito].pos[ia]*16.0+
-	//					cel.atom[ith].pos[water[ia].indexH[0]]*2.0+
-	//					cel.atom[ith].pos[water[ia].indexH[1]]*2.0)/
-	//					(16.0+2.0+2.0);
-					move.x = shortest(pre_wpos[ia].x, mass_center.x, INPUT.celldm1);
-					move.y = shortest(pre_wpos[ia].y, mass_center.y, INPUT.celldm2);
-					move.z = shortest(pre_wpos[ia].z, mass_center.z, INPUT.celldm3);
-					wpos[ia] = wpos[ia] + move; 
-					pre_wpos[ia] = mass_center;
-					double dx = wpos[ia].x-wpos0[ia].x;
-					double dy = wpos[ia].y-wpos0[ia].y; 
-					double dz = wpos[ia].z-wpos0[ia].z;
-					this->msd[igeo-INPUT.geo_1] += dx*dx + dy*dy + dz*dz;  // unit is A^2
-				}
-				if(cel.snapshot_time>0.0)
-				{
-					ofs_msd << cel.snapshot_time << " " 
-						<< msd[igeo-INPUT.geo_1]/cel.atom[ito].na << " " 
-						<< msd[igeo-INPUT.geo_1]/6.0/(cel.snapshot_time-start_time)/cel.atom[ito].na << endl;
-				}
-			}
-			++count_msd;
 		}
 	}
+	else if(INPUT.system=="oxygen")
+	{
+		if(count_msd==0)
+		{
+			this->start_time = cel.snapshot_time;
+			for(int ia=0; ia<cel.atom[ito].na; ++ia)
+			{
+				if(water[ia].nH!=2) continue;
+				//Vector3<double> mass_center = cel.atom[ito].pos[ia];
+
+				double dx0 = shortest(cel.atom[ito].pos[ia].x, cel.atom[ith].pos[water[ia].indexH[0]].x, INPUT.celldm1);
+				double dy0 = shortest(cel.atom[ito].pos[ia].y, cel.atom[ith].pos[water[ia].indexH[0]].y, INPUT.celldm2);
+				double dz0 = shortest(cel.atom[ito].pos[ia].z, cel.atom[ith].pos[water[ia].indexH[0]].z, INPUT.celldm3);
+				double dx1 = shortest(cel.atom[ito].pos[ia].x, cel.atom[ith].pos[water[ia].indexH[1]].x, INPUT.celldm1);
+				double dy1 = shortest(cel.atom[ito].pos[ia].y, cel.atom[ith].pos[water[ia].indexH[1]].y, INPUT.celldm2);
+				double dz1 = shortest(cel.atom[ito].pos[ia].z, cel.atom[ith].pos[water[ia].indexH[1]].z, INPUT.celldm3);
+				double x0 = cel.atom[ito].pos[ia].x - dx0;	
+				double y0 = cel.atom[ito].pos[ia].y - dy0;	
+				double z0 = cel.atom[ito].pos[ia].z - dz0;	
+				double x1 = cel.atom[ito].pos[ia].x - dx1;	
+				double y1 = cel.atom[ito].pos[ia].y - dy1;	
+				double z1 = cel.atom[ito].pos[ia].z - dz1;
+				Vector3<double> H0 = Vector3<double>(x0,y0,z0);
+				Vector3<double> H1 = Vector3<double>(x1,y1,z1);
+				// mohan updated on 2018-12-24
+				Vector3<double> mass_center = (cel.atom[ito].pos[ia]*cel.atom[ito].mass
+					+H0*cel.atom[ith].mass+H0*cel.atom[ith].mass)
+					/(cel.atom[ito].mass+2*cel.atom[ith].mass);
+
+				wpos[ia] = mass_center;
+				pre_wpos[ia] = wpos[ia];
+				wpos0[ia] = wpos[ia];
+			}
+		}
+		else
+		{
+			Vector3<double> move;
+			for(int ia=0; ia<cel.atom[ito].na; ++ia)
+			{
+				if(water[ia].nH!=2) continue;
+				//Vector3<double> mass_center = cel.atom[ito].pos[ia];
+
+				double dx0 = shortest(cel.atom[ito].pos[ia].x, cel.atom[ith].pos[water[ia].indexH[0]].x, INPUT.celldm1);
+				double dy0 = shortest(cel.atom[ito].pos[ia].y, cel.atom[ith].pos[water[ia].indexH[0]].y, INPUT.celldm2);
+				double dz0 = shortest(cel.atom[ito].pos[ia].z, cel.atom[ith].pos[water[ia].indexH[0]].z, INPUT.celldm3);
+				double dx1 = shortest(cel.atom[ito].pos[ia].x, cel.atom[ith].pos[water[ia].indexH[1]].x, INPUT.celldm1);
+				double dy1 = shortest(cel.atom[ito].pos[ia].y, cel.atom[ith].pos[water[ia].indexH[1]].y, INPUT.celldm2);
+				double dz1 = shortest(cel.atom[ito].pos[ia].z, cel.atom[ith].pos[water[ia].indexH[1]].z, INPUT.celldm3);
+				double x0 = cel.atom[ito].pos[ia].x - dx0;	
+				double y0 = cel.atom[ito].pos[ia].y - dy0;	
+				double z0 = cel.atom[ito].pos[ia].z - dz0;	
+				double x1 = cel.atom[ito].pos[ia].x - dx1;	
+				double y1 = cel.atom[ito].pos[ia].y - dy1;	
+				double z1 = cel.atom[ito].pos[ia].z - dz1;
+				Vector3<double> H0 = Vector3<double>(x0,y0,z0);
+				Vector3<double> H1 = Vector3<double>(x1,y1,z1);
+				Vector3<double> mass_center = (cel.atom[ito].pos[ia]*cel.atom[ito].mass
+					+H0*cel.atom[ith].mass+H0*cel.atom[ith].mass)
+					/(cel.atom[ito].mass+2*cel.atom[ith].mass);
+
+//				Vector3<double> mass_center = 
+//					(cel.atom[ito].pos[ia]*16.0+
+//					cel.atom[ith].pos[water[ia].indexH[0]]*2.0+
+//					cel.atom[ith].pos[water[ia].indexH[1]]*2.0)/
+//					(16.0+2.0+2.0);
+				move.x = shortest(pre_wpos[ia].x, mass_center.x, INPUT.celldm1);
+				move.y = shortest(pre_wpos[ia].y, mass_center.y, INPUT.celldm2);
+				move.z = shortest(pre_wpos[ia].z, mass_center.z, INPUT.celldm3);
+				wpos[ia] = wpos[ia] + move; 
+				pre_wpos[ia] = mass_center;
+				double dx = wpos[ia].x-wpos0[ia].x;
+				double dy = wpos[ia].y-wpos0[ia].y; 
+				double dz = wpos[ia].z-wpos0[ia].z;
+				this->msd[igeo-INPUT.geo_1] += dx*dx + dy*dy + dz*dz;  // unit is A^2
+			}
+			if(cel.snapshot_time>0.0)
+			{
+				ofs_msd << cel.snapshot_time << " " 
+					<< msd[igeo-INPUT.geo_1]/cel.atom[ito].na << " " 
+					<< msd[igeo-INPUT.geo_1]/6.0/(cel.snapshot_time-start_time)/cel.atom[ito].na << endl;
+			}
+		}
+		++count_msd;
+	}
+
 	else if (INPUT.system == "HPHT_water") // renxi added 20200912
 	{
 		if(count_msd==0)
@@ -351,13 +366,14 @@ void MSD::compute_msd(const Cell &cel, const int &igeo, ofstream &ofs_msd)
 			{
 				for(int ia=0; ia<cel.atom[it].na; ++ia)
 				{
-					wpos[iat] = cel.atom[it].pos[ia];
-					pre_wpos[iat] = cel.atom[it].pos[ia];
-					wpos0[iat] = wpos[iat];
+					this->wpos[iat] = cel.atom[it].pos[ia];
+					this->pre_wpos[iat] = cel.atom[it].pos[ia];
+					this->wpos0[iat] = wpos[iat];
+					// cout << this->wpos0[iat].x << " " << wpos0[iat].y << " " << wpos0[iat].z << endl;
 					++iat;
 				}
 			}
-		}//end count_msd
+		} // end count_msd
 		else
 		{
 			Vector3<double> move;
@@ -371,14 +387,17 @@ void MSD::compute_msd(const Cell &cel, const int &igeo, ofstream &ofs_msd)
 					move.x = shortest(pre_wpos[iat].x, cel.atom[it].pos[ia].x, INPUT.celldm1);
 					move.y = shortest(pre_wpos[iat].y, cel.atom[it].pos[ia].y, INPUT.celldm2);
 					move.z = shortest(pre_wpos[iat].z, cel.atom[it].pos[ia].z, INPUT.celldm3);
-					//wpos[iat] = wpos[iat] + move;  
+					// cout << this->pre_wpos[iat].x << " " << this->pre_wpos[iat].y << " " << this->pre_wpos[iat].z << endl;
+					// cout << cel.atom[it].pos[ia].x << " " << cel.atom[it].pos[ia].y << " " << cel.atom[it].pos[ia].z << endl;
+					// cout << this->wpos0[iat].x << " " << this->wpos0[iat].y << " " << this->wpos0[iat].z << endl;
+					// wpos[iat] = wpos[iat] + move;
 					wpos[iat] = wpos[iat] - move;  // mohan update 2017-08-16
 					pre_wpos[iat] = cel.atom[it].pos[ia];
 					double dx = wpos[iat].x-wpos0[iat].x;
 					double dy = wpos[iat].y-wpos0[iat].y; 
 					double dz = wpos[iat].z-wpos0[iat].z;
 					double dxyz = dx*dx + dy*dy + dz*dz;
-					//cout << iat << " " << dxyz << endl;
+					//cout << iat << " " << move.x << " " << move.y << " " << move.y << " " << dxyz << endl;
 					this->msd[index0] += dxyz;  // unit is A^2
 					++iat;
 				}
