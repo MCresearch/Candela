@@ -52,10 +52,14 @@ void Write::Routine()
 		{
 			for(int ia=0;ia<cel.atom[it].na;ia++)
 			{
+				if(INPUT.write_name)
+				{
+					ofs<<cel.atom[it].id<<'\t';
+				}
 				if(INPUT.write_cartesian)
-				ofs<<cel.atom[it].id<<'\t'<<cel.atom[it].pos[ia].x*INPUT.factor<<'\t'<<cel.atom[it].pos[ia].y*INPUT.factor<<'\t'<<cel.atom[it].pos[ia].z*INPUT.factor<<"\t1\t1\t1"<<endl;
+				ofs<<cel.atom[it].pos[ia].x*INPUT.factor<<'\t'<<cel.atom[it].pos[ia].y*INPUT.factor<<'\t'<<cel.atom[it].pos[ia].z*INPUT.factor<<"\t1\t1\t1"<<endl;
 				else
-				ofs<<cel.atom[it].id<<'\t'<<cel.atom[it].pos[ia].x/cel.a1.x<<'\t'<<cel.atom[it].pos[ia].y/cel.a2.y<<'\t'<<cel.atom[it].pos[ia].z/cel.a3.z<<"\t1\t1\t1"<<endl;
+				ofs<<cel.atom[it].pos[ia].x/cel.a1.x<<'\t'<<cel.atom[it].pos[ia].y/cel.a2.y<<'\t'<<cel.atom[it].pos[ia].z/cel.a3.z<<"\t1\t1\t1"<<endl;
 				
 			}
 		}

@@ -171,7 +171,6 @@ Input::Input()
 
 	geo_out = "result.dat";
 
-	bool write_cartesian;
 	cartesian = true;
 	gamma=false;
 	msd_single=false;
@@ -229,6 +228,9 @@ Input::Input()
 	theta_min = 0;
 	r_max = 100;
 	r_min = 0;
+	E_min = -120;
+	E_max = 100;
+	dE = 2;
 
 	pdf_nstd = -1;
 	abacus_version = "old";
@@ -367,8 +369,9 @@ void Input::Read(const string &fn)
 		else if (strcmp("geo_format", word) == 0) read_value(ifs, geo_format);
 		else if (strcmp("ntype", word) == 0) read_value(ifs, ntype);
         else if (strcmp("natom", word) == 0) read_value(ifs, natom);
-        else if (strcmp("cartesian", word) == 0) read_value(ifs, cartesian); //mohan add 2014-04-04
-		else if (strcmp("write_cartesian", word) == 0) read_value(ifs, write_cartesian); //qianrui 2020-3-7
+        else if (strcmp("cartesian", word) == 0) read_value(ifs, cartesian);
+		else if (strcmp("write_cartesian", word) == 0) read_value(ifs, write_cartesian);
+		else if (strcmp("write_name", word) == 0) read_value(ifs, write_name);
         else if (strcmp("gamma", word) == 0) read_value(ifs, gamma);
         else if (strcmp("msd_single", word) == 0) read_value(ifs, msd_single); 
         else if (strcmp("msd_type", word) == 0) read_value(ifs, msd_type);
@@ -568,11 +571,13 @@ void Input::Read(const string &fn)
         else if (strcmp("vol", word) == 0) read_value(ifs, vol);
         else if (strcmp("dw", word) == 0) read_value(ifs, dw);
         else if (strcmp("wcut", word) == 0) read_value(ifs, wcut);
+		else if (strcmp("target_w", word) == 0) read_value(ifs, target_w);
         else if (strcmp("smear", word) == 0) read_value(ifs, smear);
 		else if (strcmp("smearinvw", word) == 0) read_value(ifs, smearinvw);
         else if (strcmp("readvmatrix", word) == 0) read_value(ifs, readvmatrix);
 		else if (strcmp("cond_method", word) == 0) read_value(ifs, cond_method);
 		else if (strcmp("cond_dt", word) == 0) read_value(ifs, cond_dt);
+		else if (strcmp("cond_intra", word) == 0) read_value(ifs, cond_intra);
         else if (strcmp("n_fwhm", word) == 0) read_value(ifs, n_fwhm);
         else if (strcmp("fwhm", word) == 0) 
 		{
@@ -656,6 +661,9 @@ void Input::Read(const string &fn)
 		else if (strcmp("theta_min", word) == 0) read_value(ifs, theta_min);
 		else if (strcmp("r_max", word) == 0) read_value(ifs, r_max);
 		else if (strcmp("r_min", word) == 0) read_value(ifs, r_min);
+		else if (strcmp("emax", word) == 0) read_value(ifs, E_max);
+		else if (strcmp("emin", word) == 0) read_value(ifs, E_min);
+		else if (strcmp("de", word) == 0) read_value(ifs, dE);
 		else if (strcmp("dq", word) == 0) read_value(ifs, dq);
 		else if (strcmp("abacus_version", word) == 0) read_value(ifs, abacus_version);
 		else if (strcmp("n_recorded_water", word) == 0) read_value(ifs, n_recorded_water);

@@ -11,7 +11,7 @@
 //kappa=(L22-L12*L21/L11)/eT^2,sigma=L11,
 void writesigma(double*,double*,double*,int,int,int,int);
 static double sum_factor;
-double Velocity_Matrix_Local(const int,const int,Wavefunc &);
+double sigmod(const double& T, const double& mu, const double &E);
 
 void Ele_Conductivity::Routine()
 {
@@ -82,7 +82,7 @@ void Ele_Conductivity::method1()
 		int exist=system(command.c_str());
 		if(exist!=0)
 		{
-			cout<<"No "<<INPUT.multi_directory<<" exists."<<endl;
+			std::cout<<"No "<<INPUT.multi_directory<<" exists."<<std::endl;
 			exit(0);
 		}
 		chdir(INPUT.multi_directory.c_str());
@@ -100,7 +100,7 @@ void Ele_Conductivity::method1()
 		int exist=system(command.c_str());
 		if(exist!=0)
 		{
-			cout<<"No "<<ifolderstr<<" exists."<<endl;
+			std::cout<<"No "<<ifolderstr<<" exists."<<std::endl;
 			exit(0);
 		}
 		chdir(ifolderstr.c_str());
@@ -128,10 +128,11 @@ void Ele_Conductivity::method1()
 #endif
 		wfr.readWF(ik);
 		int nband=WF.nband;
-		cout<<"scf "<<ifolder<<" ; kpoint "<<ik+1<<endl;
+		std::cout<<"scf "<<ifolder<<" ; kpoint "<<ik+1<<std::endl;
 		//WF.print(0);
 
-		const int nbb = (nband-1) * nband / 2;
+		int nbb = (nband-1) * nband / 2;
+		if(INPUT.cond_intra) nbb += nband;
 		double *vmatrix = new double [nbb];
 		if(INPUT.readvmatrix)
 		{
@@ -148,7 +149,7 @@ void Ele_Conductivity::method1()
 			}
 			wfr.calvmatrix(vmatrix);
 		}
-		cout<<"nband: "<<nband<<endl;
+		std::cout<<"nband: "<<nband<<std::endl;
 			
 
 		double factor2=factor/INPUT.dw*pow(WF.factor,2)/INPUT.vol;
@@ -159,37 +160,48 @@ void Ele_Conductivity::method1()
 #endif	
 		for(int ib=0;ib<nband;++ib)
 		{
-			for(int jb=ib+1;jb<nband;++jb)
+			for(int jb=ib;jb<nband;++jb)
 	    	{
-				int ijb = nband*ib - ib*(ib+1)/2 + (jb - ib - 1);
+				int ijb;
 				double energyj=WF.eigE[jb];
 				double energyi=WF.eigE[ib];
-				double w=energyj-energyi;
+				double dE=energyj-energyi;
 				double docc=WF.occ[ib]-WF.occ[jb];
-				if(docc<=0.0000000001) continue;
-				assert(w>=0);
-				int iw=int(w/INPUT.dw);
-				if(iw>=nw||w==0) continue;//add w==0, sometimes w can be 0 due to truncation error.
-
-				double corr2 = vmatrix[ijb];
-				//corr2=Velocity_Matrix_Local(ib,jb,WF); 
-				
-//--------------------------------------------------------------------------------------------------
-//Smearing Part
-//Frequency-dependent functions are (or not (0)) broadened by Gaussian (0) or Lorentz (2) function.
-//--------------------------------------------------------------------------------------------------
-				double L11fact;
-				double Eij_F=(energyj+energyi)/2-INPUT.fermiE;
-
-				if(INPUT.smearinvw)
+				if(!INPUT.cond_intra)
 				{
-					L11fact=factor2/w*docc*corr2;
+					if(docc<=1e-10 || dE < 1e-5) continue;
+					ijb = nband*ib - ib*(ib+1)/2 + (jb - ib - 1);
 				}
 				else
 				{
-					L11fact=factor2*docc*corr2;
+					ijb = ib*nband - (ib + 1) * ib / 2 + jb;
 				}
+				assert(dE>=0);
+				int iw=int(dE/INPUT.dw);
+				if(iw>=nw) continue;
 
+				double corr2 = vmatrix[ijb];
+				double L11fact;
+				if(dE < 1e-5)
+				{
+					double avg_en = 0.5*(energyj+energyi);
+					double occij = sigmod(INPUT.temperature/P_EV2K, INPUT.fermiE, avg_en);
+					L11fact=factor2*corr2*(occij - 1)*occij/INPUT.temperature*P_EV2K*WF.wk;
+				}
+				else
+				{
+					if(INPUT.smearinvw)
+					{
+						L11fact=factor2/dE*docc*corr2;
+					}
+					else
+					{
+						L11fact=factor2*docc*corr2;
+					}
+				}
+				if(ib == jb) L11fact *= 0.5;
+
+				double Eij_F=(energyj+energyi)/2-INPUT.fermiE;
 				double L12fact=Eij_F*L11fact;
 				double L22fact=pow(Eij_F,2)*L11fact;
 				if(INPUT.smear==0)
@@ -224,28 +236,27 @@ void Ele_Conductivity::method1()
 						{
 							if(INPUT.smear==1)
 							{
-								if(INPUT.smearinvw)
+								if(INPUT.smearinvw || dE < 1e-5)
 								{
-									smearf=exp(pow(INPUT.dw*(iv+0.5)-w,2)*st2) + exp(pow(w+INPUT.dw*(iv+0.5),2)*st2);
+									smearf=exp(pow(INPUT.dw*(iv+0.5)-dE,2)*st2) + exp(pow(dE+INPUT.dw*(iv+0.5),2)*st2);
 									smearpre = pre * smearf;
 								}
 								else
 								{
-									smearf=exp(pow(INPUT.dw*(iv+0.5)-w,2)*st2) - exp(pow(w+INPUT.dw*(iv+0.5),2)*st2);
+									smearf=exp(pow(INPUT.dw*(iv+0.5)-dE,2)*st2) - exp(pow(dE+INPUT.dw*(iv+0.5),2)*st2);
 									smearpre = pre/(iv+0.5)/INPUT.dw * smearf;
 								}
-								
 							}
 							else
 							{
-								if(INPUT.smearinvw)
+								if(INPUT.smearinvw  || dE < 1e-5)
 								{
-									smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-w,2)) + 1/(eps2+pow(w+INPUT.dw*(iv+0.5),2));
+									smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-dE,2)) + 1/(eps2+pow(dE+INPUT.dw*(iv+0.5),2));
 									smearpre = pre * smearf;
 								}
 								else
 								{
-									smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-w,2)) - 1/(eps2+pow(w+INPUT.dw*(iv+0.5),2));
+									smearf = 1/(eps2+pow(INPUT.dw*(iv+0.5)-dE,2)) - 1/(eps2+pow(dE+INPUT.dw*(iv+0.5),2));
 									smearpre = pre/(iv+0.5)/INPUT.dw * smearf;
 								}
 								
@@ -265,8 +276,19 @@ void Ele_Conductivity::method1()
 						}
 				  	}
 				}
-	
-				tot_sum += (WF.occ[ib]-WF.occ[jb])*(corr2*WF.factor/(WF.eigE[jb]-WF.eigE[ib]));
+				if(jb != ib)
+				{
+					if(dE < 1e-5)
+					{
+						double avg_en = 0.5*(energyj+energyi);
+						double occij = sigmod(INPUT.temperature/P_EV2K, INPUT.fermiE, avg_en);
+						tot_sum += (occij - 1)*occij/INPUT.temperature*P_EV2K*(corr2*WF.factor);
+					}
+					else
+					{
+						tot_sum += docc*(corr2*WF.factor/dE);
+					}
+				}
 				//cout<<docc<<' '<<w<<' '<<corr2<<' '<<INPUT.dw<<' '<<WF.factor<<' '<<INPUT.vol<<' '<<factor<<endl;
 	    	}
 		}
@@ -429,46 +451,9 @@ void writesigma(double *sigma_all,double*L12_all,double* L22_all,int nf,int nw,i
 	return;
 }
 
-double Velocity_Matrix_Local(const int ib,const int jb,Wavefunc & WF)
+double sigmod(const double& T, const double& mu, const double &E)
 {
-		double corr2;
-		int n=WF.ngtot;
-		Vector3<double> gplusk,corrim(0,0,0);
-		complex<double> corrx,corry,corrz,C_ji_c,C_ii,C_jiii;
-		double C_jiii_im,corrxim,corryim,corrzim;
-		corrx=corry=corrz=0;
-		for(int ig=0;ig<n;ig++)
-        {
-			C_ji_c=conjugate(WF.Wavegg[jb*n+ig]);
-			C_ii=WF.Wavegg[ib*n+ig];
-			gplusk.x=WF.gkk_x[ig]+WF.kpoint_x;
-			gplusk.y=WF.gkk_y[ig]+WF.kpoint_y;
-			gplusk.z=WF.gkk_z[ig]+WF.kpoint_z;
-			if(INPUT.gamma)
-			{
-				C_jiii_im=C_ji_c.real()*C_ii.imag()+C_ji_c.imag()*C_ii.real();
-				corrim+=C_jiii_im*gplusk;
-			}
-			else
-			{
-				C_jiii=C_ji_c*C_ii;
-				corrx+=C_jiii*gplusk.x;
-				corry+=C_jiii*gplusk.y;
-				corrz+=C_jiii*gplusk.z;
-			}
-        }
-			
-        if(INPUT.gamma)
-        {
-            //Note that gkk_x[0]=gkk_y[0]=gkk_z[0]=0. Thus, we directly multiply corr by 2.
-			corr2=pow(corrim.x,2)+pow(corrim.y,2)+pow(corrim.z,2);
-			corr2*=4;
-        }
-		else
-		{
-			corr2=pow(corrx.real(),2)+pow(corrx.imag(),2)+pow(corry.real(),2)+pow(corry.imag(),2)+pow(corrz.real(),2)+pow(corrz.imag(),2);
-        }
-		return corr2;
+	return 1.0/(1.0+exp((E-mu)/T));
 }
 
 	

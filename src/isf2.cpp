@@ -34,6 +34,11 @@ void ISF2::cal()
 		  }
 		}
 		assert(count<1000);
+		if(count == 0)
+		{
+			cout<<"Find no q! Please change target_q!"<<endl;
+			exit(0);
+		}
 		Vector3<int>* mg=new Vector3<int>[count];
 		int *pre=new int[count];
 		allcount=count=-1;

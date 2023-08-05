@@ -85,13 +85,13 @@ void WfRead::readWF(int ik)
 	if(INPUT.wf_in_type=="QE1")
 	{
 		wfqe.readOCC(*wfpt,ik);
-		wfqe.readGKK(*wfpt,ik);
-		wfqe.readWF(*wfpt,ik);
+		if(!INPUT.readvmatrix) wfqe.readGKK(*wfpt,ik);
+		if(!INPUT.readvmatrix) wfqe.readWF(*wfpt,ik);
 	}
 	else if(INPUT.wf_in_type=="QE2")
 	{
 		wfqe.readOCC2(*wfpt,ik);
-		wfqe.readWF2(*wfpt,ik);
+		if(!INPUT.readvmatrix) wfqe.readWF2(*wfpt,ik);
 	}
 	else if(INPUT.wf_in_type=="PWmat")
 	{
@@ -148,6 +148,7 @@ void WfRead:: readvmatrix(const int ik, double* vmatrix)
 {
 	int nband = wfpt->nband;
 	int nbb = (nband-1) * nband / 2;
+	if(INPUT.cond_intra) nbb += nband;
 	stringstream ss;
     ss<<INPUT.wfdirectory<<"/vmatrix"<<ik+1<<".dat";
 	binfstream binfs(ss.str(), "r");
@@ -162,7 +163,8 @@ void WfRead:: readvmatrix(const int ik, double* vmatrix)
 void WfRead::calvmatrix(double* vmatrix)
 {
 	const int nband = wfpt->nband;
-	const int nbb = (nband-1) * nband / 2;
+	int nbb = (nband-1) * nband / 2;
+	if(INPUT.cond_intra) nbb += nband;
 	const int npw = wfpt->ngtot;
 	ZEROS(vmatrix, nbb);
 	complex<double> *pij = new complex<double>[nbb];
@@ -197,7 +199,9 @@ void WfRead::calvmatrix(double* vmatrix)
     	        pwave[ig + ib*npw] = wfpt->Wavegg[ib*npw + ig] * (gid[ig]+kid);
 			}
 		}
-		dtrimultipAHB(nband,nband,npw, wfpt->Wavegg, npw, pwave, npw, pij, 1);
+		int bias = 1;
+		if(INPUT.cond_intra) bias = 0;
+		dtrimultipAHB(nband,nband,npw, wfpt->Wavegg, npw, pwave, npw, pij, bias);
 		if(INPUT.gamma)
 		{
 #ifdef _OPENMP
