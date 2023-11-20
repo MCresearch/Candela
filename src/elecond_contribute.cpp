@@ -35,11 +35,11 @@ void Elecond_contribute::cal_contribute()
 		nfolder=1;
 		multi=false;
 	}
-	int nw=INPUT.wcut/INPUT.dw+1;
 	
 	double targew = INPUT.target_w;
 	
 	int NMAX = (INPUT.E_max - INPUT.E_min)/INPUT.dE + 1;
+	assert(NMAX > 0);
 	double sigma_all[NMAX],L22_all[NMAX],L12_all[NMAX];
 	for(int i=0;i<NMAX;i++)
 	{
@@ -119,7 +119,7 @@ void Elecond_contribute::cal_contribute()
 				wfr.calvmatrix(vmatrix);
 			}
 			cout<<"nband: "<<nband<<endl;
-			double factor2=factor/INPUT.dw*pow(WF.factor,2)/INPUT.vol;
+			double factor2=factor*pow(WF.factor,2)/INPUT.vol;
 			//loop of band
 #ifdef _OPENMP
 #pragma omp parallel for reduction(+:tot_sum, sigma_all[:NMAX], L12_all[:NMAX], L22_all[:NMAX]) schedule(dynamic)
@@ -133,10 +133,7 @@ void Elecond_contribute::cal_contribute()
 					double energyi=WF.eigE[ib];
 					double w=energyj-energyi;
 					double docc=WF.occ[ib]-WF.occ[jb];
-					if(docc<=0.0000000001) continue;
-					assert(w>=0);
-					int iw=int(w/INPUT.dw);
-					if(iw>=nw||w==0) continue;//add w==0, sometimes w can be 0 due to truncation error.
+					if(docc<=0.0000000001 || w < 1e-5) continue;
 
 					double corr2 = vmatrix[ijb];
 
@@ -173,7 +170,7 @@ void Elecond_contribute::cal_contribute()
 						if(INPUT.smear==1)
 						{
 							st2=-0.5/pow(st,2);
-							pre=1/sqrt(2*pi)/st2*INPUT.dw;
+							pre=1/sqrt(2*pi)/st;
 							if(INPUT.smearinvw)
 							{
 								smearf=exp(pow(targew-w,2)*st2) + exp(pow(w+targew,2)*st2);
@@ -188,7 +185,7 @@ void Elecond_contribute::cal_contribute()
 						else
 						{
 							eps2=pow(eps,2);
-							pre=1/pi*eps*INPUT.dw;
+							pre=1/pi*eps;
 							if(INPUT.smearinvw)
 							{
 								smearf = 1/(eps2+pow(targew-w,2)) + 1/(eps2+pow(w+targew,2));
@@ -200,14 +197,21 @@ void Elecond_contribute::cal_contribute()
 								smearpre = pre/targew * smearf;
 							}
 						}
+						if(smearf<1e-6) continue;
 						int indexi = ((energyi - INPUT.fermiE) - INPUT.E_min)/INPUT.dE;
 						int indexj = ((energyj - INPUT.fermiE) - INPUT.E_min)/INPUT.dE;
-						sigma_all[indexi]+=smearpre*L11fact/2;
-						L12_all[indexi]-=smearpre*L12fact/2;
-						L22_all[indexi]+=smearpre*L22fact/2;
-						sigma_all[indexj]+=smearpre*L11fact/2;
-						L12_all[indexj]-=smearpre*L12fact/2;
-						L22_all[indexj]+=smearpre*L22fact/2;
+						if(indexi < NMAX && indexi >= 0)
+						{
+							sigma_all[indexi]+=smearpre*L11fact/2;
+							L12_all[indexi]-=smearpre*L12fact/2;
+							L22_all[indexi]+=smearpre*L22fact/2;
+						}
+						if(indexj < NMAX && indexj >= 0)
+						{
+							sigma_all[indexj]+=smearpre*L11fact/2;
+							L12_all[indexj]-=smearpre*L12fact/2;
+							L22_all[indexj]+=smearpre*L22fact/2;
+						}
 					}
 				}//jb
 	    	}//ib
@@ -234,11 +238,19 @@ void Elecond_contribute::cal_contribute()
 	if(RANK == 0)
 	{
 		ofstream ofs1("contribute.txt");
+		ofs1<<setw(10)<<"#E-mu (eV)"<<setw(20)<<"S(meV)^-1"<<setw(20)<<"A(meV)^-1"<<setw(20)<<"W(mKeV)^-1"<<endl;
+		double sum_sigma=0, sum_L12=0, sum_L22=0;
 		for(int ie = 0 ; ie < NMAX; ++ie)
 		{
-			ofs1<<INPUT.E_min + (ie + 0.5) * INPUT.dE<<" "<<sigma_all[ie] / nfolder/ INPUT.dE
-			<<" "<<L12_all[ie] / nfolder/ INPUT.dE<<" "<<L22_all[ie] / nfolder/ INPUT.dE<<endl;
+			ofs1<<setw(10)<<INPUT.E_min + (ie + 0.5) * INPUT.dE<<setw(20)<<sigma_all[ie] / nfolder/ INPUT.dE
+			<<setw(20)<<L12_all[ie] / nfolder/ INPUT.dE<<setw(20)<<L22_all[ie] / nfolder/ INPUT.dE<<endl;
+			sum_sigma += sigma_all[ie]/nfolder;
+			sum_L12 += L12_all[ie]/nfolder;
+			sum_L22 += L22_all[ie]/nfolder;
 		}
+		std::cout<<"sigma("<<targew<<") = "<<sum_sigma<<std::endl;
+		std::cout<<"L12("<<targew<<") = "<<sum_L12<<std::endl;
+		std::cout<<"L22("<<targew<<") = "<<sum_L22<<std::endl;
 	}
 
     free(wdbuf);

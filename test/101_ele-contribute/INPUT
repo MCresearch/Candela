@@ -1,0 +1,14 @@
+calculation     elecond_contribute
+#calculation     ele_conductivity
+wf_in_type      ABACUS
+wfdirectory     ./
+multi_directory ../wavefunc/Si1.abacus
+
+nscf      2
+fwhm      5    #Full Width at Half Maximam of Gauss or Lorentz function. Only useful when smear is 1 or 2
+smear     1     #0 for linear approx.; 1 for Gauss approx.; 2 for Lorentz approx.
+smearinvw 0
+target_w  0.41
+emax      20
+emin     -20
+de        0.02
