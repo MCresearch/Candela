@@ -304,6 +304,7 @@ public:
 	double msd_dt; // time step 
 	int msd_natom; // number of atoms that need MSD to be computed
 	bool msd_stokes; // ignore the jumps of proton transfer
+	string ele_select; // select the element for MSD
 
 	// for general purpose
 	int func; // different functions

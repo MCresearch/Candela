@@ -59,6 +59,7 @@ Input::Input()
 	hindex = 0;
 	ele1 = "none";
 	ele2 = "none";
+	ele_select = "none";
 	bdf_center = "none";
 	z1 = -10000;
 	z0 = -10000;
@@ -671,6 +672,7 @@ void Input::Read(const string &fn)
 		else if (strcmp("non_return", word) == 0) read_value(ifs, non_return);
 		else if (strcmp("upper_time", word) == 0) read_value(ifs, upper_time);
 		else if (strcmp("lower_time", word) == 0) read_value(ifs, lower_time);
+		else if (strcmp("ele_select", word) == 0) read_value(ifs, ele_select);
 		else if (strcmp("oindex", word) == 0)
 		{
 			for (int io=0; io<n_recorded_water-1; io++)
