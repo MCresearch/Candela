@@ -267,6 +267,7 @@ void MSD_Multiple::compute_msd(const Cell &cel, const int &igeo)
 	int ito=-1;
 	int ith=-1;
 	int itc=-1;
+	int it_select = -1;
 
 	int na=0;
 	for(int it=0;it <INPUT.ntype; ++it)
@@ -275,9 +276,20 @@ void MSD_Multiple::compute_msd(const Cell &cel, const int &igeo)
 		else if(cel.atom[it].id=="H" or cel.atom[it].id=="D") ith=it;
 		else if(cel.atom[it].id=="C") itc=it;
 		na += cel.atom[it].na;
+
+		if (INPUT.ele_select != "none" and cel.atom[it].id == INPUT.ele_select)
+		{
+			it_select = it;
+		}
 	}
-	if(INPUT.ntype==2){ assert(ito>=0); assert(ith>=0);}
-	if(INPUT.ntype==3){ assert(itc>=0); }
+	//if(INPUT.ntype==2){ assert(ito>=0); assert(ith>=0);}
+	//if(INPUT.ntype==3){ assert(itc>=0); }
+
+	if (INPUT.system == "water" or INPUT.system == "hydroxide" or INPUT.system == "hydronium")
+	{
+		assert(ito>=0);
+		assert(ith>=0);
+	}
 
 	assert(INPUT.celldm1>0);
 	assert(INPUT.celldm2>0);
@@ -295,7 +307,7 @@ void MSD_Multiple::compute_msd(const Cell &cel, const int &igeo)
 	for(int i=0; i<INPUT.msd_n; ++i)
 	{
 //		ofs_running << "i= " << i << endl;
-		each_msd(cel, ito, ms[i], water);
+		each_msd(cel, ito, it_select, ms[i], water);
 	}
 
 	if(INPUT.system=="water" || INPUT.system=="hydronium" || INPUT.system=="hydroxide")
@@ -305,7 +317,7 @@ void MSD_Multiple::compute_msd(const Cell &cel, const int &igeo)
 	return;
 }
 
-void MSD_Multiple::each_msd(const Cell &cel, const int &ito, MSD_Single &ms, const Water* water)
+void MSD_Multiple::each_msd(const Cell &cel, const int &ito, const int &it_select, MSD_Single &ms, const Water* water)
 {
 	if(cel.snapshot_time < ms.t0) return;
 	else if(cel.snapshot_time>= ms.t1) return;
@@ -395,6 +407,10 @@ void MSD_Multiple::each_msd(const Cell &cel, const int &ito, MSD_Single &ms, con
 		int iaq=0;
 		for(int it=0; it<INPUT.ntype; ++it)
 		{
+			if (it_select != -1 and it != it_select)
+			{
+				continue;
+			}
 			for(int ia=0; ia<cel.atom[it].na; ++ia)
 			{
 				if(INPUT.system=="water")
@@ -432,12 +448,17 @@ void MSD_Multiple::each_msd(const Cell &cel, const int &ito, MSD_Single &ms, con
 		int index = round((cel.snapshot_time - ms.t0) / INPUT.msd_dt);
 		//cout << "time=" << cel.snapshot_time << " dt=" << INPUT.msd_dt << " t0=" << ms.t0 << endl; // test
 		assert(index>=0);
+		if (index >= ms.ndim) return;
 		assert(index<ms.ndim);
 		int iat=0;
 		int iaq=0;
 //		cout << "msd0=" << ms.msd[index] << " mmm0=" << ms.mmm[index] << " index=" << index << endl;
 		for(int it=0; it<INPUT.ntype; ++it)
 		{
+			if (it_select != -1 and it != it_select)
+			{
+				continue;
+			}
 			for(int ia=0; ia<cel.atom[it].na; ++ia)
 			{
 #ifdef __MPI

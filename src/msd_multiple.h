@@ -50,7 +50,7 @@ class MSD_Multiple
 	private:
 
 	void compute_msd(const Cell &cel, const int &igeo);
-	void each_msd(const Cell &cel, const int &ito, MSD_Single &ms, const Water* water);
+	void each_msd(const Cell &cel, const int &ito, const int &it_select, MSD_Single &ms, const Water* water);
 	int round(double r);
 	MSD_Single* ms; // mean square displacement array	
 };
