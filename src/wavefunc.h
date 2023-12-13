@@ -27,10 +27,10 @@ class Wavefunc
 		//Wavegg^2*factor in unit 1
 		double *gkk_x = nullptr,*gkk_y = nullptr,*gkk_z = nullptr;//in bohr^-1
 		double kpoint_x,kpoint_y,kpoint_z;//in bohr^-1
-		double *occ = nullptr;
+		double *occ = nullptr; // normalized to 1
 		double *eigE = nullptr; //in eV
 		int nband,ngtot;
-		double wk;//weight of kpoint
+		double wk;//weight of kpoint, normalized to 1
 	public:
 		int ig0 = 0; //ig when gkk = (0,0,0)
 };

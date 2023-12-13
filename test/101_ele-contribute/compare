@@ -3,3 +3,4 @@ threshold 1e-4
 enable_mpi ON
 
 contribute.ref contribute.txt
+vmatrix.ref vmatrix.txt

@@ -175,7 +175,11 @@ Input::Input()
 	cartesian = true;
 	gamma=false;
 	msd_single=false;
-	tpk=1.0; //when N goes to infinity, tpk goes to 1.
+	// p = 0.95, N      5,     10,     20, infinity
+	//         tpk 2.5706, 2.2281, 2.0860,   1.0000
+	// p = 0.99, N      5,     10,     20, infinity
+	//         tpk 4.0321, 3.1693, 2.8453,   1.0000
+	tpk=1.0;
 	error_con=false;
 	wfdirectory="./";//qianrui
 
