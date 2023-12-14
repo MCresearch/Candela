@@ -125,6 +125,11 @@ void Elecond_contribute::cal_contribute()
 			}
 			cout<<"nband: "<<nband<<endl;
 			double factor2=factor*pow(WF.factor,2)/INPUT.vol;
+			// More electrons, smaller vmatrix
+			// Since vmatrix means the transition probability，
+			// more electrons, more choices, smaller probability for one choice.
+			// Here we mutiple vmatrix by nele to normalize it.
+			double vfact = pow(WF.factor,2)*INPUT.nele;
 			//loop of band
 #ifdef _OPENMP
 #pragma omp parallel for reduction(+:tot_sum, sigma_all[:NMAX], L12_all[:NMAX], L22_all[:NMAX], v11_all[:NMAX], v12_all[:NMAX], v22_all[:NMAX], vweight[:NMAX]) schedule(dynamic)
@@ -150,17 +155,8 @@ void Elecond_contribute::cal_contribute()
 					double v11fact, v12fact, v22fact;
 					double Eij_F=(energyj+energyi)/2-INPUT.fermiE;
 
-					if(INPUT.smearinvw)
-					{
-						L11fact=factor2/w*docc*corr2;
-						v11fact=factor2/w*WF.wk*corr2;
-
-					}
-					else
-					{
-						L11fact=factor2*docc*corr2;
-						v11fact=factor2*WF.wk*corr2;
-					}
+					L11fact=factor2*docc*corr2;
+					v11fact=vfact*corr2;
 
 					L12fact=Eij_F*L11fact;
 					L22fact=pow(Eij_F,2)*L11fact;
@@ -201,8 +197,8 @@ void Elecond_contribute::cal_contribute()
 						double Lpre, vpre;
 						if(INPUT.smearinvw)
 						{
-							Lpre = invsmearpre;
-							vpre = smearpre*WF.wk;
+							Lpre = invsmearpre/w;
+							vpre = smearpre/w*WF.wk;
 						}
 						else
 						{
@@ -260,8 +256,8 @@ void Elecond_contribute::cal_contribute()
 	{
 		ofstream ofs1("contribute.txt");
 		ofstream ofs2("vmatrix.txt");
-		ofs1<<setw(10)<<"#E-mu (eV)"<<setw(20)<<"L11"<<setw(20)<<"L12"<<setw(20)<<"L22"<<endl;
-		ofs2<<setw(10)<<"#E-mu (eV)"<<setw(20)<<"v11"<<setw(20)<<"v12"<<setw(20)<<"v22"<<setw(20)<<"weight"<<endl;
+		ofs1<<setw(10)<<"#E-mu (eV)"<<setw(20)<<"L11"<<setw(20)<<"L12/e"<<setw(20)<<"L22/e^2"<<endl;
+		ofs2<<setw(10)<<"#E-mu (eV)"<<setw(20)<<"v11"<<setw(20)<<"v12/e"<<setw(20)<<"v22/e^2"<<setw(20)<<"weight"<<endl;
 		double sum_sigma=0, sum_L12=0, sum_L22=0;
 		for(int ie = 0 ; ie < NMAX; ++ie)
 		{

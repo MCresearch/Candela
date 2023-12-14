@@ -22,6 +22,10 @@ class Wavefunc
 		void print(int );
 		void checknorm(int,int);
 	public:
+		//For ABACUS, QE:
+		//    <Wavegg|Wavegg> = 1
+		//For PWmat:
+		//    <Wavegg|Wavegg>*volume = 1 
 		complex <double> * Wavegg = nullptr; //in bohr^-3/2 or 1
 		double factor;// in unit 1 or bohr^3
 		//Wavegg^2*factor in unit 1
