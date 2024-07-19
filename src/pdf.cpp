@@ -174,15 +174,24 @@ void PDF::cal()
 		{
 			cel.read_and_used=false;
 		}
-		else cel.read_and_used=true;
+		else 
+		{
+			cel.read_and_used=true;
+		}
 		cout << "Succeeded" << endl;
 		stringstream ss; ss << igeo;
 		cel.file_name = ss.str();
 
 		// cel : input geometry file
-		if( !CellFile::ReadGeometry( cel ) ) continue;
+		if( !CellFile::ReadGeometry( cel ) ) 
+		{
+			continue;
+		}
 #ifdef __MPI //qianrui add
-		if(igeo<numConfigsInit) cel.read_and_used=false;
+		if(igeo<numConfigsInit) 
+		{
+			cel.read_and_used=false;
+		}
 #endif
 		if(cel.read_and_used==false) 
 		{
