@@ -255,7 +255,8 @@ bool CellFile::ReadGeometry( Cell &cel )
 
 			if(!ifs_pos_kept)
 			{
-				cout << "Could not open the file." << endl;
+				cout << " Could not open the file." << endl;
+                cout << " Have a nice day!! " << endl;
 				exit(0);
 			} 
 			file_open = true;

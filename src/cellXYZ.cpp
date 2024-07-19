@@ -83,7 +83,7 @@ bool CellFile::ReadGeometry_XYZ( Cell &cel, ifstream &ifs)
 		string tid;
 		double tx, ty, tz;
 		ifs >> tid >> tx >> ty >> tz;
-//		cout << setw(5) << tid << setw(10) << tx << endl;
+	//	cout << setw(5) << tid << setw(10) << cel.atom[0].id << endl;
 		for(int it=0; it<ntype; ++it)
 		{
 			if(tid == cel.atom[it].id)
@@ -114,6 +114,7 @@ bool CellFile::ReadGeometry_XYZ( Cell &cel, ifstream &ifs)
 	}
 	for(int it=0; it<ntype; ++it)
 	{
+    //    cout << "count_atom=" << count_atom[it] << " na=" << cel.atom[it].na << endl;
 		assert(count_atom[it] == cel.atom[it].na);
 	}
 	delete[] count_atom;
