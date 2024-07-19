@@ -1,0 +1,20 @@
+  calculation  pdf   # pair distribution function.
+  geo_in_type  XYZ   # input type of geometry file: PROFESS/VASP/QE/ABINIT/ABACUS/XYZ
+  geo_directory GEOM_600k_30.xyz # the name of the output .xyz file
+  geo_1        1  # index of the starting configuration 
+  geo_2        5  # the last configuration
+  geo_interval 1  # only read every 'geo_interval' geometries 
+
+  geo_out      PDF.txt # the pdf name as an output file
+
+  ntype        1         # number of different types of atoms.
+  natom        128       # total number of atoms.
+  natom1       128       # the number of atomic species 1 
+
+  dr       0.01      # delta r in real space 
+  rcut     6.00      # real space distance to evaluate the structure factor
+  id1      1         # element type starting from 1
+  
+  celldm1 13.821 # cell length along x
+  celldm2 13.821 # cell length along y
+  celldm3 13.821 # cell lenght along z
