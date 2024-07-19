@@ -3,7 +3,7 @@ include Makefile.vars
 
 NVCC=nvcc
 NVFLAGS= -O3 -arch=native
-CFLAGS=-O3 -march=native
+CFLAGS=-O3 -march=native -std=c++11
 FFLAGS=-O3 -march=native -cpp
 D_SRC=./src
 D_OBJ=./obj
