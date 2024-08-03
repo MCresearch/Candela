@@ -157,7 +157,7 @@ bool ifelt(const T x, const T y)
 			return false;
 		}
 	}
-	else if(double(x)==0.0d&&double(y)==0.0d)
+	else if(double(x)==0.0&&double(y)==0.0)
 		return true;
 	else
 	{
