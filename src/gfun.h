@@ -41,7 +41,7 @@ template <class T>
 static void READ_VALUE(ifstream &ifs, T &v)
 {
     ifs >> v;
-    ifs.ignore(150, '\n');
+    ifs.ignore(20000, '\n');
     return;
 }
 
