@@ -877,7 +877,7 @@ void PDF::sort_multi_pdf(double** multi_pdf, int* npdf_count)
 		for (int ir = 0; ir<int(INPUT.rcut/INPUT.dr); ir++)
 		{
 			double vv = 4*(pow(ir+1, 3) - pow(ir, 3))*PI*pow(INPUT.dr, 3)/3;
-			double rho = n2/INPUT.celldm1/INPUT.celldm2/INPUT.celldm3;
+			double rho = n2/Cell::last_volume;
 			this->multi_pdf[ipdf][ir] /= this->npdf_count[ipdf]*vv*n1*rho;
 			//cout << ir << " factor = " << 1/(vv*n1*rho) << endl;
 		}

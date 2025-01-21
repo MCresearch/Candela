@@ -258,7 +258,13 @@ public:
 	int nkpoint;//2020-2-5
 	double fermiE;//qianrui 2020-3-24
 	bool  error_con;//To print the std of averaged conductivity (used with nscf) by qianrui 2020-5-13
-	double tpk;//qianrui 2020-3-25 tpk (amendment between student distribution and normal distribution )
+	
+	// amendment between student distribution and normal distribution
+	// p = 0.95, N      5,     10,     20, infinity
+	//         tpk 2.5706, 2.2281, 2.0860,   1.0000
+	// p = 0.99, N      5,     10,     20, infinity
+	//         tpk 4.0321, 3.1693, 2.8453,   1.0000
+	double tpk;
 	double vol;
 	double dw;
 	double wcut;

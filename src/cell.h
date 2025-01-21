@@ -20,6 +20,7 @@ class Cell
 	string coordinate; //which type of coordinate
 	Vector3<double> a1,a2,a3; // lattice vectors
 	double volume; // volume of cell
+	static double last_volume; // volume of last cell
 	string file_name;
 	string system_name;
 	int nat; // total atom number

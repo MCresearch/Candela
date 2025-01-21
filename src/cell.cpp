@@ -18,6 +18,8 @@ Cell::~Cell()
 	delete[] eig;
 }
 
+double Cell::last_volume = 0.0;
+
 // transform the coordinates from direct to cartesian
 void Cell::direct2cartesian(const int &it, const int &i)
 {
@@ -301,5 +303,6 @@ double Cell::cal_volume()
 {
 	this->volume = this->a1.x*this->a2.y*this->a3.z + this->a1.y*this->a2.z*this->a3.x + this->a1.z*this->a2.x*this->a3.y -
 	  this->a1.x*this->a2.z*this->a3.y - this->a1.y*this->a2.x*this->a3.z - this->a1.z*this->a2.y*this->a3.x;
+	this->last_volume = this->volume;
 	return this->volume;
 }

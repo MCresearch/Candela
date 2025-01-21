@@ -85,7 +85,6 @@ void Elecond_contribute::cal_contribute()
 		Wavefunc WF;
 		WfRead wfr(WF);
 		wfr.Init();
-		double sum_factor=2*P_ME*INPUT.vol*pow(P_BOHR,3)/M_PI/P_QE/INPUT.nele/1e30/P_HBAR;
 		int nk=INPUT.nkpoint;
 		assert(nk>0);
 
